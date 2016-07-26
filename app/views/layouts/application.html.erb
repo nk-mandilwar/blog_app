@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>BlogDeviseApp</title>
+  <%= stylesheet_link_tag    'application', media: 'all' %>
+  <%= javascript_include_tag 'application' %>
+  <%= csrf_meta_tags %>
+</head>
+<body>
+	<%= render 'layouts/header' %>
+	<% if current_user %>
+ 		<div class="side_div11">
+			<%= render 'layouts/side_bar' %>
+		</div>
+	<% end %>
+	
+	 <div class="container body_div11">
+ 			<p class="notice"><%= notice %></p>
+ 			<p class="alert"><%= alert %></p>
+
+				<%= yield %>
+  		<%= render 'layouts/footer' %>
+  </div>
+    
+</body>
+</html>

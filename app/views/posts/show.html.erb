@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Title:</strong>
+  <%= @post.title %>
+</p>
+
+<p>
+  <strong>Content:</strong>
+  <%= @post.content %>
+</p>
+
+<%= link_to 'Edit', edit_post_path(@post) %> |
+<%= link_to 'Back', posts_path %>
+
+	<h5>Comments</h5>
+  <% @post.comments.each do |comment| %>
+    <% if !comment.parent_id %>
+    <p>
+      <strong><%= comment.user.name %></strong>  
+    </p>
+   	<p>
+     	<%= comment.content %>	
+    </p>
+	
+      <% if comment.user_id == current_user.id %>
+    	 <%= link_to 'Destroy', [comment.post, comment],
+            method: :delete,
+            data: { confirm: 'Are you sure?' } %>
+      <% end %>
+ 
+      <%= link_to "Reply", post_comment_path(comment.post, comment) %> 
+
+    <% end %>
+  <% end %>
+
+
+	<h5>Add a comment:</h5>
+
+	<%= form_for([@post, @post.comments.build]) do |f| %>
+		<%= f.label :content %><br />
+		<%= f.text_area :content, class: 'form-control' %>
+		<%= f.submit class:"btn btn-primary" %>
+	<% end %>
+

@@ -1,0 +1,8 @@
+<h1 id="header-id">Welcome <%= current_user.name %></h1>
+	<br>
+	
+ 	<%= link_to 'View Your Facebook Profile Here', current_user.facebook_profile %>
+  <br>
+  <%= link_to "All Blogs (#{Post.count})", posts_path %>
+  <br>
+  <%= link_to "My Blogs (#{Post.where('user_id' => current_user).count})", post_my_blogs_path %>
