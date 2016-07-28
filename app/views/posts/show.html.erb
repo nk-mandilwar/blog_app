@@ -1,36 +1,46 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Title:</strong>
-  <%= @post.title %>
+<div id="post-title">
+  <u><%= @post.title %></u>
 </p>
+</div>
 
-<p>
-  <strong>Content:</strong>
-  <%= @post.content %>
-</p>
-
-<%= link_to 'Edit', edit_post_path(@post) %> |
-<%= link_to 'Back', posts_path %>
-
-	<h5>Comments</h5>
+<div id="post-content">
+  <strong> <%= @post.content %> </strong>
+  <div>
+    <% if current_user == @post.user %>
+      <%= link_to 'Edit', edit_post_path(@post) %>
+    <% end %>
+  </div >
+</div>
+  
+	<h3>Comments:</h3>
   <% @post.comments.each do |comment| %>
     <% if !comment.parent_id %>
-    <p>
-      <strong><%= comment.user.name %></strong>  
-    </p>
-   	<p>
+    <div>
+      <strong><%= comment.user.name %>:</strong>  
      	<%= comment.content %>	
-    </p>
-	
+      <div>
+	    <%= link_to "Reply", post_comment_path(comment.post, comment) %> 
       <% if comment.user_id == current_user.id %>
-    	 <%= link_to 'Destroy', [comment.post, comment],
+    	  <span>|<%= link_to 'Destroy', [comment.post, comment],
             method: :delete,
-            data: { confirm: 'Are you sure?' } %>
+            data: { confirm: 'Are you sure?' } %></span>
       <% end %>
- 
-      <%= link_to "Reply", post_comment_path(comment.post, comment) %> 
-
+      </div>
+      </div>
+      
+      <%  def tree_traversing(c)  %>
+        <% comments = c.children %>
+    
+        <% comments.each do |comment| %>
+          <%= render partial: "comment", locals: {comment: comment} %>
+          <% if(comment.no_of_children > 0) %>
+            <% tree_traversing(comment) %>
+          <% end %>
+        <% end %>
+      <% end %>
+      <% if(comment.no_of_children > 0) %>
+        <% tree_traversing(comment) %>
+      <% end %>
     <% end %>
   <% end %>
 

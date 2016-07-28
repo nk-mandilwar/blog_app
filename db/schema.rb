@@ -11,16 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160722090105) do
+ActiveRecord::Schema.define(version: 20160727113053) do
 
   create_table "comments", force: :cascade do |t|
-    t.text     "content",    limit: 65535
-    t.integer  "post_id",    limit: 4
-    t.integer  "user_id",    limit: 4
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
-    t.integer  "parent_id",  limit: 4
-    t.integer  "base_id",    limit: 4
+    t.text     "content",        limit: 65535
+    t.integer  "post_id",        limit: 4
+    t.integer  "user_id",        limit: 4
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
+    t.integer  "parent_id",      limit: 4
+    t.integer  "base_id",        limit: 4
+    t.integer  "no_of_children", limit: 4,     default: 0
+    t.integer  "level",          limit: 4,     default: 0
   end
 
   add_index "comments", ["post_id"], name: "index_comments_on_post_id", using: :btree
@@ -44,6 +46,7 @@ ActiveRecord::Schema.define(version: 20160722090105) do
     t.integer  "user_id",    limit: 4
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
+    t.integer  "sal",        limit: 4
   end
 
   add_index "replies", ["comment_id"], name: "index_replies_on_comment_id", using: :btree

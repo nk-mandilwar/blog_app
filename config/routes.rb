@@ -8,7 +8,7 @@ Rails.application.routes.draw do
     resources :comments
   end
 
- 
+
   
 
   get '/post/my_blogs', to: 'posts#my_blogs'

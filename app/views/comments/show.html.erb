@@ -1,34 +1,12 @@
 <div class="row">
-  <% a = @comment.id %>
-<% @post.comments.each do |c| %>
-    <% if c.parent_id == a %>
-    <p> 
-      <strong><%= c.user.name %></strong>  
-    </p>
-   	<p>
-     	<%= c.content %>	
-    </p>
-      
-    <br>
-	
-      <% if c.user_id == current_user.id %>
-    	 <%= link_to 'Destroy', [c.post, c],
-            method: :delete,
-            data: { confirm: 'Are you sure?' } %>
-      <% end %>
-      <br>
-    <%= link_to "Reply", post_comment_path(c.post, c) %>
-
-    <br>
-    <% end %>
-  <% end %>
 
 
 	<h5>Add a reply:</h5>
 
 	<%= form_for([@post, @post.comments.build]) do |f| %>
-  <%= @comment.id %>
+
     <%= f.hidden_field :parent_id, :value => @comment.id %>
+    <%= f.hidden_field :level, :value => @comment.level + 1 %>
     <% if !@comment.base_id %>
         <%= f.hidden_field :base_id, :value => @comment.id %>
     <% else %>

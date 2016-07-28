@@ -6,10 +6,10 @@ class CommentsController < ApplicationController
 		@comment.save
 		if @comment.parent_id 
 			@c = Comment.find(@comment.parent_id) 
-			redirect_to post_comment_path(@post, @c)
-		else
-			redirect_to post_path(@post)
+			@c.no_of_children += 1
+			@c.save
 		end
+			redirect_to post_path(@post)
 	end
 
 	def destroy
@@ -26,6 +26,6 @@ class CommentsController < ApplicationController
 	private
 
 		def comment_params
-			params.require(:comment).permit(:content, :parent_id, :base_id)
+			params.require(:comment).permit(:content, :parent_id, :base_id, :level)
 		end
 end

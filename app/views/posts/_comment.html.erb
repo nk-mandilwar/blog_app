@@ -1,0 +1,19 @@
+  
+ <% l = comment.level*50 %>
+
+ <div style="margin-left: <%= l %>px; border: solid grey 1px; border-radius: 5px">
+ <div>
+      <strong><%= comment.user.name %></strong>  
+     	<%= comment.content %>	
+    </div>
+	<div>
+      <%= link_to "Reply", post_comment_path(comment.post, comment) %> 
+      <% if comment.user_id == current_user.id %>
+    	 <span>|<%= link_to 'Destroy', [comment.post, comment],
+            method: :delete,
+            data: { confirm: 'Are you sure?' } %></span>
+      <% end %>
+      </div>
+ 
+      
+</div>
