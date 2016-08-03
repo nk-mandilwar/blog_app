@@ -7,43 +7,17 @@
   <strong> <%= @post.content %> </strong>
   <div>
     <% if current_user == @post.user %>
-      <%= link_to 'Edit', edit_post_path(@post) %>
+      <%= link_to 'Edit', edit_post_path(@post) %> -
     <% end %>
+    <span class="time-ago"><%= time_ago_in_words(@post.created_at) %></span>
   </div >
 </div>
   
 	<h3>Comments:</h3>
-  <% @post.comments.each do |comment| %>
-    <% if !comment.parent_id %>
-    <div>
-      <strong><%= comment.user.name %>:</strong>  
-     	<%= comment.content %>	
-      <div>
-	    <%= link_to "Reply", post_comment_path(comment.post, comment) %> 
-      <% if comment.user_id == current_user.id %>
-    	  <span>|<%= link_to 'Destroy', [comment.post, comment],
-            method: :delete,
-            data: { confirm: 'Are you sure?' } %></span>
-      <% end %>
-      </div>
-      </div>
-      
-      <%  def tree_traversing(c)  %>
-        <% comments = c.children %>
-    
-        <% comments.each do |comment| %>
-          <%= render partial: "comment", locals: {comment: comment} %>
-          <% if(comment.no_of_children > 0) %>
-            <% tree_traversing(comment) %>
-          <% end %>
-        <% end %>
-      <% end %>
-      <% if(comment.no_of_children > 0) %>
-        <% tree_traversing(comment) %>
-      <% end %>
-    <% end %>
-  <% end %>
 
+
+  <% comments =  @post.comments.where("parent_id" => nil)%>
+  <%= render partial: "comment", locals: {comments: comments, l: 0} %>
 
 	<h5>Add a comment:</h5>
 

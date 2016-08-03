@@ -1,19 +1,30 @@
   
- <% l = comment.level*50 %>
+ <div style="margin-left: <%= l %>px; ">
+  <% if l == 0 %>
+    <% l = 100 %>
+  <% end %>
 
- <div style="margin-left: <%= l %>px; border: solid grey 1px; border-radius: 5px">
- <div>
+  <% comments.each do |comment| %>     
+    <div class="comment">
       <strong><%= comment.user.name %></strong>  
-     	<%= comment.content %>	
-    </div>
-	<div>
-      <%= link_to "Reply", post_comment_path(comment.post, comment) %> 
+      <%= comment.content %>
+    </div>	
+	  <div class="comment-reply-delete">
+      <%= link_to 'Reply', post_comment_path(comment.post, comment) %> 
       <% if comment.user_id == current_user.id %>
-    	 <span>|<%= link_to 'Destroy', [comment.post, comment],
+    	  <span>|<%= link_to 'Destroy', [comment.post, comment],
             method: :delete,
-            data: { confirm: 'Are you sure?' } %></span>
+            data: { confirm: 'Are you sure?' } %></span> -
       <% end %>
-      </div>
- 
+      <span class="time-ago"><%= time_ago_in_words(@post.created_at) %></span>
+      <% if (comment.no_of_children > 0) %>
+        <span> <%= link_to "Replies", "javascript:void(0);", id: "reply_#{comment.id}", class: "reply"%></span>
+      <% end %>
+    </div>
+        
       
+         <div id="comment_<%= "#{comment.id}"%>", class="nested_comment" > 
+          <%= render partial: "comment", locals: {comments: comment.children, l: l * 0.9} %>
+        </div> 
+    <% end %>
 </div>
