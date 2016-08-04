@@ -13,7 +13,19 @@
         <td colspan="10"><%= user.name %></td>
         <td colspan="10"><%= user.city %></td>
         <td colspan="10"><%= link_to user.facebook_profile, user.facebook_profile %></td>
-      </tr>
+        <% if current_user != user %>
+          <% if current_user.friends.include?(user) %>
+            <td colspan="10"> Friends</td>
+          <% elsif current_user.friend_requests.find_by(:friend_id => user) == nil %>
+            <td colspan="10"><%= link_to "Add Friend", friend_requests_path(:friend_id => user), 
+                          :method => :post %> </td>
+          <% else %>
+            <% request_id = current_user.friend_requests.find_by(:friend_id => user) %>
+            <td colspan="10"> Friend Request Sent/ <%= link_to "Cancel request", 
+                          friend_request_path(request_id), method: :delete, 
+                            data: { confirm: 'Are you sure?' } %></td>
+          <% end %>
+        <% end %>
     <% end %>
   </tbody>
 </table>

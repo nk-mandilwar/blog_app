@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   
-  
+  resources :friends, only: [:index, :destroy]
+  resources :friend_requests
+  get 'sent_requests', to: 'friend_requests#sent_requests'
   # root 'home#index'
   root 'dashboard#index'
 

@@ -5,7 +5,7 @@ class PostsController < ApplicationController
   # GET /posts
   # GET /posts.json
   def index
-    @posts = Post.all
+    @posts = Post.page params[:page]
   end
 
   # GET /posts/1
@@ -64,7 +64,7 @@ class PostsController < ApplicationController
   end
 
   def my_blogs
-    @posts = Post.where('user_id' => current_user)
+    @posts = Post.where('user_id' => current_user).page params[:page]
     render 'index'
   end
 

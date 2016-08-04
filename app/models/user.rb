@@ -2,6 +2,9 @@ class User < ActiveRecord::Base
 	has_many :posts, dependent: :destroy
 	has_many :comments, dependent: :destroy
   has_many :replies, dependent: :destroy
+  has_many :friend_requests, dependent: :destroy
+  has_many :friendships, dependent: :destroy
+  has_many :friends, through: :friendships
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :validatable, :confirmable,
@@ -17,11 +20,10 @@ class User < ActiveRecord::Base
                     uniqueness: { case_sensitive: false }, unless: :uid
 
   def self.from_omniauth(auth)
-    binding.pry
     where(auth.slice(:provider, :uid)).first_or_create do |user|
-      user.provider = auth.provider
-      user.uid = auth.uid
-      user.username = auth.info.nickname
+      user.provider = auth[:provider]
+      user.uid = auth[:uid]
+      user.username = auth[:info][:nickname]
       user.confirmed_at = Time.now
     end
   end
