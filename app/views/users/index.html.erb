@@ -1,30 +1,32 @@
 <h1 id="header-id">Listing All Users</h1>
 <table class="table table-hover">
   <thead>
-    <th colspan="10">Username</th> 
-    <th colspan="10">Name</th>   
-    <th colspan="10">City</th> 
-    <th colspan="10">Facebook Profile Link</th>    
+    <th colspan="8">Username</th>  
   </thead>
   <tbody>
     <% @users.each do |user| %>
       <tr>
-        <td colspan="10"><%= user.username %></td>
-        <td colspan="10"><%= user.name %></td>
-        <td colspan="10"><%= user.city %></td>
-        <td colspan="10"><%= link_to user.facebook_profile, user.facebook_profile %></td>
+        <td colspan="8"><%= link_to "#{user.username}", user_path(user) %></td>
         <% if current_user != user %>
           <% if current_user.friends.include?(user) %>
-            <td colspan="10"> Friends</td>
-          <% elsif current_user.friend_requests.find_by(:friend_id => user) == nil %>
-            <td colspan="10"><%= link_to "Add Friend", friend_requests_path(:friend_id => user), 
+            <td colspan="8"> Friends</td>
+          <% elsif current_user.received_friend_requests.find_by(:user_id => user) %>
+            <td colspan="8"> Respond to Request </td> 
+          <% elsif !current_user.friend_requests.find_by(:friend_id => user) %>
+            <td colspan="8"><%= link_to "Add Friend", friend_requests_path(:friend_id => user), 
                           :method => :post %> </td>
           <% else %>
-            <% request_id = current_user.friend_requests.find_by(:friend_id => user) %>
-            <td colspan="10"> Friend Request Sent/ <%= link_to "Cancel request", 
-                          friend_request_path(request_id), method: :delete, 
-                            data: { confirm: 'Are you sure?' } %></td>
+            <td colspan="8"> Friend Request Sent/<%= link_to "Cancel Request", friend_request_path(user), 
+                          :method => :delete %> </td>
           <% end %>
+          <% if !current_user.following?(user) %>
+            <td colspan="8"><%= link_to "Follow", relationships_path(:followed_id => user), 
+                                                method: :post %></td>
+          <% else %>
+            <% follow_id = current_user.active_relationships.find_by(:followed_id => user) %>
+            <td colspan="8"><%= link_to "Unfollow", relationship_path(follow_id),
+                                                  method: :delete %></td>
+          <% end %>                                        
         <% end %>
     <% end %>
   </tbody>

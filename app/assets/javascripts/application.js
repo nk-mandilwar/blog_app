@@ -14,9 +14,25 @@
 //= require jquery_ujs
 //= require bootstrap-sprockets
 //= require_tree .
-$(document).ready(function(){
-    $("#replyp").click(function(){
-        $(this).hide();
-         $("#reply").show();
-    });
+$(document).ready(function() {
+
+   $('.reply').on('click', function() {
+    $("#comment_" + ($(this).attr('id').split("_")[1])).toggle();
+  });
+
+  $('.comment-reply').on('click', function() {
+    $("#reply_div" + ($(this).attr('id').split("_")[1])).toggle();
+  });   
 });
+
+// var incr = (function () {
+//     var i = 1;
+//     return function () {
+//         return i++;
+//     }
+// })();
+  //   i = incr()
+    // if( i % 2 == 1)      
+  //     document.getElementById(reply_id).innerHTML = "Replies";
+    // else
+    //  document.getElementById(reply_id).innerHTML = "Hide";

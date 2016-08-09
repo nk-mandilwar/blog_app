@@ -1,14 +1,15 @@
-<h1 id="header-id">Friend Request</h1>
+<h1 id="header-id">Friend Requests</h1>
 <table class="table table-hover">
   <thead>
-    <th colspan="10">User id</th>   
+    <th colspan="10">Username</th>   
   </thead>
   <tbody>
     <% @incoming.each do |user| %>
       <tr>
-        <td colspan="10"><%= user.user_id %></td>
-        <td colspan="10"><%= link_to "Accept", user, method: :put %></td>
-        <td colspan="10"><%= link_to "Reject", user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td colspan="10"><%= user.username %></td>
+        <td colspan="10"><%= link_to "Accept", friend_request_path(user), method: :put %></td>
+        <td colspan="10"><%= link_to "Reject", friend_request_path(user), method: :delete, 
+                      data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>

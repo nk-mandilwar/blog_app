@@ -2,22 +2,30 @@
   <u><%= @post.title %></u>
 </p>
 </div>
-
 <div id="post-content">
   <strong> <%= @post.content %> </strong>
   <div>
     <% if current_user == @post.user %>
-      <%= link_to 'Edit', edit_post_path(@post) %> -
+      <%= link_to 'Edit ', edit_post_path(@post) %>| 
+      <%= link_to 'delete ', @post, method: :delete, data: { confirm: 'Are you sure?' } %></td>-
     <% end %>
     <span class="time-ago"><%= time_ago_in_words(@post.created_at) %></span>
   </div >
+  <div>
+    <% if @post.user != current_user %>
+      <span> --posted by: <%= link_to @post.user.username, user_path(@post.user) %> </strong>
+            <%= link_to " #{@post.user.followers.count} followers", followers_user_path(@post.user) %>
+            <%= link_to " #{@post.user.following.count} following", following_user_path(@post.user) %> 
+      </span>
+    <% end %>
+  </div>
 </div>
   
 	<h3>Comments:</h3>
 
 
   <% comments =  @post.comments.where("parent_id" => nil)%>
-  <%= render partial: "comment", locals: {comments: comments, l: 0} %>
+  <%= render partial: "shared/comment", locals: {post: @post, comments: comments, l: 0} %>
 
 	<h5>Add a comment:</h5>
 

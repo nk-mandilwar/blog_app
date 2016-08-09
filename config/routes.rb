@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   resources :friends, only: [:index, :destroy]
   resources :friend_requests
   get 'sent_requests', to: 'friend_requests#sent_requests'
-  # root 'home#index'
+  
   root 'dashboard#index'
 
   resources :posts do
@@ -12,7 +12,12 @@ Rails.application.routes.draw do
 
   get '/post/my_blogs', to: 'posts#my_blogs'
 
-  resources :users, only: [:index, :edit, :update]
+  resources :users, only: [:index, :edit, :update, :show] do
+    member do
+      get :following, :followers
+    end
+  end
+  resources :relationships,       only: [:create, :destroy]
 
   devise_for :users, controllers: { registrations: "registrations", 
                                   omniauth_callbacks: "omniauth_callbacks"}

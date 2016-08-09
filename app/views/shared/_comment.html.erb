@@ -1,0 +1,51 @@
+<div style="margin-left: <%= l %>px; ">
+  <% if l == 0 %>
+    <% l = 100 %>
+  <% end %>
+
+  <% comments.each do |comment| %>     
+    <div class="comment">
+      <strong><%= comment.user.name %></strong>  
+      <%= comment.content %>
+    </div>
+
+	  <div class="comment-reply-delete">
+
+      <%= link_to "Reply", "javascript:void(0);", 
+                  id: "addcomment_#{comment.id}", class: "comment-reply"%>
+
+      <% if comment.user_id == current_user.id %>
+    	  <span>|<%= link_to 'Destroy', [comment.post, comment],
+            method: :delete,
+            data: { confirm: 'Are you sure?' } %></span> -
+      <% end %>
+
+      <span class="time-ago"><%= time_ago_in_words(@post.created_at) %></span>
+      
+      <% if (comment.no_of_children > 0) %>
+        <span id="reply_<%= "#{comment.id}"%>", class="reply"> Replies </span>
+      <% end %>
+    </div>
+
+ 
+    <div id="comment_<%= "#{comment.id}"%>", class="nested-class" > 
+      <%= render partial: "shared/comment", locals: {post: post, comments: comment.children, l: l * 0.9} %>
+    </div>
+
+    <div id="reply_div<%= "#{comment.id}" %>", class="add-reply", style="margin-left: <%= l*0.9 %>px;" >
+      <%= form_for([post, @post.comments.build]) do |f| %>
+        <%= f.hidden_field :parent_id, :value => comment.id %>
+        <%= f.hidden_field :level, :value => comment.level + 1 %>
+        <% if !comment.base_id %>
+            <%= f.hidden_field :base_id, :value => comment.id %>
+        <% else %>
+            <%= f.hidden_field :base_id, :value => comment.base_id %>
+        <%end%>   
+        <%= f.label :content %><br />
+        <%= f.text_area :content, class: 'form-control' %>
+        <%= f.submit class:"btn btn-primary" %>
+      <% end %>
+    </div>
+
+  <% end %>
+</div>

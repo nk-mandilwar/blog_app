@@ -1,10 +1,26 @@
 class User < ActiveRecord::Base
 	has_many :posts, dependent: :destroy
+
 	has_many :comments, dependent: :destroy
-  has_many :replies, dependent: :destroy
-  has_many :friend_requests, dependent: :destroy
-  has_many :friendships, dependent: :destroy
+  
+  has_many :friend_requests, foreign_key: "user_id", dependent: :destroy
+  has_many :received_friend_requests, class_name: "FriendRequest",
+                               foreign_key: "friend_id",
+                               dependent: :destroy
+  has_many :requests, through: :friend_requests, source: :friend
+  has_many :received_requests, through: :received_friend_requests, source: :user                           
+
+  has_many :friendships, dependent: :destroy 
   has_many :friends, through: :friendships
+
+  has_many :active_relationships,  class_name:  "Relationship",
+                                   foreign_key: "follower_id",
+                                   dependent:   :destroy
+  has_many :passive_relationships, class_name:  "Relationship",
+                                   foreign_key: "followed_id",
+                                   dependent:   :destroy
+  has_many :following, through: :active_relationships,  source: :followed
+  has_many :followers, through: :passive_relationships
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :validatable, :confirmable,
@@ -42,4 +58,17 @@ class User < ActiveRecord::Base
   def password_required?
     super && provider.blank?
   end
+
+  def follow(other_user)
+    active_relationships.create(followed_id: other_user.id)
+  end
+
+  def unfollow(other_user)
+    active_relationships.find_by(followed_id: other_user.id).destroy
+  end
+
+  def following?(other_user)
+    following.include?(other_user)
+  end
+
 end

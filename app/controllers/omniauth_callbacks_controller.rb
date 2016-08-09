@@ -1,9 +1,4 @@
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
-	# def passthru
-	# 	binding.pry
-	# 	self.resource = resource_class.new
-	# 	render 'devise/registrations/new'
-	# end
 
 	def twitter				
 		user = User.from_omniauth(request.env.with_indifferent_access['omniauth.auth'])

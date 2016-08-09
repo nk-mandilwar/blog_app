@@ -1,0 +1,28 @@
+<h1 id="header-id">Profile</h1>
+
+<% if current_user == @user %>
+  <h3> My Profile </h3>
+<% else %>
+  <h3><%= "#{@user.username} Profile" %></h3>
+<% end %>
+<span>
+  <%= link_to " #{@user.followers.count} followers", followers_user_path(@user) %>
+  <%= link_to " #{@user.following.count} following", following_user_path(@user) %> 
+</span>
+
+<table class="table table-hover">
+  <thead>
+    <th colspan="8">Username</th> 
+    <th colspan="8">Name</th>   
+    <th colspan="8">City</th> 
+    <th colspan="8">Facebook Profile Link</th>    
+  </thead>
+  <tbody>
+    <tr>
+      <td colspan="8"><%= @user.username %></td>
+      <td colspan="8"><%= @user.name %></td>
+      <td colspan="8"><%= @user.city %></td>
+      <td colspan="8"><%= link_to @user.facebook_profile, @user.facebook_profile %></td> 
+    </tr>                                      
+  </tbody>
+</table>

@@ -19,13 +19,13 @@
         <%= link_to "New Post", new_post_path %> 
       </li>
       <li>
-        <%= link_to "My Friends", friends_path %> 
+        <%= link_to "My Friends(#{current_user.friends.count})", friends_path %> 
       </li>
       <li>
-        <%= link_to "Frnd Requests", friend_requests_path %> 
+        <%= link_to "Friend Requests(#{FriendRequest.where(friend_id: current_user).count})", friend_requests_path %> 
       </li>
        <li>
-        <%= link_to "Sent Requests", sent_requests_path %> 
+        <%= link_to "Sent Requests(#{current_user.friend_requests.count})", sent_requests_path %> 
       </li>
       <li>
         <a href="#">About</a>

@@ -7,10 +7,10 @@
 	<% @friends.each do |friend| %>
 		<tr>
 			<td>
-				<%= User.find_by(:id => friend.id).name %>
+				<%= friend.username %>
 			</td>
 			<td>
-				<%= link_to "Unfriend", friend_path(friend), :method => :delete %><span class="glyphicon glyphicon-user">
+				<%= link_to "Unfriend", friend_path(friend), :method => :delete %>
 			</td>
 		</tr>
 	<% end %>

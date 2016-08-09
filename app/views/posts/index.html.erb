@@ -1,32 +1,16 @@
-<p id="notice"><%= notice %></p>
-
-<h1>Listing Posts</h1>
+<h1 id="header-id">Listing Posts</h1>
 <%= paginate @posts %>
-<table>
+<table class="table table-hover">
   <thead>
     <tr>
       <th>Title</th>
-      <th>Content</th>
-      <th>Posted By</th>
-      <th colspan="3"></th>
     </tr>
   </thead>
 
   <tbody>
     <% @posts.each do |post| %>
       <tr>
-        <td><%= post.title %></td>
-        <td><%= post.content %></td>
-        <% if post.user_id != current_user.id %>
-          <td><%= post.posted_by %></td>
-        <% else %>
-          <td><%= 'me' %></td>
-        <% end %>
-        <td><%= link_to 'Show', post %></td>
-        <% if post.user_id == current_user.id %>
-          <td><%= link_to 'Edit', edit_post_path(post) %></td>
-          <td><%= link_to 'Destroy', post, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        <% end %>
+        <td><%= link_to post.title, post %></td>
       </tr>
     <% end %>
   </tbody>

@@ -1,12 +1,13 @@
 class FriendRequestsController < ApplicationController
 	before_action :set_friend_request, except: [:index, :create, :sent_requests]
+  before_action :authenticate_user!
 
 	def index
-  	@incoming = FriendRequest.where(friend_id: current_user)
+  	@incoming = current_user.received_requests
 	end
 
 	def sent_requests
-		@outgoing = current_user.friend_requests
+		@outgoing = current_user.requests
 	end
 
   def create
@@ -16,8 +17,9 @@ class FriendRequestsController < ApplicationController
   end
 
   def destroy
+    @friend_request ||= FriendRequest.find_by(:friend_id => params[:id])
   	@friend_request.destroy
-  	redirect_to users_path  
+  	redirect_to users_path 
   end
 
   def update
@@ -28,6 +30,6 @@ class FriendRequestsController < ApplicationController
   private
 
   def set_friend_request
-    @friend_request = FriendRequest.find(params[:id])
+    @friend_request = FriendRequest.find_by(:user_id => params[:id])
   end
 end
