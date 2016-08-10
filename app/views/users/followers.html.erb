@@ -1,24 +1,2 @@
 <h1 id="header-id">Followers</h1>
-<table class="table table-hover">
-  <thead>
-    <th colspan="10">Username</th>   
-  </thead>
-  <tbody>
-    <% @users.each do |user| %>
-      <tr>
-        <td colspan="10"><%= user.username %>
-          <% if user != current_user %>
-            <% if current_user.following?(user) %>
-              <% follow_id = current_user.active_relationships.find_by(:followed_id => user) %>
-              <td colspan="8"><%= link_to "Unfollow", relationship_path(follow_id),
-                                                      method: :delete %></td>
-            <% else %>
-              <td colspan="8"><%= link_to "Follow", relationships_path(:followed_id => user), 
-                                                  method: :post %></td>
-            <% end %>
-          <% end %>  
-        </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<%= render "shared/follow" %>

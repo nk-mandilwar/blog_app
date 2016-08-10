@@ -6,7 +6,7 @@
   <tbody>
     <% @users.each do |user| %>
       <tr>
-        <td colspan="8"><%= link_to "#{user.username}", user_path(user) %></td>
+        <td colspan="8"><%= link_to "#{user.username}", user %></td>
         <% if current_user != user %>
           <% if current_user.friends.include?(user) %>
             <td colspan="8"> Friends</td>
@@ -26,7 +26,9 @@
             <% follow_id = current_user.active_relationships.find_by(:followed_id => user) %>
             <td colspan="8"><%= link_to "Unfollow", relationship_path(follow_id),
                                                   method: :delete %></td>
-          <% end %>                                        
+          <% end %> 
+        <% else %>
+          <td></td>                                    
         <% end %>
     <% end %>
   </tbody>

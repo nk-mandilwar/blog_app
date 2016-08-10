@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  ratyrate_rater
 	has_many :posts, dependent: :destroy
 
 	has_many :comments, dependent: :destroy
@@ -23,14 +24,14 @@ class User < ActiveRecord::Base
   has_many :followers, through: :passive_relationships
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable, :validatable, :confirmable,
-         :recoverable, :rememberable, :trackable, :omniauthable, :omniauth_providers => [:twitter]
+  devise :database_authenticatable, :registerable, :validatable, :confirmable, :recoverable, :rememberable, 
+         :trackable, :omniauthable, :omniauth_providers => [:twitter], :authentication_keys => [:login]
 
-  VALID_FB_REGEX = /(?:https?:\/\/)?(?:www\.)?facebook\.com\/(?:(?:\w)*#!\/)?(?:pages\/)?(?:[\w\-]*\/)*([\w\-\.]*)/
+VALID_FB_REGEX = /(?:https?:\/\/)?(?:www\.)?facebook\.com\/(?:(?:\w)*#!\/)?(?:pages\/)?(?:[\w\-]*\/)*([\w\-\.]*)/
   VALID_STRING_REGEX=/([\w\-\'])([\s]+)?([\w\-\'])/
   validates :name,  presence: true, length: { maximum: 50 }, format: { with: VALID_STRING_REGEX }, unless: :uid
   validates :city,  presence: true, format: { with: VALID_STRING_REGEX }, unless: :uid
-  validates :username,  presence: true, uniqueness: true, unless: :uid
+  validates :username,  presence: true, uniqueness: { case_sensitive: false }, unless: :uid
   validates :facebook_profile, presence: true, 
                     format: { with: VALID_FB_REGEX },
                     uniqueness: { case_sensitive: false }, unless: :uid
@@ -40,6 +41,8 @@ class User < ActiveRecord::Base
       user.provider = auth[:provider]
       user.uid = auth[:uid]
       user.username = auth[:info][:nickname]
+      user.name = auth[:info][:name]
+      user.email = "e#{user.username}@email.com"
       user.confirmed_at = Time.now
     end
   end
@@ -52,6 +55,15 @@ class User < ActiveRecord::Base
       end
     else
       super
+    end
+  end
+
+  def self.find_for_database_authentication(warden_conditions)
+    conditions = warden_conditions.dup
+    if login = conditions.delete(:login)
+      where(conditions.to_hash).where(["lower(username) = lower(:value) OR lower(email) = lower(:value)", { :value => login.downcase }]).first
+    elsif conditions.has_key?(:username) || conditions.has_key?(:email)
+      where(conditions.to_hash).first
     end
   end
 
@@ -69,6 +81,14 @@ class User < ActiveRecord::Base
 
   def following?(other_user)
     following.include?(other_user)
+  end
+
+  def login=(login)
+    @login = login
+  end
+
+  def login
+    @login || self.username || self.email
   end
 
 end

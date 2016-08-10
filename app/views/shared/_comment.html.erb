@@ -15,7 +15,7 @@
                   id: "addcomment_#{comment.id}", class: "comment-reply"%>
 
       <% if comment.user_id == current_user.id %>
-    	  <span>|<%= link_to 'Destroy', [comment.post, comment],
+    	  <span>|<%= link_to ' Delete', [comment.post, comment],
             method: :delete,
             data: { confirm: 'Are you sure?' } %></span> -
       <% end %>
@@ -41,9 +41,8 @@
         <% else %>
             <%= f.hidden_field :base_id, :value => comment.base_id %>
         <%end%>   
-        <%= f.label :content %><br />
-        <%= f.text_area :content, class: 'form-control' %>
-        <%= f.submit class:"btn btn-primary" %>
+        <%= f.text_field :content, class: 'form-control' %>
+        <%= f.submit "Comment", class:"btn btn-primary create-comment" %>
       <% end %>
     </div>
 

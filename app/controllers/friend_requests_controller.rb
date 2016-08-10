@@ -1,6 +1,6 @@
 class FriendRequestsController < ApplicationController
 	before_action :set_friend_request, except: [:index, :create, :sent_requests]
-  before_action :authenticate_user!
+
 
 	def index
   	@incoming = current_user.received_requests

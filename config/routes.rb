@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   
+  devise_for :users, controllers: { registrations: "registrations", 
+                                  omniauth_callbacks: "omniauth_callbacks"}
+  post '/rate' => 'rater#create', :as => 'rate'
   resources :friends, only: [:index, :destroy]
   resources :friend_requests
   get 'sent_requests', to: 'friend_requests#sent_requests'
@@ -19,8 +22,7 @@ Rails.application.routes.draw do
   end
   resources :relationships,       only: [:create, :destroy]
 
-  devise_for :users, controllers: { registrations: "registrations", 
-                                  omniauth_callbacks: "omniauth_callbacks"}
+  
 
   # post 'users/auth/twitter/callback', to: 'sessions#create'
 

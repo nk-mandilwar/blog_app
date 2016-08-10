@@ -12,8 +12,12 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery.raty
+//= require ratyrate
 //= require bootstrap-sprockets
+//= require tinymce-jquery
 //= require_tree .
+
 $(document).ready(function() {
 
    $('.reply').on('click', function() {
