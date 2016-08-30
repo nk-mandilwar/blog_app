@@ -1,6 +1,9 @@
 source 'https://rubygems.org'
 
-
+gem 'social-share-button'
+gem 'bullet'
+gem 'carrierwave'
+gem 'mini_magick', '~> 4.3'
 gem 'devise'
 gem 'ratyrate'
 gem 'tinymce-rails'

@@ -1,7 +1,16 @@
-<h1 id="header-id">Welcome <%= current_user.name %></h1>
-<br>	
-<%= link_to 'View Your Facebook Profile Here', current_user.facebook_profile %>
-<br>
-<%= link_to "All Blogs (#{Post.count})", posts_path %>
-<br>
-<%= link_to "My Blogs (#{Post.where('user_id' => current_user).count})", post_my_blogs_path %>
+<h1 id="header-id">Welcome</h1>
+<%= render 'layouts/subscribe' %>
+
+<% @users.each do |user| %>
+	<% if user == current_user %>
+		<% user.following.each do |user| %>
+			<% user.posts.each do |post| %>
+				<div> <%= link_to post.title, post %> </div>
+				<%= render partial: "shared/post", locals: {post: post} %>
+				<br><br>
+			<% end %>
+		<% end %>
+		<% break %>
+	<% end %>
+<% end %>		 
+

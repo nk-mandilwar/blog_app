@@ -1,0 +1,4 @@
+<% if (count = comment.likes.length) > 0 %>
+	<%= link_to "#{count}", liked_by_comment_path(comment) %>
+	<span class="glyphicon glyphicon-thumbs-up"></span>
+<% end %>

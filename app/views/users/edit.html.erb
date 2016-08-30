@@ -1,18 +1,53 @@
-<h1 id="header-id">Change your password</h1>
+<h1 id="header-id">Edit</h1>
 <%= form_for(@user, :url => { :action => "update" } ) do |f| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this post from being updated:</h2>
+
+      <ul>
+      <% @user.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
   <div class="field">
-    <%= f.label :current_password %>(we need your current password to confirm your changes)
-    <%= f.password_field :current_password, :autocomplete => "off", class: "form-control"  %>
+    <%= f.label :username %>
+    <%= f.text_field :username, autofocus: true, class: "form-control" %>
   </div>
+  
   <div class="field">
-    <%= f.label :password, " New Password" %><br />
-    <%= f.password_field :password, :autocomplete => "off", class: "form-control"  %>
+    <%= f.label :name %>
+    <%= f.text_field :name, autofocus: true, class: "form-control" %>
+  </div>  
+
+  <div class="field">
+    <%= f.label :email %>
+    <%= f.email_field :email, autofocus: true, class: "form-control" %>
   </div>
+
   <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, class: "form-control" %>
-  </div><br>
-  <div class="action_container">
-    <%= f.submit "Change Password", class: "btn btn-primary" %>
+    <%= f.label :city %>
+    <%= f.text_field :city, autofocus: true, class: "form-control" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :facebook_profile %>
+    <%= f.text_field :facebook_profile, autofocus: true, class: "form-control" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :image %><br>
+    <%= f.file_field :image, class: "form-control" %>
+    <% if f.object.image? %>
+      <%= image_tag f.object.image.thumb.url %>
+      <%= f.label :remove_image %>
+      <%= f.check_box :remove_image %> 
+    <% end %>
+  </div>
+  <br>
+  <div class="actions">
+    <%= f.submit "Update", class: "btn btn-primary" %>
   </div>
 <% end %>

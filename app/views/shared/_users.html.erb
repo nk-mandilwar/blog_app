@@ -1,0 +1,34 @@
+<table class="table table-hover">
+  <thead>
+    <th colspan="8">Username</th>  
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td colspan="8"><%= image_tag user.image.thumb.url %><%= link_to "  #{user.username}", user %></td>
+        <% if current_user != user %>
+          <% if current_user.friends.include?(user) %>
+            <td colspan="8"> Friends</td>
+          <% elsif current_user.received_friend_requests.find_by(:user_id => user) %>
+            <td colspan="8"> Respond to Request </td> 
+          <% elsif !current_user.friend_requests.find_by(:friend_id => user) %>
+            <td colspan="8"><%= link_to "Add Friend", friend_requests_path(:friend_id => user), 
+                          :method => :post %> </td>
+          <% else %>
+            <td colspan="8"> Friend Request Sent/<%= link_to "Cancel Request", friend_request_path(user), 
+                          :method => :delete %> </td>
+          <% end %>
+          <% follow_id = current_user.active_relationships.find_by(:followed_id => user) %>
+          <% if !follow_id %>
+            <td colspan="8"><%= link_to "Follow", relationships_path(:followed_id => user), 
+                                                method: :post %></td>
+          <% else %>
+            <td colspan="8"><%= link_to "Unfollow", relationship_path(follow_id),
+                                                method: :delete %></td>
+          <% end %> 
+        <% else %>
+          <td></td>                                    
+        <% end %>
+    <% end %>
+  </tbody>
+</table>

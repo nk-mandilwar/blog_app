@@ -16,17 +16,47 @@
 //= require ratyrate
 //= require bootstrap-sprockets
 //= require tinymce-jquery
+//= require social-share-button
 //= require_tree .
 
 $(document).ready(function() {
 
-   $('.reply').on('click', function() {
+  $('.reply').on('click', function() {
     $("#comment_" + ($(this).attr('id').split("_")[1])).toggle();
+    $(this).hide();
+    $("#hide_" + ($(this).attr('id').split("_")[1])).show();
+  });
+
+  $('.hide1').on('click', function() {
+    $("#comment_" + ($(this).attr('id').split("_")[1])).toggle();
+    $(this).hide();
+    $("#reply_" + ($(this).attr('id').split("_")[1])).show();
   });
 
   $('.comment-reply').on('click', function() {
     $("#reply_div" + ($(this).attr('id').split("_")[1])).toggle();
-  });   
+    // hide_reply_div();
+  });
+
+  // function hide_reply_div(){
+  //   $('.add-reply').on('click', function(){
+  //   });
+  //   $('body').on('click', function() {
+  //     $('.add-reply').hide();
+  //   });
+  // }
+
+
+
+  $("#search-form input").keyup(function() {
+    $.get($("#search-form").attr("action"), $("#search-form").serialize(), null, "script");
+    return false;
+  });  
+
+  $("#search-post input").keyup(function() {
+    $.get($("#search-post").attr("action"), $("#search-post").serialize(), null, "script");
+    return false;
+  });  
 });
 
 // var incr = (function () {

@@ -46,7 +46,16 @@ GEM
       autoprefixer-rails (>= 5.2.1)
       sass (>= 3.3.4)
     builder (3.2.2)
+    bullet (5.3.0)
+      activesupport (>= 3.0.0)
+      uniform_notifier (~> 1.10.0)
     byebug (9.0.5)
+    carrierwave (0.11.2)
+      activemodel (>= 3.2.0)
+      activesupport (>= 3.2.0)
+      json (>= 1.7)
+      mime-types (>= 1.16)
+      mimemagic (>= 0.3.0)
     closure_tree (6.1.0)
       activerecord (>= 4.1.0)
       with_advisory_lock (>= 3.0.0)
@@ -91,6 +100,8 @@ GEM
     mime-types (3.1)
       mime-types-data (~> 3.2015)
     mime-types-data (3.2016.0521)
+    mimemagic (0.3.2)
+    mini_magick (4.5.1)
     mini_portile2 (2.1.0)
     minitest (5.9.0)
     multi_json (1.12.1)
@@ -160,6 +171,9 @@ GEM
       json (~> 1.7, >= 1.7.7)
       rdoc (~> 4.0)
     slop (3.6.0)
+    social-share-button (0.3.2)
+      coffee-rails
+      sass-rails
     spring (1.7.2)
     sprockets (3.6.3)
       concurrent-ruby (~> 1.0)
@@ -180,6 +194,7 @@ GEM
       thread_safe (~> 0.1)
     uglifier (3.0.0)
       execjs (>= 0.3.0, < 3)
+    uniform_notifier (1.10.0)
     warden (1.2.6)
       rack (>= 1.0)
     web-console (2.3.0)
@@ -196,13 +211,16 @@ PLATFORMS
 
 DEPENDENCIES
   bootstrap-sass (~> 3.3.6)
+  bullet
   byebug
+  carrierwave
   closure_tree
   coffee-rails (~> 4.1.0)
   devise
   jbuilder (~> 2.0)
   jquery-rails
   kaminari
+  mini_magick (~> 4.3)
   mysql2 (>= 0.3.13, < 0.5)
   omniauth
   omniauth-twitter
@@ -212,6 +230,7 @@ DEPENDENCIES
   ratyrate
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
+  social-share-button
   spring
   tinymce-rails
   turbolinks

@@ -1,0 +1,3 @@
+
+$('#like<%=@comment.id%>').html("<%= escape_javascript(render partial: 'shared/unlike')%>");
+$('#like_count<%=@comment.id%>').html("<%= escape_javascript(render partial: 'shared/like_count', locals: {comment: @comment})%>");

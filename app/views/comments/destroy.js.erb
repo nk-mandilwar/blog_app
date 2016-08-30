@@ -1,0 +1,11 @@
+$("#destroy-comment<%= @comment.id %>").remove();
+<% def remove_comment(comment) %>
+	<% comment.children.each do |comment| %>
+		$("#destroy-comment<%= comment.id %>").remove();
+		<% if comment.children %>
+			<% remove_comment(comment) %>
+		<% end %>
+	<% end %>
+<% end %>
+
+<% remove_comment(@comment)%>

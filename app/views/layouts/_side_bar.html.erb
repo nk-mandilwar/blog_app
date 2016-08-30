@@ -10,10 +10,10 @@
        <%= link_to "Dashboard", root_path %>      
       </li>
       <li>
-        <%= link_to "All Blogs", posts_path %> 
+        <%= link_to "All Blogs(#{Post.all.count})", posts_path %> 
       </li>
       <li>
-        <%= link_to "My Blogs", post_my_blogs_path %> 
+        <%= link_to "My Blogs(#{current_user.posts.count})", post_my_blogs_path %> 
       </li>
       <li>
         <%= link_to "New Post", new_post_path %> 
@@ -26,6 +26,9 @@
       </li>
        <li>
         <%= link_to "Sent Requests(#{current_user.friend_requests.count})", sent_requests_path %> 
+      </li>
+      <li>  
+        <%= link_to 'Facebook Profile', current_user.facebook_profile %>
       </li>
       <li>
         <a href="#">About</a>

@@ -1,35 +1,16 @@
-<h1 id="header-id">Listing All Users</h1>
-<table class="table table-hover">
-  <thead>
-    <th colspan="8">Username</th>  
-  </thead>
-  <tbody>
-    <% @users.each do |user| %>
-      <tr>
-        <td colspan="8"><%= link_to "#{user.username}", user %></td>
-        <% if current_user != user %>
-          <% if current_user.friends.include?(user) %>
-            <td colspan="8"> Friends</td>
-          <% elsif current_user.received_friend_requests.find_by(:user_id => user) %>
-            <td colspan="8"> Respond to Request </td> 
-          <% elsif !current_user.friend_requests.find_by(:friend_id => user) %>
-            <td colspan="8"><%= link_to "Add Friend", friend_requests_path(:friend_id => user), 
-                          :method => :post %> </td>
-          <% else %>
-            <td colspan="8"> Friend Request Sent/<%= link_to "Cancel Request", friend_request_path(user), 
-                          :method => :delete %> </td>
-          <% end %>
-          <% if !current_user.following?(user) %>
-            <td colspan="8"><%= link_to "Follow", relationships_path(:followed_id => user), 
-                                                method: :post %></td>
-          <% else %>
-            <% follow_id = current_user.active_relationships.find_by(:followed_id => user) %>
-            <td colspan="8"><%= link_to "Unfollow", relationship_path(follow_id),
-                                                  method: :delete %></td>
-          <% end %> 
-        <% else %>
-          <td></td>                                    
-        <% end %>
-    <% end %>
-  </tbody>
-</table>
+<h1 id="header-id"> Users </h1>
+<br>
+<%= form_tag(users_path, :method => "get", id: "search-form") do %>
+	<%= text_field_tag :search, params[:search], placeholder: "Search Users", autocomplete: "off", value: nil %>
+	<%= button_tag "", type: 'submit', class: "button-search glyphicon glyphicon-search" %>
+<% end %>
+
+<br>
+<%= render 'layouts/subscribe' %>
+<div id="users">
+	<% if @users.present? %>
+	  <%= render "shared/users" %>
+	<% else %>
+	  <p><b>There are no users with name like: <%= params[:search] %>.</b></p>
+	<% end %>
+</div>

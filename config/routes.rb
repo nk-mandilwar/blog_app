@@ -1,29 +1,39 @@
 Rails.application.routes.draw do
   
+  root 'dashboard#index'
   devise_for :users, controllers: { registrations: "registrations", 
                                   omniauth_callbacks: "omniauth_callbacks"}
-  post '/rate' => 'rater#create', :as => 'rate'
+
   resources :friends, only: [:index, :destroy]
-  resources :friend_requests
+  resources :friend_requests, except: [:edit, :show]
   get 'sent_requests', to: 'friend_requests#sent_requests'
-  
-  root 'dashboard#index'
 
   resources :posts do
-    resources :comments
+    
+    resources :comments, only: [:create, :destroy]
   end
-
   get '/post/my_blogs', to: 'posts#my_blogs'
+  post '/rate' => 'rater#create', :as => 'rate'
 
+  resources :comments, only: :create do
+    member do
+      get :liked_by
+    end
+    resources :likes, only: [:create, :destroy]
+  end  
+  
   resources :users, only: [:index, :edit, :update, :show] do
     member do
       get :following, :followers
     end
   end
-  resources :relationships,       only: [:create, :destroy]
+  resources :relationships,  only: [:create, :destroy]
 
-  
+  resources :subscribes, only: :create
 
+  get '*a', :to => 'errors#routing'
+ 
+  # get '/post/my_blogs', to: 'posts#my_blogs', as: 'my_blogs'
   # post 'users/auth/twitter/callback', to: 'sessions#create'
 
   # The priority is based upon order of creation: first created -> highest priority.

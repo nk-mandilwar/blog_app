@@ -22,6 +22,7 @@ class User < ActiveRecord::Base
                                    dependent:   :destroy
   has_many :following, through: :active_relationships,  source: :followed
   has_many :followers, through: :passive_relationships
+  has_many :likes, dependent: :destroy
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :validatable, :confirmable, :recoverable, :rememberable, 
@@ -36,13 +37,15 @@ VALID_FB_REGEX = /(?:https?:\/\/)?(?:www\.)?facebook\.com\/(?:(?:\w)*#!\/)?(?:pa
                     format: { with: VALID_FB_REGEX },
                     uniqueness: { case_sensitive: false }, unless: :uid
 
+  mount_uploader :image, ImageUploader                    
+
   def self.from_omniauth(auth)
     where(auth.slice(:provider, :uid)).first_or_create do |user|
       user.provider = auth[:provider]
       user.uid = auth[:uid]
       user.username = auth[:info][:nickname]
       user.name = auth[:info][:name]
-      user.email = "e#{user.username}@email.com"
+      user.email = "tempor#{user.username}@email.com"
       user.confirmed_at = Time.now
     end
   end
@@ -61,7 +64,8 @@ VALID_FB_REGEX = /(?:https?:\/\/)?(?:www\.)?facebook\.com\/(?:(?:\w)*#!\/)?(?:pa
   def self.find_for_database_authentication(warden_conditions)
     conditions = warden_conditions.dup
     if login = conditions.delete(:login)
-      where(conditions.to_hash).where(["lower(username) = lower(:value) OR lower(email) = lower(:value)", { :value => login.downcase }]).first
+      where(conditions.to_hash).where(["lower(username) = lower(:value) OR lower(email) = lower(:value)",
+                               { :value => login.downcase }]).first
     elsif conditions.has_key?(:username) || conditions.has_key?(:email)
       where(conditions.to_hash).first
     end
@@ -89,6 +93,14 @@ VALID_FB_REGEX = /(?:https?:\/\/)?(?:www\.)?facebook\.com\/(?:(?:\w)*#!\/)?(?:pa
 
   def login
     @login || self.username || self.email
+  end
+
+  def self.search(search)
+    where("username LIKE ?", "%#{search}%") 
+  end
+
+  def to_param
+    [id, name.parameterize].join("-")
   end
 
 end

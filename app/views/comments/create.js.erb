@@ -1,0 +1,7 @@
+<% if @comment.parent_id != nil %>
+	$('#comment-content<%= @comment.parent_id %>').val('');
+	$("#display-comment<%= @comment.parent_id %>").append("<%= escape_javascript(render partial: 'comments/comment', locals: {comment: @comment})%>");
+	$('#reply_div<%= @comment.parent_id %>').hide();
+<% else %>
+	$("#base-comment").append("<%= escape_javascript(render partial: 'comments/comment', locals: {comment: @comment})%>");
+<% end %>		

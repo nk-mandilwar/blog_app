@@ -1,0 +1,11 @@
+			<%= form_for([post, post.comments.build], remote: true, id: "comment-form#{comment.id}") do |f| %>
+				<%= f.hidden_field :parent_id, :value => comment.id %>
+				<%= f.hidden_field :level, :value => comment.level + 1 %>
+				<% if !comment.base_id %>
+						<%= f.hidden_field :base_id, :value => comment.id %>
+				<% else %>
+						<%= f.hidden_field :base_id, :value => comment.base_id %>
+				<%end%>   
+				<%= f.text_field :content, placeholder: "Comment", autocomplete: "off", class: 'form-control comment-content' %>
+				<%= f.submit "Comment", class:"hide" %>
+			<% end %>

@@ -13,6 +13,7 @@
  */
  @import "bootstrap-sprockets";
  @import "bootstrap";
+ @import "social-share-button";
 
 .bar{
 	background: #111;
@@ -185,7 +186,7 @@ footer ul li {
 }
 
 .body_div11{
-  margin-top: 20px;
+  margin-top: 50px;
   padding-left:18%;
 	width: 100%;
   float:right;
@@ -228,4 +229,27 @@ margin:0px;
 
 .create-comment{
   margin-top: 0.5%;
+}
+
+.subscribers-div{
+  float: right;
+  border: solid grey 2px;
+  padding: 50px;
+  height: 200px;
+  position: fixed;
+  top: 100px;
+  right: 5px;
+}
+
+.button-search{
+  border: none;
+  background: white;
+}
+
+.nested-class{
+  display: none;
+}
+
+.hide1{
+  display: none;
 }

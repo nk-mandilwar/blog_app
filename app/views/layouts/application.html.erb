@@ -7,19 +7,26 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-	<%= render 'layouts/header' %>
+	<div>
+		<%= render 'layouts/header' %>
+	</div>
 	<% if current_user %>
  		<div class="side_div11">
 			<%= render 'layouts/side_bar' %>
 		</div>
 	<% end %>
-	
-	<div class="container body_div11">
- 		<p class="notice"><%= notice %></p>
- 		<p class="alert"><%= alert %></p>
 
-		<%= yield %>
-  	<%= render 'layouts/footer' %>
-  </div>    
+	<div class="body_div11">
+		<div class="row" >
+			<div class="col-md-8" >
+		 		<p class="notice"><%= notice %></p>
+		 		<p class="alert"><%= alert %></p>
+				<%= yield %>
+		  </div>  
+		</div>
+		<%= render 'layouts/footer' %>
+	</div> 
+	<!-- Go to www.addthis.com/dashboard to customize your tools -->
+	<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-57c41656595f4df3"></script> 
 </body>
 </html>

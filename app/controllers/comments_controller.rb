@@ -1,6 +1,6 @@
 class CommentsController < ApplicationController
-	before_action :set_post, only: [:create, :show, :destroy]
 	before_action :authenticate_user!
+	before_action :set_post, only: [:destroy, :create]
 	
 	def create
 		@comment = Comment.create(comment_params.merge({post_id: @post.id, user_id: current_user.id}))
@@ -9,18 +9,25 @@ class CommentsController < ApplicationController
 			@c.no_of_children += 1
 			@c.save
 		end
-			redirect_to post_path(@post)
+		respond_to do |format|
+			format.html {redirect_to post_path(@post)}
+			format.js
+		end
 	end
 
 	def destroy
-		@comment = Comment.find(params[:id])
+		@comment = @post.comments.find(params[:id])
     @comment.destroy
-    redirect_to post_path(@post)
+    respond_to do |format|
+    	format.html {redirect_to post_path(@post)}
+    	format.js
+    end
   end
 
-	def show
-	   @comment = @post.comments.find(params[:id])
-	end
+  def liked_by
+  	@comment = Comment.find(params[:id])
+  	@users = @comment.liked_by
+  end
 
 	private
 
@@ -29,6 +36,6 @@ class CommentsController < ApplicationController
 		end
 
 		def set_post
-			@post = Post.find(params[:post_id])
+			@post = Post.find_by(:id => params[:post_id])
 		end
 end
