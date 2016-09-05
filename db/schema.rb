@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160819133553) do
+ActiveRecord::Schema.define(version: 20160901094557) do
 
   create_table "average_caches", force: :cascade do |t|
     t.integer  "rater_id",      limit: 4
@@ -23,15 +23,14 @@ ActiveRecord::Schema.define(version: 20160819133553) do
   end
 
   create_table "comments", force: :cascade do |t|
-    t.text     "content",        limit: 65535
-    t.integer  "post_id",        limit: 4
-    t.integer  "user_id",        limit: 4
-    t.datetime "created_at",                               null: false
-    t.datetime "updated_at",                               null: false
-    t.integer  "parent_id",      limit: 4
-    t.integer  "base_id",        limit: 4
-    t.integer  "no_of_children", limit: 4,     default: 0
-    t.integer  "level",          limit: 4,     default: 0
+    t.text     "content",    limit: 65535
+    t.integer  "post_id",    limit: 4
+    t.integer  "user_id",    limit: 4
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
+    t.integer  "parent_id",  limit: 4
+    t.integer  "base_id",    limit: 4
+    t.integer  "level",      limit: 4,     default: 0
   end
 
   add_index "comments", ["post_id"], name: "index_comments_on_post_id", using: :btree
@@ -71,12 +70,11 @@ ActiveRecord::Schema.define(version: 20160819133553) do
   end
 
   create_table "posts", force: :cascade do |t|
-    t.string   "title",      limit: 255
+    t.text     "title",      limit: 4294967295
     t.text     "content",    limit: 65535
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
     t.integer  "user_id",    limit: 4
-    t.string   "posted_by",  limit: 255
   end
 
   add_index "posts", ["user_id"], name: "index_posts_on_user_id", using: :btree

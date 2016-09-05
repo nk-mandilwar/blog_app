@@ -17,7 +17,7 @@ class FriendRequestsController < ApplicationController
   end
 
   def destroy
-    @friend_request ||= FriendRequest.find_by(:friend_id => params[:id])
+    @friend_request ||= FriendRequest.find_by(friend_id: params[:id])
   	@friend_request.destroy
   	redirect_to users_path 
   end
@@ -30,6 +30,6 @@ class FriendRequestsController < ApplicationController
   private
 
   def set_friend_request
-    @friend_request = FriendRequest.find_by(:user_id => params[:id])
+    @friend_request = FriendRequest.find_by(user_id: params[:id])
   end
 end

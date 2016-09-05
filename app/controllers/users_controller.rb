@@ -11,9 +11,9 @@
 	end
 
 	def edit
-		unless @user && @user == current_user
-      render :file => "#{Rails.root}/public/404.html", :status => 404, :layout => false
-    end
+		# unless @user && @user == current_user
+  #     render :file => "#{Rails.root}/public/404.html", :status => 404, :layout => false
+  #   end
 	end
 
 	def update
@@ -25,9 +25,10 @@
 	end
 
 	def show
-		unless @user
-      render :file => "#{Rails.root}/public/404.html", :status => 404, :layout => false
-    end
+		# unless @user
+  #     render :file => "#{Rails.root}/public/404.html", :status => 404, :layout => false
+  #   end
+    @posts = @user.posts.order("updated_at DESC")
 	end
 
 	def following

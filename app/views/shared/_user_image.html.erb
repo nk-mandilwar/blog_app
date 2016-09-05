@@ -1,0 +1,6 @@
+<% if user.image.present? %>
+  <%= image_tag user.image.thumb.url, class: "missing-image" %><%= link_to "  #{user.username}", user %>
+<% else %>
+  <img src="<%= asset_path( 'blank-person.png' ) %>" class="missing-image"/>
+                              <%= link_to "  #{user.username}", user %></td> 
+<% end %>

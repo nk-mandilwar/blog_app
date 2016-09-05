@@ -48,15 +48,15 @@ $(document).ready(function() {
 
 
 
-  $("#search-form input").keyup(function() {
-    $.get($("#search-form").attr("action"), $("#search-form").serialize(), null, "script");
-    return false;
-  });  
+  // $("#search-form input").keyup(function() {
+  //   $.get($("#search-form").attr("action"), $("#search-form").serialize(), null, "script");
+  //   return false;
+  // });  
 
-  $("#search-post input").keyup(function() {
-    $.get($("#search-post").attr("action"), $("#search-post").serialize(), null, "script");
-    return false;
-  });  
+  // $("#search-post input").keyup(function() {
+  //   $.get($("#search-post").attr("action"), $("#search-post").serialize(), null, "script");
+  //   return false;
+  // });  
 });
 
 // var incr = (function () {

@@ -4,11 +4,6 @@ class CommentsController < ApplicationController
 	
 	def create
 		@comment = Comment.create(comment_params.merge({post_id: @post.id, user_id: current_user.id}))
-		if @comment.parent_id 
-			@c = Comment.find(@comment.parent_id) 
-			@c.no_of_children += 1
-			@c.save
-		end
 		respond_to do |format|
 			format.html {redirect_to post_path(@post)}
 			format.js
@@ -16,7 +11,11 @@ class CommentsController < ApplicationController
 	end
 
 	def destroy
-		@comment = @post.comments.find(params[:id])
+		@comment = @post.comments.find_by(id: params[:id])
+		@comment_ids = [@comment.id]
+		if(@comment.children)
+			find_all_child_commennt(@comment.children)
+		end
     @comment.destroy
     respond_to do |format|
     	format.html {redirect_to post_path(@post)}
@@ -25,7 +24,7 @@ class CommentsController < ApplicationController
   end
 
   def liked_by
-  	@comment = Comment.find(params[:id])
+  	@comment = Comment.find_by(id: params[:id])
   	@users = @comment.liked_by
   end
 
@@ -36,6 +35,15 @@ class CommentsController < ApplicationController
 		end
 
 		def set_post
-			@post = Post.find_by(:id => params[:post_id])
+			@post = Post.find_by(id: params[:post_id])
 		end
+
+		def find_all_child_comment comments
+			comments.each do |comment|
+				@comment_ids.push(comment.id)
+				if(comment.children)
+					find_all_child_comment(comment.children)
+				end
+			end
+		end	
 end

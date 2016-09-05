@@ -11,7 +11,7 @@ class LikesController < ApplicationController
 	end
 
 	def destroy
-		@like = Like.find(params[:id])
+		@like = Like.find_by(id: params[:id])
     @like.destroy
     respond_to do |f|
 			f.html {redirect_to post_path(@comment.post)}
@@ -22,6 +22,6 @@ class LikesController < ApplicationController
 	private
 
 		def set_comment
-			@comment = Comment.find(params[:comment_id])
+			@comment = Comment.find_by(id: params[:comment_id])
 		end
 end

@@ -7,7 +7,7 @@
   <tbody>
     <% @outgoing.each do |user| %>
       <tr>
-        <td colspan="10"><%= user.username %></td>
+        <td colspan="8"> <%= render partial: "shared/user_image", locals: {user: user}%></td>
         <td colspan="10"><%= link_to "Cancel request", friend_request_path(user), method: :delete, 
                         data: { confirm: 'Are you sure?' } %> </td>
       </tr>

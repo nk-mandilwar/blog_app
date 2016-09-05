@@ -1,7 +1,10 @@
-<div class="subscribers-div">
-	<%= form_tag(controller: "subscribes", action: "create", method: "post") do %>
-		<p>Enter your email here to subscribe:</p>
-		<p><%= text_field(:subscribe, :email) %></p>
-		<p><%= submit_tag "subscribe", class: "btn btn-primary" %></p>
-	<% end %>
-</div>
+<% if !Subscribe.exists?(:email => current_user.email) %>
+	<div class="subscribers-div">
+		<%= form_for(:subscribe, :url => url_for(:controller => "subscribes", :action => "create", 
+														:method => "post")) do |f|%>
+			<p>To get all news, Subscribe it.</p>
+			<p><%= f.hidden_field(:email, :value => current_user.email) %></p>
+			<p><%= f.submit "subscribe", class: "btn btn-primary" %></p>
+		<% end %>
+	</div>
+<% end %>

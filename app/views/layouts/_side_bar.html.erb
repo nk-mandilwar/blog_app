@@ -13,7 +13,7 @@
         <%= link_to "All Blogs(#{Post.all.count})", posts_path %> 
       </li>
       <li>
-        <%= link_to "My Blogs(#{current_user.posts.count})", post_my_blogs_path %> 
+        <%= link_to "My Blogs(#{current_user.posts.count})", my_blogs_posts_path %> 
       </li>
       <li>
         <%= link_to "New Post", new_post_path %> 
@@ -31,13 +31,13 @@
         <%= link_to 'Facebook Profile', current_user.facebook_profile %>
       </li>
       <li>
-        <a href="#">About</a>
+        <a href="#" data-toggle="modal" data-target="#myModal">About</a>
       </li>
       <li>
-        <a href="#">Services</a>
+        <a href="#" data-toggle="modal" data-target="#myModal">Services</a>
       </li>
       <li>
-        <a href="#">Contact</a>
+        <a href="#" data-toggle="modal" data-target="#myModal">Contact</a>
       </li>
     </ul>
   </div>

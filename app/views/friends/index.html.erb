@@ -5,13 +5,11 @@
   <thead>
   	<th>Friends</th>
   </thead>
-	<% @friends.each do |friend| %>
+	<% @friends.each do |user| %>
 		<tr>
-			<td>
-				<%= friend.username %>
-			</td>
-			<td>
-				<%= link_to "Unfriend", friend_path(friend), :method => :delete %>
+			<td colspan="8"> <%= render partial: "shared/user_image", locals: {user: user}%></td>
+			<td colspan="8">
+				<%= link_to "Unfriend", friend_path(user), :method => :delete %>
 			</td>
 		</tr>
 	<% end %>

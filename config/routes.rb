@@ -9,10 +9,11 @@ Rails.application.routes.draw do
   get 'sent_requests', to: 'friend_requests#sent_requests'
 
   resources :posts do
-    
+    collection do 
+      get 'my_blogs'
+    end    
     resources :comments, only: [:create, :destroy]
   end
-  get '/post/my_blogs', to: 'posts#my_blogs'
   post '/rate' => 'rater#create', :as => 'rate'
 
   resources :comments, only: :create do
@@ -29,9 +30,13 @@ Rails.application.routes.draw do
   end
   resources :relationships,  only: [:create, :destroy]
 
-  resources :subscribes, only: :create
+  resources :subscribes, only: [:create, :destroy] do
+    collection do 
+      get 'unsubscribe'
+    end
+  end
 
-  get '*a', :to => 'errors#routing'
+  # get '*a', :to => 'errors#routing'
  
   # get '/post/my_blogs', to: 'posts#my_blogs', as: 'my_blogs'
   # post 'users/auth/twitter/callback', to: 'sessions#create'

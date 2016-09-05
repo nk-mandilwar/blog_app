@@ -1,0 +1,6 @@
+
+<% posts.each do |post| %>
+	<div class="post-link"> <%= link_to post.title, post %> </div>
+	<div class="show-less-content"><%= render partial: "shared/post", locals: {post: post} %> </div>
+	<br><br>
+<% end %>

@@ -8,17 +8,21 @@
 <br>
 <br>
 <div id="posts" >
-<%= paginate @posts %>
-  <table class="table table-hover">
-    <tbody>
-      <% @posts.each do |post| %>
-        <div> <%= link_to post.title, post %> </div>
-          <%= render partial: "shared/post", locals: {post: post} %>
-        <br><br>
-      <% end %>
-    </tbody>
-  </table>
-<%= paginate @posts %>
+  <% if !@posts.present? %>
+    <p><b>There are no posts with name like: <%= params[:search] %>.</b></p>
+  <% else %>  
+    <%= paginate @posts %>
+      <table class="table table-hover">
+        <tbody>
+          <% @posts.each do |post| %>
+            <div> <%= link_to post.title, post %> </div>
+            <div class="show-less-content"><%= render partial: "shared/post", locals: {post: post} %></div>
+            <br><br>
+          <% end %>
+        </tbody>
+      </table>
+    <%= paginate @posts %>
+  <% end %>  
 </div>
 
 

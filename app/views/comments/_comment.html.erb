@@ -1,6 +1,6 @@
 	<div id="destroy-comment<%= "#{comment.id}" %>">	
 		<div class="comment">
-			<strong><%= comment.user.name %></strong>  
+			<%= render partial: "shared/user_image", locals: {user: comment.user}%>
 			<%= comment.content %>
 		</div>
 

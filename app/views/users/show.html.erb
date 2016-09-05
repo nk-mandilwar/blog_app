@@ -1,11 +1,12 @@
 <h1 id="header-id">Profile</h1>
 <%= render 'layouts/subscribe' %>
 
-<% if current_user == @user %>
-  <h3> My Profile </h3>
+<% if @user.image.present? %>
+  <%= image_tag @user.image, class: "user-page-image" %>
 <% else %>
-  <h3><%= "#{@user.username} Profile" %></h3>
-<% end %>
+  <img src="<%= asset_path( 'blank-person.png' ) %>" class="user-page-image"/>
+<% end %> 
+
 <span>
   <%= link_to " #{@user.followers.count} followers", followers_user_path(@user) %>
   <%= link_to " #{@user.following.count} following", following_user_path(@user) %> 
@@ -27,3 +28,8 @@
     </tr>                                      
   </tbody>
 </table>
+
+<br> <br>
+<h3> Posts </h3>
+<br>
+<%= render partial: "dashboard/index", locals: {posts: @posts} %>

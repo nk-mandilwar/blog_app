@@ -5,18 +5,17 @@
   <tbody>
     <% @users.each do |user| %>
       <tr>
-        <td colspan="10"><%= user.username %>
-          <% if user != current_user %>
-            <% if current_user.following?(user) %>
-              <% follow_id = current_user.active_relationships.find_by(:followed_id => user) %>
-              <td colspan="8"><%= link_to "Unfollow", relationship_path(follow_id),
+        <td colspan="8"> <%= render partial: "shared/user_image", locals: {user: user}%></td>
+        <% if user != current_user %>
+          <% if current_user.following?(user) %>
+            <% follow_id = current_user.active_relationships.find_by(:followed_id => user) %>
+            <td colspan="8"><%= link_to "Unfollow", relationship_path(follow_id),
                                                       method: :delete %></td>
-            <% else %>
-              <td colspan="8"><%= link_to "Follow", relationships_path(:followed_id => user), 
+          <% else %>
+            <td colspan="8"><%= link_to "Follow", relationships_path(:followed_id => user), 
                                                   method: :post %></td>
-            <% end %>
-          <% end %>  
-        </td>
+          <% end %>
+        <% end %>  
       </tr>
     <% end %>
   </tbody>

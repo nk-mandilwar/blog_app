@@ -1,7 +1,12 @@
 <% if @comment.parent_id != nil %>
 	$('#comment-content<%= @comment.parent_id %>').val('');
 	$("#display-comment<%= @comment.parent_id %>").append("<%= escape_javascript(render partial: 'comments/comment', locals: {comment: @comment})%>");
+	// var reply_div = document.createElement("DIV");
+	// reply_div.setAttribute('id','reply_div<%= @comment.id %>');
+	// reply_div.setAttribute('class', 'add-reply');
+	// $("#destroy-comment<%= @comment.id%>").appendChild(reply_div);
 	$('#reply_div<%= @comment.parent_id %>').hide();
 <% else %>
+	$('.comment-content').val('');
 	$("#base-comment").append("<%= escape_javascript(render partial: 'comments/comment', locals: {comment: @comment})%>");
 <% end %>		

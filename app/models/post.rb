@@ -8,6 +8,10 @@ class Post < ActiveRecord::Base
 	validates :title, presence: true
 	validates :content, presence: true
 
+	def to_param
+    [id, title.parameterize].join("-")
+  end
+  
 	private
 
 	def send_email_to_subscribers
@@ -17,10 +21,6 @@ class Post < ActiveRecord::Base
 	end
 
 	def self.search(search)
-  	where("title LIKE ? or content LIKE ?", "%#{search}%", "%#{search}%") 
+  	where("title LIKE :search", {search: "%#{search}%"})
 	end
-
-	def to_param
-    [id, title.parameterize].join("-")
-  end
 end
