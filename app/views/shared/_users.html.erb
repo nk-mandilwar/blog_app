@@ -19,11 +19,11 @@
             <td colspan="8" id="cancel_request">
             <%= render partial: "shared/cancel_request", locals: {user: user} %></td>
           <% end %>
-          <% follow_id = current_user.active_relationships.find_by(followed_id: user) %>
-          <% if !follow_id %>
+          <% relationship = current_user.active_relationships.find_by(followed_id: user) %>
+          <% if !relationship %>
             <%= render partial: "shared/link_to_follow", locals: {user: user} %>
           <% else %>
-            <%= render partial: "shared/link_to_follow", locals: {user: user, follow_id: follow_id} %>
+            <%= render partial: "shared/link_to_unfollow", locals: {user: user, relationship: relationship} %>
           <% end %> 
           <% else %>
             <td colspan="8"></td>

@@ -2,8 +2,8 @@ class RelationshipsController < ApplicationController
 	before_action :authenticate_user!
 
   def create
-    @user = User.find_by(id: params[:followed_id])
-    current_user.follow(@user)
+    @relationship = Relationship.create(follower_id: current_user.id, followed_id: params[:followed_id])
+    @relationship.save
     respond_to do |format|
       format.html {redirect_to users_path}
       format.js
@@ -11,8 +11,8 @@ class RelationshipsController < ApplicationController
   end
 
   def destroy
-    @user = Relationship.find_by(id: params[:id]).followed
-    current_user.unfollow(@user)
+    @relationship = Relationship.find_by(id: params[:id])
+    @relationship.destroy
     respond_to do |format|
       format.html {redirect_to users_path}
       format.js

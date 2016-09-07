@@ -5,11 +5,8 @@
 	<%= render partial: "index", locals: {posts: @posts} %>
 <% else %>
 	<%= render "layouts/subscribe" %>
-	<% following = current_user.following.includes(:posts) %>
-	<% following.each do |f| %>
-		<% following_posts = f.posts.order("updated_at DESC") %>
-		<% @posts = @posts - following_posts %>
-		<%= render partial: "index", locals: {posts: following_posts} %>
-	<% end %>	
+	<% if @following_posts %>
+		<%= render partial: "index", locals: {posts: @following_posts} %>	
+	<% end %>
 	<%= render partial: "index", locals: {posts: @posts} %>
 <% end %>

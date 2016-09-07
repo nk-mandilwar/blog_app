@@ -1,0 +1,2 @@
+<% user = User.find(@relationship.followed_id) %>
+$('#unfollow<%= @relationship.followed_id %>').html("<%= escape_javascript(render partial: 'shared/link_to_follow', locals: {user: user})%>");
