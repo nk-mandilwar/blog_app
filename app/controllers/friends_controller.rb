@@ -3,18 +3,21 @@ class FriendsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-  	@friends = current_user.friends
+  	@friends = current_user.received_friends + current_user.request_friends
   end
 
   def destroy
-    current_user.friends.destroy(@friend)
-    @friend.friends.destroy(current_user)
-    redirect_to friends_path
+    @friend.destroy
+    respond_to do |format|
+      format.html {redirect_to friends_path}
+      format.js
+    end
   end
 
   private
 
   def set_friend
-    @friend = current_user.friends.find_by(id: params[:id])
+    @friend = Friendship.find_by(user_id: current_user.id, friend_id: params[:id]) || 
+                                Friendship.find_by(user_id: params[:id], friend_id: current_user.id)                                               
   end
 end

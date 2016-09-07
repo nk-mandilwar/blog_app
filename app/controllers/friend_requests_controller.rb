@@ -13,18 +13,27 @@ class FriendRequestsController < ApplicationController
   def create
     @friend_request = current_user.friend_requests.new(friend_id: params[:friend_id] )
     @friend_request.save
-    redirect_to users_path  
+    respond_to do |format|
+      format.html {redirect_to users_path}  
+      format.js
+    end
   end
 
   def destroy
     @friend_request ||= FriendRequest.find_by(friend_id: params[:id])
   	@friend_request.destroy
-  	redirect_to users_path 
+  	respond_to do |format|
+      format.html {redirect_to :back}  
+      format.js
+    end 
   end
 
   def update
 	  @friend_request.accept
-	  redirect_to friend_requests_path
+    respond_to do |format|
+	    format.html {redirect_to friend_requests_path}
+      format.js
+    end
 	end
 
   private

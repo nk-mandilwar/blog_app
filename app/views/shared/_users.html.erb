@@ -7,26 +7,27 @@
       <tr>
         <td colspan="8"> <%= render partial: "shared/user_image", locals: {user: user}%></td>
         <% if current_user != user %>
-          <% if current_user.friends.include?(user) %>
+          <% if current_user.received_friendships.find_by(user_id: user) or
+                        current_user.request_friendships.find_by(friend_id: user) %>
             <td colspan="8"> Friends</td>
-          <% elsif current_user.received_friend_requests.find_by(:user_id => user) %>
+          <% elsif current_user.received_friend_requests.find_by(user_id:  user) %>
             <td colspan="8"> Respond to Request </td> 
-          <% elsif !current_user.friend_requests.find_by(:friend_id => user) %>
-            <td colspan="8"><%= link_to "Add Friend", friend_requests_path(:friend_id => user), 
-                          :method => :post %> </td>
+          <% elsif !current_user.friend_requests.find_by(friend_id: user) %>
+            <td colspan="8" id="add_friend">
+            <%= render partial: "shared/add_friend", locals: {user: user} %></td>
           <% else %>
-            <td colspan="8"> Friend Request Sent/<%= link_to "Cancel Request",                     friend_request_path(user), :method => :delete %> </td>
+            <td colspan="8" id="cancel_request">
+            <%= render partial: "shared/cancel_request", locals: {user: user} %></td>
           <% end %>
-          <% follow_id = current_user.active_relationships.find_by(:followed_id => user) %>
+          <% follow_id = current_user.active_relationships.find_by(followed_id: user) %>
           <% if !follow_id %>
-            <td colspan="8"><%= link_to "Follow", relationships_path(:followed_id => user), 
-                                                method: :post %></td>
+            <%= render partial: "shared/link_to_follow", locals: {user: user} %>
           <% else %>
-            <td colspan="8"><%= link_to "Unfollow", relationship_path(follow_id),
-                                                method: :delete %></td>
+            <%= render partial: "shared/link_to_follow", locals: {user: user, follow_id: follow_id} %>
           <% end %> 
-        <% else %>
-          <td></td>                                    
+          <% else %>
+            <td colspan="8"></td>
+            <td colspan="8"></td>                                    
         <% end %>
     <% end %>
   </tbody>

@@ -1,0 +1,1 @@
+$('#follow<%= @user.id %>').html("<%= escape_javascript(render partial: 'shared/link_to_unfollow', locals: {user: @user})%>");

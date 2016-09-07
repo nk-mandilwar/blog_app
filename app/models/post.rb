@@ -21,6 +21,6 @@ class Post < ActiveRecord::Base
 	end
 
 	def self.search(search)
-  	where("title LIKE :search", {search: "%#{search}%"})
+  	where("title LIKE :search", {search: "%#{search}%"}).order("updated_at DESC")
 	end
 end

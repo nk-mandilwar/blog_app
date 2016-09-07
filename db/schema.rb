@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160901094557) do
+ActiveRecord::Schema.define(version: 20160906062144) do
 
   create_table "average_caches", force: :cascade do |t|
     t.integer  "rater_id",      limit: 4
@@ -139,7 +139,6 @@ ActiveRecord::Schema.define(version: 20160901094557) do
     t.string   "name",                   limit: 255
     t.string   "username",               limit: 255
     t.string   "city",                   limit: 255
-    t.string   "facebook_profile",       limit: 255
     t.string   "email",                  limit: 255, default: "", null: false
     t.string   "encrypted_password",     limit: 255, default: "", null: false
     t.string   "reset_password_token",   limit: 255
@@ -159,6 +158,7 @@ ActiveRecord::Schema.define(version: 20160901094557) do
     t.string   "provider",               limit: 255
     t.string   "uid",                    limit: 255
     t.string   "image",                  limit: 255
+    t.string   "twitter_profile",        limit: 255
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree

@@ -1,0 +1,3 @@
+
+$('#add_friend<%= @friend_request.friend_id%>').html("<%= escape_javascript(render partial: 'shared/cancel_request', locals: {user: User.find(@friend_request.friend_id)})%>");
+$('#sent_request_count').html("<%= escape_javascript(render partial: 'shared/sent_request_count')%>");

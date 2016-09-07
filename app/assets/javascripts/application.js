@@ -20,53 +20,44 @@
 //= require_tree .
 
 $(document).ready(function() {
+ 
+  var replyTextOnClick = function(){
+    $(document).on('click', '.reply', function(){
+      
+      var comment_id = find_id("#comment_", $(this).attr('id'));
+      var hide_id = find_id("#hide_", $(this).attr('id'));
+      
+      $(comment_id).toggle();
+      $(this).hide();
+      $(hide_id).show();
+    });
+  };
 
-  $('.reply').on('click', function() {
-    $("#comment_" + ($(this).attr('id').split("_")[1])).toggle();
-    $(this).hide();
-    $("#hide_" + ($(this).attr('id').split("_")[1])).show();
-  });
+  var hide1TextOnClick = function(){
+    $(document).on('click', '.hide1', function() {
 
-  $('.hide1').on('click', function() {
-    $("#comment_" + ($(this).attr('id').split("_")[1])).toggle();
-    $(this).hide();
-    $("#reply_" + ($(this).attr('id').split("_")[1])).show();
-  });
+      var comment_id = find_id("#comment_", $(this).attr('id'));
+      var reply_id = find_id("#reply_", $(this).attr('id'));
+      
+      $(comment_id).toggle();
+      $(this).hide();
+      $(reply_id).show();
+    });
+  };
 
-  $('.comment-reply').on('click', function() {
-    $("#reply_div" + ($(this).attr('id').split("_")[1])).toggle();
-    // hide_reply_div();
-  });
-
-  // function hide_reply_div(){
-  //   $('.add-reply').on('click', function(){
-  //   });
-  //   $('body').on('click', function() {
-  //     $('.add-reply').hide();
-  //   });
-  // }
-
-
-
-  // $("#search-form input").keyup(function() {
-  //   $.get($("#search-form").attr("action"), $("#search-form").serialize(), null, "script");
-  //   return false;
-  // });  
-
-  // $("#search-post input").keyup(function() {
-  //   $.get($("#search-post").attr("action"), $("#search-post").serialize(), null, "script");
-  //   return false;
-  // });  
+  var commentReplyOnClick = function(){
+    $(document).on('click', '.comment-reply', function() {
+      var reply_div_id = find_id("#reply_div", $(this).attr('id'));
+      $(reply_div_id).toggle();
+    });
+  };
+  
+  replyTextOnClick();
+  hide1TextOnClick();
+  commentReplyOnClick(); 
 });
 
-// var incr = (function () {
-//     var i = 1;
-//     return function () {
-//         return i++;
-//     }
-// })();
-  //   i = incr()
-    // if( i % 2 == 1)      
-  //     document.getElementById(reply_id).innerHTML = "Replies";
-    // else
-    //  document.getElementById(reply_id).innerHTML = "Hide";
+
+function find_id(id_initial, id){
+  return (id_initial + id.split("_")[1]);
+}

@@ -4,7 +4,7 @@ class PostsController < ApplicationController
 
   def index
     if params[:search]
-      @posts = Post.search(params[:search]).order("updated_at DESC").page params[:page]
+      @posts = Post.search(params[:search]).page params[:page]
     else
       @posts = Post.order("updated_at DESC").page params[:page]
       # @posts = Post.includes(:user).order("created_at DESC").page params[:page]
@@ -12,9 +12,9 @@ class PostsController < ApplicationController
   end
 
   def show
-    # unless @post 
-    #   render :file => "#{Rails.root}/public/404.html", :status => 404, :layout => false
-    # end
+    unless @post 
+      redirect_to posts_path
+    end
   end
 
   def new
@@ -47,9 +47,12 @@ class PostsController < ApplicationController
   end
 
   def my_blogs
-    @posts = current_user.posts.order("updated_at DESC").page params[:page]
-    render 'index'
-  end
+    if params[:search]
+      @posts = current_user.posts.search(params[:search]).page params[:page]
+    else
+      @posts = current_user.posts.order("updated_at DESC").page params[:page]
+    end
+  end 
 
   private
     def set_post
@@ -60,3 +63,4 @@ class PostsController < ApplicationController
       params.require(:post).permit(:title, :content)
     end
 end
+

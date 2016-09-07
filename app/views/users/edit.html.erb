@@ -13,19 +13,9 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :username %>
-    <%= f.text_field :username, autofocus: true, class: "form-control" %>
-  </div>
-  
-  <div class="field">
     <%= f.label :name %>
     <%= f.text_field :name, autofocus: true, class: "form-control" %>
   </div>  
-
-  <div class="field">
-    <%= f.label :email %>
-    <%= f.email_field :email, autofocus: true, class: "form-control" %>
-  </div>
 
   <div class="field">
     <%= f.label :city %>
@@ -33,8 +23,8 @@
   </div>
 
   <div class="field">
-    <%= f.label :facebook_profile %>
-    <%= f.text_field :facebook_profile, autofocus: true, class: "form-control" %>
+    <%= f.label :twitter_profile %>
+    <%= f.text_field :twitter_profile, autofocus: true, class: "form-control" %>
   </div>
 
   <div class="field">
@@ -48,6 +38,6 @@
   </div>
   <br>
   <div class="actions">
-    <%= f.submit "Update", class: "btn btn-primary" %>
+    <%= f.submit "Update", class: "btn-primary" %>
   </div>
 <% end %>

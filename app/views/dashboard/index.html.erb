@@ -2,8 +2,6 @@
 <br>
 <% if !current_user %>
 	<%= render "layouts/subscribe2" %>
-	<p> Sign up or login to read more </p>
-	<br>
 	<%= render partial: "index", locals: {posts: @posts} %>
 <% else %>
 	<%= render "layouts/subscribe" %>

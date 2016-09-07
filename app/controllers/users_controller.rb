@@ -11,24 +11,25 @@
 	end
 
 	def edit
-		# unless @user && @user == current_user
-  #     render :file => "#{Rails.root}/public/404.html", :status => 404, :layout => false
-  #   end
+		unless @user == current_user
+      redirect_to edit_user_path(current_user)
+    end
 	end
 
 	def update
 		if @user.update(user_params)
-			redirect_to  new_user_session_url
+			redirect_to user_path(@user)
 		else
 			render "edit"
 		end	
 	end
 
 	def show
-		# unless @user
-  #     render :file => "#{Rails.root}/public/404.html", :status => 404, :layout => false
-  #   end
-    @posts = @user.posts.order("updated_at DESC")
+		if !@user
+      redirect_to users_path
+  	else
+    	@posts = @user.posts.order("updated_at DESC")
+    end
 	end
 
 	def following
@@ -46,6 +47,6 @@
 	end
 
 	def user_params
-    params.require(:user).permit(:name, :email, :username, :city, :facebook_profile, :image, :remove_image)
+    params.require(:user).permit(:name, :city, :twitter_profile, :image, :remove_image)
   end
 end

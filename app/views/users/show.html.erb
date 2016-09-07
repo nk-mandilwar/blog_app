@@ -17,14 +17,16 @@
     <th colspan="8">Username</th> 
     <th colspan="8">Name</th>   
     <th colspan="8">City</th> 
-    <th colspan="8">Facebook Profile Link</th>    
+    <th colspan="8">Twitter Profile Link</th>    
   </thead>
   <tbody>
     <tr>
       <td colspan="8"><%= @user.username %></td>
       <td colspan="8"><%= @user.name %></td>
       <td colspan="8"><%= @user.city %></td>
-      <td colspan="8"><%= link_to @user.facebook_profile, @user.facebook_profile %></td> 
+      <% if @user.twitter_profile %>
+        <td colspan="8"><%= link_to @user.twitter_profile, @user.twitter_profile %></td>
+      <% end %>   
     </tr>                                      
   </tbody>
 </table>

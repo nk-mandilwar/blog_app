@@ -3,8 +3,7 @@ class FriendRequest < ActiveRecord::Base
   belongs_to :friend, class_name: 'User'
 
   def accept
-    user.friends << friend
-    friend.friends << user
+    user.request_friends << friend
     destroy
   end
 end

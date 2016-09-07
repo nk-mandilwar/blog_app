@@ -11,8 +11,14 @@ class User < ActiveRecord::Base
   has_many :requests, through: :friend_requests, source: :friend
   has_many :received_requests, through: :received_friend_requests, source: :user                           
 
-  has_many :friendships, dependent: :destroy 
-  has_many :friends, through: :friendships
+  has_many :request_friendships, class_name: "Friendship", 
+                              foreign_key: "user_id",
+                              dependent: :destroy
+  has_many :received_friendships, class_name: "Friendship", 
+                              foreign_key: "friend_id",
+                              dependent: :destroy                             
+  has_many :request_friends, through: :request_friendships, source: :friend
+  has_many :received_friends, through: :received_friendships, source: :user
 
   has_many :active_relationships,  class_name:  "Relationship",
                                    foreign_key: "follower_id",
@@ -28,13 +34,14 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable, :validatable, :confirmable, :recoverable, :rememberable, 
          :trackable, :omniauthable, :omniauth_providers => [:twitter], :authentication_keys => [:login]
 
-VALID_FB_REGEX = /(?:https?:\/\/)?(?:www\.)?facebook\.com\/(?:(?:\w)*#!\/)?(?:pages\/)?(?:[\w\-]*\/)*([\w\-\.]*)/
+  VALID_TWITTER_REGEX = /(?:https?:\/\/)?(?:www\.)?twitter\.com\/(?:(?:\w)*#!\/)?(?:pages\/)?(?:[\w\-]*\/)*([\w\-\.]*)/
   VALID_STRING_REGEX=/([\w\-\'])([\s]+)?([\w\-\'])/
-  validates :name,  presence: true, length: { maximum: 50 }, format: { with: VALID_STRING_REGEX }, unless: :uid
-  validates :city,  presence: true, format: { with: VALID_STRING_REGEX }, unless: :uid
-  validates :username,  presence: true, uniqueness: { case_sensitive: false }, unless: :uid
-  validates :facebook_profile, presence: true, 
-                    format: { with: VALID_FB_REGEX },
+  validates :name, presence: true, length: { maximum: 50 }, format: { with: VALID_STRING_REGEX }, unless: :uid
+  validates :city, presence: true, length: { maximum: 50 }, format: { with: VALID_STRING_REGEX }, unless: :uid
+  validates :username,  presence: true, length: { maximum: 50 }, 
+                    uniqueness: { case_sensitive: false }, unless: :uid
+  validates :twitter_profile, length: { maximum: 100 },
+                    format: { with: VALID_TWITTER_REGEX },
                     uniqueness: { case_sensitive: false }, unless: :uid
 
   mount_uploader :image, ImageUploader                    

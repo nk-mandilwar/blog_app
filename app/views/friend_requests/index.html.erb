@@ -6,11 +6,11 @@
   </thead>
   <tbody>
     <% @incoming.each do |user| %>
-      <tr>
+      <tr id="friend_request<%= user.id %>">
         <td colspan="8"> <%= render partial: "shared/user_image", locals: {user: user}%></td>
-        <td colspan="10"><%= link_to "Accept", friend_request_path(user), method: :put %></td>
+        <td colspan="10"><%= link_to "Accept", friend_request_path(user), method: :put, remote: true %></td>
         <td colspan="10"><%= link_to "Reject", friend_request_path(user), method: :delete, 
-                      data: { confirm: 'Are you sure?' } %></td>
+                      remote: true %></td>
       </tr>
     <% end %>
   </tbody>
