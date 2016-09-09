@@ -16,7 +16,7 @@ class Post < ActiveRecord::Base
 
 	def send_email_to_subscribers
 	  Subscribe.all.each do |subscribe|
-	  	SubscribeMailer.send_email(subscribe.email, self).deliver_now
+	  	SubscribeMailer.send_email(subscribe.email, self).deliver_later
 		end
 	end
 

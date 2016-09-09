@@ -1,6 +1,23 @@
-
+<% if !current_user %>
+	<%= paginate posts %>
+<% end %>
 <% posts.each do |post| %>
 	<div class="post-link"> <%= link_to post.title, post %> </div>
-	<div class="show-less-content"><%= render partial: "shared/post", locals: {post: post} %> </div>
+	<div class="show-less-content", id="show_<%= post.id %>">
+		<div id="post-content">
+  		<%= post.content.html_safe %>
+		</div>
+	</div>
+	<%= render partial: "shared/post", locals: {post: post} %> 
+	<% if current_user %>
+ 		<span class="show-more" id="show_more<%= post.id %>"> <strong>...Read More</strong> </span>
+		<span class="read-less" id="show_less_<%= post.id %>"> <strong>...Read Less</strong> </span>
+	<% else %>
+		<span> <strong id="warning">...Read More</strong> </span>
+	<% end %>	
 	<br><br>
+<% end %>
+
+<% if !current_user %>
+	<%= paginate posts %>
 <% end %>

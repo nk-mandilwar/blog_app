@@ -293,3 +293,8 @@ margin:0px;
 .post-title-wrap{
 	word-wrap: break-word;
 }
+
+.show-more, .read-less{
+	float: right; 
+	display: none;
+}

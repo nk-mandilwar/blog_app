@@ -1,7 +1,7 @@
 class DashboardController < ApplicationController
   
   def index
-  	@posts = Post.all.order("updated_at DESC")
+  	@posts = Post.all.order("updated_at DESC").page params[:page]
   	if (current_user)
   		current_user.following.each do |following|
   			@following_posts = !(@following_posts)? following.posts : @following_posts + following.posts

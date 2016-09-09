@@ -7,8 +7,13 @@
         <tbody>
           <% @posts.each do |post| %>
             <div class="post-title-wrap"> <%= link_to post.title, post %> </div>
-            <div class="show-less-content"><%= render partial: "shared/post", locals: {post: post} %></div>
-            <br><br>
+            <div class="show-less-content">
+              <div id="post-content">
+                <%= post.content.html_safe %>
+              </div>
+          </div>
+          <%= render partial: "shared/post", locals: {post: post} %> 
+          <br><br>
           <% end %>
         </tbody>
       </table>

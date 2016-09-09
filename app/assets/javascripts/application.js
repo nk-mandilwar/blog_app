@@ -54,9 +54,53 @@ $(document).ready(function() {
   
   replyTextOnClick();
   hide1TextOnClick();
-  commentReplyOnClick(); 
-});
+  commentReplyOnClick();
 
+  var i = 1;
+  for(; i < 100; i++){
+    if(document.getElementById("show_"+i) != null){
+      var scrollHeight = document.getElementById("show_"+i).scrollHeight;
+      var clientHeight = document.getElementById("show_"+i).clientHeight;
+      if( scrollHeight > clientHeight){
+        $("#show_more"+i).show();
+      }
+    }
+  }
+
+  var showMore = function(){
+    $(document).on('click', '.show-more', function(){
+      var id = $(this).attr('id').split("e")[1];
+      var show_id = "show_" + id;
+      $("#"+show_id).css("max-height", document.getElementById(show_id).scrollHeight);
+      $("#show_less_"+id).show();
+      $(this).hide(); 
+    });
+  };
+
+  var showLess = function(){
+    $(document).on('click', '.read-less', function(){
+      var id = $(this).attr('id').split("_")[2];
+      console.log("hii" +id);
+      var show_id = "show_" + id;
+      $("#"+show_id).css("max-height", 100);
+      $("#show_more"+id).show();
+      $(this).hide();
+      var position = $("#"+show_id).position();
+      window.scrollTo(position.left, position.top); 
+    });
+  };
+
+  showMore();
+  showLess();
+
+  var warning = function() {
+    $(document).on('click', '#warning', function(){
+      alert('Please Sign in or Sign up to read more')
+    });
+  }; 
+
+  warning();        
+});
 
 function find_id(id_initial, id){
   return (id_initial + id.split("_")[1]);

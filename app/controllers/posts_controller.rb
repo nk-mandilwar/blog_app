@@ -13,7 +13,7 @@ class PostsController < ApplicationController
 
   def show
     unless @post 
-      redirect_to posts_path
+      redirect_to posts_path, notice: 'The post you are looking for does not exist'
     end
   end
 
@@ -43,7 +43,7 @@ class PostsController < ApplicationController
 
   def destroy
     @post.destroy
-    redirect_to posts_path, notice: 'Post was successfully destroyed.'
+    redirect_to :back, notice: 'Post was successfully destroyed.'
   end
 
   def my_blogs

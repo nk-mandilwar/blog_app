@@ -12,13 +12,13 @@
 
 	def edit
 		unless @user == current_user
-      redirect_to edit_user_path(current_user)
+      redirect_to edit_user_path(current_user), notice: "Cannot access other user edit page" 
     end
 	end
 
 	def update
 		if @user.update(user_params)
-			redirect_to user_path(@user)
+			redirect_to user_path(@user), notice: "Updated Successfully"
 		else
 			render "edit"
 		end	
@@ -26,7 +26,7 @@
 
 	def show
 		if !@user
-      redirect_to users_path
+      redirect_to users_path, notice: "The user you are looking for does not exist"  
   	else
     	@posts = @user.posts.order("updated_at DESC")
     end
