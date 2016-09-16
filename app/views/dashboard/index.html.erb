@@ -1,12 +1,22 @@
 <h1 id="header-id">Welcome</h1>
 <br>
-<% if !current_user %>
-	<%= render "layouts/subscribe2" %>
-	<%= render partial: "index", locals: {posts: @posts} %>
-<% else %>
-	<%= render "layouts/subscribe" %>
-	<% if @following_posts %>
-		<%= render partial: "index", locals: {posts: @following_posts} %>	
-	<% end %>
-	<%= render partial: "index", locals: {posts: @posts} %>
+<div id="subscribe"> <%= render "layouts/subscribe" %> </div>
+
+<% if !@posts.any? %>
+	<p><strong> Create a New Post! </strong><%= link_to "Click here", new_post_path %></p>
+	<% if current_user %>
+		<p> Or </p>
+		<p><strong> Follow users to see their posts here. </strong><%= link_to "Click here", users_path %></p>
+		
+	<% end %>	
 <% end %>
+
+<div class="my-posts">
+	<%= render partial: "index", locals: {posts: @posts} %>
+</div>
+
+<div id="infinite-scrolling">
+  <%= link_to_next_page(@posts, "<i class=\"glyphicon glyphicon-option-vertical\"></i>".html_safe, 
+  																																										:remote => true) %>	
+</div>
+

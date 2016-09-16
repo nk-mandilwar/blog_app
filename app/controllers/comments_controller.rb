@@ -1,6 +1,6 @@
 class CommentsController < ApplicationController
 	before_action :authenticate_user!
-	before_action :set_post, only: [:destroy, :create]
+	before_action :set_post, only: [:destroy, :create, :edit, :update]
 	
 	def create
 		@comment = Comment.create(comment_params.merge({post_id: @post.id, user_id: current_user.id}))
@@ -14,13 +14,29 @@ class CommentsController < ApplicationController
 		@comment = @post.comments.find_by(id: params[:id])
 		@comment_ids = [@comment.id]
 		if(@comment.children)
-			find_all_child_commennt(@comment.children)
+			find_all_child_comment(@comment.children)
 		end
     @comment.destroy
     respond_to do |format|
     	format.html {redirect_to post_path(@post)}
     	format.js
     end
+  end
+
+  def edit
+  	@comment = @post.comments.find_by(id: params[:id])
+  	respond_to do |format|
+  		format.js
+  	end
+  end
+
+  def update
+  	@comment = @post.comments.find_by(id: params[:id])
+  	if @comment.update(comment_params)
+  		respond_to do |format|
+  			format.js
+  		end
+  	end
   end
 
   def liked_by

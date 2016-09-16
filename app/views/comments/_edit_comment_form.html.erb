@@ -1,0 +1,6 @@
+<%= form_for([post, comment], method: :put,
+											remote: true, id: "comment-form#{comment.id}") do |f| %>
+	<%= f.text_field :content, autocomplete: "off", class: 'form-control', 
+															id: "comment-content#{comment.id}", value: comment.content %>
+	<%= f.submit "Comment", class:"hide" %>
+<% end %>

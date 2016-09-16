@@ -12,7 +12,7 @@ Rails.application.routes.draw do
     collection do 
       get 'my_blogs'
     end    
-    resources :comments, only: [:create, :destroy]
+    resources :comments, only: [:create, :destroy, :edit, :update]
   end
   post '/rate' => 'rater#create', :as => 'rate'
 

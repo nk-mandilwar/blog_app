@@ -17,6 +17,7 @@
 //= require bootstrap-sprockets
 //= require tinymce-jquery
 //= require social-share-button
+//= require jquery.infinite-pages
 //= require_tree .
 
 $(document).ready(function() {
@@ -51,7 +52,7 @@ $(document).ready(function() {
       $(reply_div_id).toggle();
     });
   };
-  
+
   replyTextOnClick();
   hide1TextOnClick();
   commentReplyOnClick();

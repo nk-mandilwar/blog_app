@@ -1,10 +1,4 @@
-<% if !Subscribe.exists?(:email => current_user.email) %>
-	<div class="subscribers-div">
-		<%= form_for(:subscribe, :url => url_for(:controller => "subscribes", :action => "create", 
-														:method => "post")) do |f|%>
-			<p>To get all news, Subscribe it.</p>
-			<p><%= f.hidden_field(:email, :value => current_user.email) %></p>
-			<p><%= f.submit "subscribe", class: "btn btn-primary" %></p>
-		<% end %>
-	</div>
+
+<% if !current_user || !Subscribe.exists?(:email => current_user.email) %>
+	<%= render "layouts/subscribe_form" %>
 <% end %>

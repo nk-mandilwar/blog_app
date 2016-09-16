@@ -52,7 +52,6 @@ class User < ActiveRecord::Base
       user.uid = auth[:uid]
       user.username = auth[:info][:nickname]
       user.name = auth[:info][:name]
-      user.email = "tempor#{user.username}@email.com"
       user.confirmed_at = Time.now
     end
   end
@@ -102,4 +101,9 @@ class User < ActiveRecord::Base
     [id, name.parameterize].join("-")
   end
 
+  def following_posts
+    following_ids = "SELECT followed_id FROM relationships WHERE follower_id = :user_id"
+    Post.where("user_id IN (#{following_ids}) OR user_id = :user_id", 
+                                              user_id: id).order("updated_at DESC")
+  end
 end

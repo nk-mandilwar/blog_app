@@ -2,8 +2,16 @@ class SubscribesController < ApplicationController
 
 	def create
     @subscribe = Subscribe.new(subscriber_params)
-    @subscribe.save
-    redirect_to :back, notice: 'You subscribed successfully'
+    if @subscribe.save
+      respond_to do |format|
+        format.html {redirect_to :back}
+        format.js
+      end
+    else
+      respond_to do |format|
+        format.js
+      end
+    end
   end
 
   def destroy

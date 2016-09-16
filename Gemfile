@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+gem 'jquery-infinite-pages'
+gem 'sidekiq'
 gem 'social-share-button'
 gem 'bullet'
 gem 'carrierwave'

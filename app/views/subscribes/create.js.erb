@@ -1,0 +1,9 @@
+<% if @subscribe.save %>
+	$('.notice-msg').html("Subscribed successfully!");
+	<% if current_user %>
+		$('#subscribe').remove();
+	<% end %>	
+	$('#subscribe_textfield').val('');
+<% else %>
+	$('#subscribe_error').html("Invalid email");
+<% end %>	

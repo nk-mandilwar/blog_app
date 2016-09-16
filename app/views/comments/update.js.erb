@@ -1,0 +1,3 @@
+
+$("#destroy-comment<%= @comment.id %>")
+	.html("<%= j render partial: 'comment_content', locals: {post: @post, comment: @comment}%>");
