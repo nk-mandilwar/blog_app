@@ -6,7 +6,7 @@ class Comment < ActiveRecord::Base
   has_many :likes, dependent: :destroy
   has_many :liked_by, through: :likes, source: :user
 
-  validates :content, presence: true, length: { maximum: 140 }
+  validates :content, presence: true, length: { maximum: 10000}
   validates :post_id, presence: true
   validates :user_id, presence: true
 end

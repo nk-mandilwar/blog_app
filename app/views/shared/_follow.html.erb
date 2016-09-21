@@ -5,7 +5,8 @@
   <tbody>
     <% @users.each do |user| %>
       <tr>
-        <td colspan="8"> <%= render partial: "shared/user_image", locals: {user: user}%></td>
+        <td colspan="8"> <%= render partial: "shared/user_image", locals: {user: user}%>
+                                                <%= link_to "  #{user.username}", user %></td>
         <% if user != current_user %>
           <% if current_user.following?(user) %>
             <% follow_id = current_user.active_relationships.find_by(:followed_id => user) %>

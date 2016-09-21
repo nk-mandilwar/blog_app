@@ -4,17 +4,17 @@
   <%= devise_error_messages! %>
 
   <div class="field">
-    <%= f.label :username %><br />
+    <%= f.label :username %>
     <%= f.text_field :username, autofocus: true, class: "form-control" %>
   </div>
   
   <div class="field">
-    <%= f.label :name %><br />
+    <%= f.label :name %>
     <%= f.text_field :name, autofocus: true, class: "form-control" %>
   </div>  
 
   <div class="field">
-    <%= f.label :email %><br />
+    <%= f.label :email %>
     <%= f.email_field :email, autofocus: true, class: "form-control" %>
   </div>
 
@@ -22,24 +22,24 @@
     <div class="field">
       <%= f.label :password %>
       <% if @minimum_password_length %>
-      <em>(<%= @minimum_password_length %> characters minimum)</em>
-      <% end %><br />
+        <em>(<%= @minimum_password_length %> characters minimum)</em>
+      <% end %>
       <%= f.password_field :password, autocomplete: "off", class: "form-control" %>
     </div>
 
     <div class="field">
-      <%= f.label :password_confirmation %><br />
+      <%= f.label :password_confirmation %>
       <%= f.password_field :password_confirmation, autocomplete: "off",class: "form-control" %>
     </div>
+
+    <div class="field">
+      <%= f.label :city %>
+      <%= f.text_field :city, autofocus: true, class: "form-control" %>
+    </div>
   <% end %>
-
+    
   <div class="field">
-    <%= f.label :city %><br />
-    <%= f.text_field :city, autofocus: true, class: "form-control" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :twitter_profile %><br />
+    <%= f.label :twitter_profile %>
     <%= f.text_field :twitter_profile, autofocus: true, class: "form-control" %>
   </div>  
   <br>

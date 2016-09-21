@@ -19,12 +19,16 @@
 	<div class="body_div11">
 		<div class="row" >
 			<div class="col-md-8" >
-				<% if notice %>
-		 			<p class="notice alert-success notice-msg"><%= notice %></p>
-		 		<% end %>
-		 		<% if alert %>	
-		 			<p class="notice alert-danger alert-msg"><%= alert %></p>
-		 		<% end %> 
+				<p class="notice alert-success notice-msg">
+					<% if notice %>
+		 				<%= notice %>
+		 			<% end %>
+		 		</p>	
+		 		<p class="notice alert-danger alert-msg">
+		 			<% if alert %>	
+		 				<%= alert %>
+		 			<% end %> 
+		 		</p>	
 		 		<%= render 'layouts/modal' %>
 				<%= yield %>
 		  </div>  

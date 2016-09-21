@@ -224,11 +224,9 @@ margin:0px;
 }
 
 .comment-reply-delete {
-	font-size: 100%;
-}
-
-.comment {
-	font-size: 120%;
+	width: 100%;
+	margin-left: 55px;
+	font-size: small;
 }
 
 .add-reply {
@@ -305,3 +303,28 @@ margin:0px;
 	text-align: center;
 	background: #cce6ff;
 }
+
+.comment123{
+	margin-top: 5px;
+  margin-bottom: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 10px;
+  border: 1px #929698 solid;
+  border-radius: 5px; 
+  word-wrap: break-word;
+}
+
+.image12{
+	margin-top: 0px;
+	float: left;
+}
+
+.comment-content1{
+	font-size: 120%;
+	width:  calc(100% - 55px);
+	float: right;
+	word-wrap: break-word;
+}
+
+

@@ -1,27 +1,33 @@
-		<div class="comment">
-			<%= render partial: "shared/user_image", locals: {user: comment.user}%>
-			<%= comment.content %>
-		</div>
-
-		<div class="comment-reply-delete">
+<div class="comment123">
+	<div class="image12">
+		<% if comment.user.image.present? %>
+		  <%= image_tag comment.user.image.thumb.url, class: "missing-image" %>
+		<% else %>
+		  <img src="<%= asset_path( 'blank-person.png' ) %>" class="missing-image"/>
+		<% end %>		
+	</div>
+	<div class="comment-content1">
+		<%= link_to "#{comment.user.username} ", comment.user %><%= comment.content %>
+	</div>
+	<div>
+		<div class="comment-reply-delete">		
+			<span><%= link_to "Reply", "javascript:void(0);", 
+												id: "addcomment_#{comment.id}", class: "comment-reply"%></span>
+			<% if comment.user == current_user %>
+				<span><%= link_to 'Edit', edit_post_comment_path(@post, comment), remote: true %></span>
+				<span><%= link_to 'Delete', [@post, comment], method: :delete, 
+																				data: { confirm: 'Are you sure?' }, remote: true %></span> -
+			<% end %>
 			<span id="like_count<%= comment.id %>">
 				<%= render partial: "shared/like_count", locals: {comment: comment} %>
 			</span>	
 			<% like = Like.find_by(:comment_id => comment.id, :user_id => current_user.id) %>
 			<% if !like  %>
 				<span id="like<%=comment.id%>"><%= link_to "Like", comment_likes_path(comment),
-																										method: :post, remote: true %></span>
+																												method: :post, remote: true %></span>
 			<% else %>
 				<span id="unlike<%=comment.id%>"><%= link_to "Unlike", 
 														comment_like_path(comment, like), method: :delete, remote: true %></span>
-			<% end %>
-
-			<span><%= link_to "Reply", "javascript:void(0);", 
-										id: "addcomment_#{comment.id}", class: "comment-reply"%></span>
-			<% if comment.user == current_user %>
-				<span><%= link_to 'Edit', edit_post_comment_path(@post, comment), remote: true %></span>
-				<span><%= link_to 'Delete', [@post, comment], method: :delete, 
-																		data: { confirm: 'Are you sure?' }, remote: true %></span> -
 			<% end %>
 			<span class="time-ago"><%= time_ago_in_words(comment.created_at) %></span>
 			<% if (comment.children.length > 0) %>
@@ -29,3 +35,5 @@
 				<span id="hide_<%= "#{comment.id}"%>", class="hide1"> Hide </span>
 			<% end %>
 		</div>
+	</div>	
+</div>	

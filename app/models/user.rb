@@ -52,6 +52,7 @@ class User < ActiveRecord::Base
       user.uid = auth[:uid]
       user.username = auth[:info][:nickname]
       user.name = auth[:info][:name]
+      user.twitter_profile = auth[:info][:urls][:Twitter]
       user.confirmed_at = Time.now
     end
   end

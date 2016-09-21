@@ -1,4 +1,4 @@
-	<%= render 'layouts/subscribe' %>
+<%= render 'layouts/subscribe' %>
 <div id="post-title">
   <u><%= @post.title %></u>
 </div> 
@@ -17,16 +17,18 @@
 
 <%= rating_for @post, 'content', disable_after_rate: false, enable_half: true %> 
 
-<h3>Comments:</h3>
-
 <% comments = @post.comments.includes(:user, :children, :likes) %>
-<%= render partial: "shared/comment", locals: {comments: (comments.where("level = ?", 0)), l: 0} %>
+<% if comments.any? %>
+  <h3>Comments:</h3>
+  <%= render partial: "shared/comment", locals: {comments: (comments.where("level = ?", 0)), l: 0} %>
+<% end %>  
 
-<div id="base-comment"> </div> 
-<h5>Add a comment:</h5>
+<div id="base-comment"></div><br>
 
+<h5><strong>Add a comment:</strong></h5>
 <%= form_for([@post, @post.comments.build], remote: true, class: "comment-form") do |f| %>
   <%= f.text_field :content, placeholder: "Comment", autocomplete: "off", class: 'form-control comment-content' %>
   <%= f.submit "Comment", class:"hide" %>
 <% end %>
+
 

@@ -57,14 +57,13 @@ $(document).ready(function() {
   hide1TextOnClick();
   commentReplyOnClick();
 
-  var i = 1;
-  for(; i < 100; i++){
-    if(document.getElementById("show_"+i) != null){
-      var scrollHeight = document.getElementById("show_"+i).scrollHeight;
-      var clientHeight = document.getElementById("show_"+i).clientHeight;
-      if( scrollHeight > clientHeight){
-        $("#show_more"+i).show();
-      }
+  var content = document.getElementsByClassName('show-less-content');
+  for (var i = 0; i < content.length; ++i) {
+    var id = $(content[i]).attr('id').split('_')[1];
+    var scrollHeight = content[i].scrollHeight;
+    var clientHeight = content[i].clientHeight;
+    if( scrollHeight > clientHeight){
+      $("#show_more"+id).show();
     }
   }
 
@@ -81,7 +80,6 @@ $(document).ready(function() {
   var showLess = function(){
     $(document).on('click', '.read-less', function(){
       var id = $(this).attr('id').split("_")[2];
-      console.log("hii" +id);
       var show_id = "show_" + id;
       $("#"+show_id).css("max-height", 100);
       $("#show_more"+id).show();
@@ -100,7 +98,7 @@ $(document).ready(function() {
     });
   }; 
 
-  warning();        
+  warning();    
 });
 
 function find_id(id_initial, id){

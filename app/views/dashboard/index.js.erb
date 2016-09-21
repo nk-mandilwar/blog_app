@@ -1,6 +1,16 @@
 $("<%= j render(:partial => 'index', locals: {:posts => @posts}) %>")
   .appendTo($(".my-posts"));
 
+var content = document.getElementsByClassName('show-less-content');
+for (var i = 0; i < content.length; ++i) {
+  var id = $(content[i]).attr('id').split('_')[1];
+  var scrollHeight = content[i].scrollHeight;
+  var clientHeight = content[i].clientHeight;
+  if( scrollHeight > clientHeight){
+    $("#show_more"+id).show();
+  }
+}
+
 <% if @posts.last_page? %>
   $('#infinite-scrolling').html("That's all! No more posts to show");
 <% else %>

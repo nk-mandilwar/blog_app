@@ -5,8 +5,9 @@
 		<%= f.hidden_field :base_id, :value => comment.id %>
 	<% else %>
 		<%= f.hidden_field :base_id, :value => comment.base_id %>
-	<%end%>   
+	<%end%> 
+	<span><%= render partial: "shared/user_image", locals: {user: comment.user}%>  
 	<%= f.text_field :content, placeholder: "Comment", autocomplete: "off", class: 'form-control', 
-															id: "comment-content#{comment.id}" %>
+															id: "comment-content#{comment.id}" %></span>
 	<%= f.submit "Comment", class:"hide" %>
 <% end %>

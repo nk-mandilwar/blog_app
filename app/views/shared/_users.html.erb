@@ -5,7 +5,8 @@
   <tbody>
     <% @users.each do |user| %>
       <tr>
-        <td colspan="8"> <%= render partial: "shared/user_image", locals: {user: user}%></td>
+        <td colspan="8"> <%= render partial: "shared/user_image", locals: {user: user}%>
+                                          <%= link_to "  #{user.username}", user %></td>
         <% if current_user != user %>
           
           <% if current_user.received_friendships.find_by(user_id: user) or

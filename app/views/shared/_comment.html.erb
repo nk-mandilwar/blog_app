@@ -1,13 +1,15 @@
-<div style="margin-left: <%= l %>px; ">
+<div style="margin-left: <%= l %>px;">
 	<% if l == 0 %>
 		<% l = 100 %>
 	<% end %>
 
 	<% comments.each do |comment| %> 
 		<%= render partial: "comments/comment", locals: {comment: comment} %>
-		<div id="comment_<%= "#{comment.id}" %>", class="nested-class" > 
-			<%= render partial: "shared/comment", locals: {comments: comment.children, l: l * 0.9} %>
-		</div>  
+		<% if (comments = comment.children) %>	
+			<div id="comment_<%= "#{comment.id}" %>", class="nested-class" > 
+				<%= render partial: "shared/comment", locals: {comments: comments, l: l * 0.9} %>
+			</div> 
+		<% end %>	 
 
 		<div id="display-comment<%= "#{comment.id}" %>", style="margin-left: <%=l*0.9%>px;" > </div>
 		<div id="reply_div<%= "#{comment.id}" %>", class="add-reply", style="margin-left: <%=l*0.9%>px;" >
