@@ -2,10 +2,11 @@
 	<%= form_for(:subscribe, :url => url_for(:controller => "subscribes", :action => "create", 
 														:method => "post"), remote: true) do |f|%>
 		<p id="subscribe_error" class="text-danger"></p>
-		<p>To get all news, Subscribe it.</p>
+		<p> <strong>To get all news, Subscribe it.</strong> </p>
 		<% if current_user %>
 			<p><%= f.hidden_field(:email, :value => current_user.email) %></p>
 		<% else %>
+			<p> Email: </p>
 			<p><%= f.text_field :email, id: "subscribe_textfield" %></p>
 		<% end %>		
 		<p><%= f.submit "subscribe", class: "btn btn-primary" %></p>

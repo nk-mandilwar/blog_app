@@ -1,6 +1,6 @@
-<h1 id="header-id"> Users </h1>
+<h1 id="header_id"> Users </h1>
 <br>
-<%= form_tag(users_path, :method => "get", id: "search-form") do %>
+<%= form_tag(users_path, :method => "get", id: "search_form") do %>
 	<%= text_field_tag :search, params[:search], placeholder: "Search Users", autocomplete: "off", value: nil %>
 	<%= button_tag "", type: 'submit', class: "button-search glyphicon glyphicon-search" %>
 <% end %>
@@ -8,7 +8,9 @@
 <br>
 <div id="users">
 	<% if @users.present? %>
+		<%= paginate @users %>
 	  <%= render "shared/users" %>
+		<%= paginate @users %>	
 	<% else %>
 	  <p><b>There are no users with name like: <%= params[:search] %>.</b></p>
 	<% end %>

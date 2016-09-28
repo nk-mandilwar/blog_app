@@ -1,7 +1,7 @@
-<h1 id="header-id">My Posts</h1>
+<h1 id="header_id">My Posts</h1>
 <%= render 'layouts/subscribe' %>
 
-<%= form_tag(my_blogs_posts_path, :method => "get", id: "search-post") do %>
+<%= form_tag(my_blogs_posts_path, :method => "get", id: "search_post") do %>
   <%= text_field_tag :search, params[:search], placeholder: "Search posts", autocomplete: "off", value: nil %>
   <%= button_tag "", type: 'submit', class: "button-search glyphicon glyphicon-search" %>
 <% end %>

@@ -2,11 +2,11 @@
 <% posts.each do |post| %>
 	<div class="post-link"> <%= link_to post.title, post %> </div>
 	<div class="show-less-content", id="show_<%= post.id %>">
-		<div id="post-content">
+		<div id="post_content">
   		<%= post.content.html_safe %>
 		</div>
 	</div>
-	<%= render partial: "shared/post", locals: {post: post} %> 
+	<%= render partial: "shared/post_manipulation", locals: {post: post} %> 
 	<% if current_user %>
  		<span class="show-more" id="show_more<%= post.id %>"> <strong>...Read More</strong> </span>
 		<span class="read-less" id="show_less_<%= post.id %>"> <strong>...Read Less</strong> </span>

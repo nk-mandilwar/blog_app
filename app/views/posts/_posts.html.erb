@@ -8,11 +8,11 @@
           <% @posts.each do |post| %>
             <div class="post-title-wrap"> <%= link_to post.title, post %> </div>
             <div class="show-less-content">
-              <div id="post-content">
+              <div id="post_content">
                 <%= post.content.html_safe %>
               </div>
           </div>
-          <%= render partial: "shared/post", locals: {post: post} %> 
+          <%= render partial: "shared/post_manipulation", locals: {post: post} %> 
           <br><br>
           <% end %>
         </tbody>

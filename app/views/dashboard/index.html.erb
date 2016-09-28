@@ -1,4 +1,4 @@
-<h1 id="header-id">Welcome</h1>
+<h1 id="header_id">Welcome</h1>
 <br>
 <div id="subscribe"> <%= render "layouts/subscribe" %> </div>
 
@@ -15,8 +15,8 @@
 	<%= render partial: "index", locals: {posts: @posts} %>
 </div>
 
-<div id="infinite-scrolling">
-  <%= link_to_next_page(@posts, "<i class=\"glyphicon glyphicon-option-vertical\"></i>".html_safe, 
-  																																										:remote => true) %>	
+<div id="infinite_scrolling">
+  <%= link_to_next_page(@posts, "<i class=\"glyphicon glyphicon-option-vertical\"></i>".html_safe,
+  																							remote: true) %>	
 </div>
 

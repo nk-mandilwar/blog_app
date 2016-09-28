@@ -1,4 +1,4 @@
-<h1 id="header-id">Profile</h1>
+<h1 id="header_id"><%= @user.username %></h1>
 
 <% if @user.image.present? %>
   <%= image_tag @user.image, class: "user-page-image" %>
@@ -12,25 +12,45 @@
 </span>
 
 <table class="table table-hover">
-  <thead>
-    <th colspan="8">Username</th> 
-    <th colspan="8">Name</th>   
-    <th colspan="8">City</th> 
-    <th colspan="8">Twitter Profile Link</th>    
-  </thead>
   <tbody>
     <tr>
-      <td colspan="8"><%= @user.username %></td>
-      <td colspan="8"><%= @user.name %></td>
-      <td colspan="8"><%= @user.city %></td>
-      <% if @user.twitter_profile %>
-        <td colspan="8"><%= link_to @user.twitter_profile, @user.twitter_profile %></td>
-      <% end %>   
-    </tr>                                      
+      <% if current_user != @user %>
+        <% if current_user.received_friendships.find_by(user_id: @user) or
+                      current_user.request_friendships.find_by(friend_id: @user) %>
+          <td colspan="8"> Friends</td>
+        <% elsif current_user.received_friend_requests.find_by(user_id: @user) %>
+          <td colspan="8"> Respond to Request </td> 
+        <% elsif !current_user.friend_requests.find_by(friend_id: @user) %>
+          <%= render partial: "shared/add_friend", locals: {user: @user} %>
+        <% else %>
+          <%= render partial: "shared/cancel_request", locals: {user: @user} %>
+        <% end %>
+          
+        <% relationship = current_user.active_relationships.find_by(followed_id: @user) %>
+        <% if !relationship %>
+          <%= render partial: "shared/link_to_follow", locals: {user: @user} %>
+        <% else %>
+          <%= render partial: "shared/link_to_unfollow", locals: {user: @user, relationship: relationship} %>
+        <% end %> 
+      <% end %>
+    </tr>  
   </tbody>
 </table>
 
-<br> <br>
-<h3> Posts </h3>
+<h1>About</h1> 
+<p><strong>Name: <%= @user.name %></strong></p>   
+<p><strong>City: <%= @user.city %></strong></p> 
+<p><strong>Twitter Profile Link:</strong>
+  <% if @user.twitter_profile %>
+    <%= link_to @user.twitter_profile, @user.twitter_profile %>
+  <% end %> 
+</p>    
 <br>
-<%= render partial: "dashboard/index", locals: {posts: @posts} %>
+<h1> Posts </h1>
+<% if @posts.any? %>
+  <%= paginate @posts %>
+  <%= render partial: "dashboard/index", locals: {posts: @posts} %>
+  <%= paginate @posts %>
+<% else %>
+  No posts to display. Create a new one. 
+<% end %>   

@@ -1,6 +1,11 @@
-<%= form_for([post, comment], method: :put,
-											remote: true, id: "comment-form#{comment.id}") do |f| %>
-	<%= f.text_field :content, autocomplete: "off", class: 'form-control', 
-															id: "comment-content#{comment.id}", value: comment.content %>
-	<%= f.submit "Comment", class:"hide" %>
-<% end %>
+<div class="image">
+	<%= render partial: "shared/user_image", locals: {user: post.user}%>
+</div>
+<div class="comment-form">
+	<%= form_for([post, comment], method: :put,
+												remote: true, id: "comment_form#{comment.id}") do |f| %>
+		<%= f.text_field :content, autocomplete: "off", class: 'form-control', 
+																id: "comment_content#{comment.id}", value: comment.content %>
+		<%= f.submit "Comment", class:"hide" %>
+	<% end %>
+</div>	

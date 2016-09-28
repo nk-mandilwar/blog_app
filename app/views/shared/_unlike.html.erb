@@ -1,2 +1,3 @@
-<span id="unlike<%=@comment.id%>"><%= link_to "Unlike", 
-															comment_like_path(@comment, @like), method: :delete, remote: true %></span>
+<span id="unlike<%=@comment.id%>">
+	<%= link_to "Unlike", comment_like_path(@comment, @like), method: :delete, remote: true %>	
+</span>

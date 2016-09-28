@@ -1,13 +1,20 @@
-<%= form_for([post, post.comments.build], remote: true, id: "comment-form#{comment.id}") do |f| %>
-	<%= f.hidden_field :parent_id, :value => comment.id %>
-	<%= f.hidden_field :level, :value => comment.level + 1 %>
-	<% if !comment.base_id %>
-		<%= f.hidden_field :base_id, :value => comment.id %>
-	<% else %>
-		<%= f.hidden_field :base_id, :value => comment.base_id %>
-	<%end%> 
-	<span><%= render partial: "shared/user_image", locals: {user: comment.user}%>  
-	<%= f.text_field :content, placeholder: "Comment", autocomplete: "off", class: 'form-control', 
-															id: "comment-content#{comment.id}" %></span>
-	<%= f.submit "Comment", class:"hide" %>
-<% end %>
+<div class="form-div">
+  <div class="image">
+    <%= render partial: "shared/user_image", locals: {user: @post.user} %>
+  </div>
+	<div class="comment-form">
+		<%= form_for([post, post.comments.build], remote: true, id: "comment_form#{comment.id}") do |f| %>
+			<%= f.hidden_field :parent_id, :value => comment.id %>
+			<%= f.hidden_field :level, :value => comment.level + 1 %>
+			<% if !comment.base_id %>
+				<%= f.hidden_field :base_id, :value => comment.id %>
+			<% else %>
+				<%= f.hidden_field :base_id, :value => comment.base_id %>
+			<%end%> 
+			<%= f.text_field :content, placeholder: "Comment", autocomplete: "off", class: 'form-control', 
+																	id: "comment_content#{comment.id}" %>
+			<%= f.submit "Comment", class:"hide" %>
+		<% end %>
+	</div>
+	<div style="clear:both"></div>
+</div>    

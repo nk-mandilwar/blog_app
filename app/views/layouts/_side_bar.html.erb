@@ -1,11 +1,12 @@
 <div id="wrapper">
   <div id="sidebar-wrapper">
-    <ul class="sidebar-nav">
-      <li class="sidebar-brand">
-        <%= link_to "Hi #{current_user.username}", user_path(current_user) %>             
-      </li>
+    
+    <div class="sidebar-brand">
+      <%= link_to "Hi, #{current_user.username}!", user_path(current_user) %>          
+    </div>
+    <ul class="sidebar-nav">  
       <li>
-        <%= link_to "Dashboard", root_path %>      
+        <%= link_to "Home", root_path %>      
       </li>
       <li>
         <%= link_to "All Blogs(#{Post.all.count})", posts_path %> 

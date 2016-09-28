@@ -4,9 +4,9 @@
 	
 	def index
 		if params[:search]
-    	@users = User.search(params[:search])
+    	@users = User.search(params[:search]).page params[:page]
   	else
-    	@users = User.all
+    	@users = User.all.page params[:page]
     end
 	end
 
@@ -28,7 +28,7 @@
 		if !@user
       redirect_to users_path, notice: "The user you are looking for does not exist"  
   	else
-    	@posts = @user.posts.order("updated_at DESC")
+    	@posts = @user.posts.order("updated_at DESC").page params[:page]
     end
 	end
 

@@ -1,2 +1,3 @@
-<td colspan="8" id="follow<%= user.id %>"><%= link_to "Follow", relationships_path(followed_id: user.id), 
-                                                method: :post, remote: true %></td>
+<td colspan="8" id="follow<%= user.id %>">
+	<%= link_to "Follow", relationships_path(followed_id: user.id),  method: :post, remote: true %>	
+</td>

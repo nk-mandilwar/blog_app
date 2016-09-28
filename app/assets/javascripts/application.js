@@ -94,11 +94,20 @@ $(document).ready(function() {
 
   var warning = function() {
     $(document).on('click', '#warning', function(){
-      alert('Please Sign in or Sign up to read more')
+      $('.alert-msg').html('Sign in to read more');
+      timeOut();
     });
   }; 
 
-  warning();    
+  warning(); 
+
+  var timeOut = function(){
+    setTimeout(function(){
+      $('.notice').html('');
+    }, 4000);
+  }
+  
+  timeOut();     
 });
 
 function find_id(id_initial, id){

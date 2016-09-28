@@ -1,11 +1,14 @@
 <%= render 'layouts/subscribe' %>
-<div id="post-title">
+
+<div id="post_title">
   <u><%= @post.title %></u>
 </div> 
-<div id="post-content">
+<div id="post_content">
   <%= @post.content.html_safe %>
 </div>
-<%= render partial: "shared/post", locals: {post: @post} %>
+
+<%= render partial: "shared/post_manipulation", locals: {post: @post} %>
+
 <div>
   <% if @post.user != current_user %>
     <span> --posted by: <%= link_to @post.user.username, user_path(@post.user) %> </strong>
@@ -23,12 +26,20 @@
   <%= render partial: "shared/comment", locals: {comments: (comments.where("level = ?", 0)), l: 0} %>
 <% end %>  
 
-<div id="base-comment"></div><br>
+<div id="base_comment"></div>
 
 <h5><strong>Add a comment:</strong></h5>
-<%= form_for([@post, @post.comments.build], remote: true, class: "comment-form") do |f| %>
-  <%= f.text_field :content, placeholder: "Comment", autocomplete: "off", class: 'form-control comment-content' %>
-  <%= f.submit "Comment", class:"hide" %>
-<% end %>
 
-
+<div >
+  <div class="image">
+    <%= render partial: "shared/user_image", locals: {user: @post.user} %>
+  </div>
+  <div class="comment-form">
+    <%= form_for([@post, @post.comments.build], remote: true, class: "comment-form") do |f| %>
+      <%= f.text_field :content, placeholder: "Comment", autocomplete: "off", class: 'form-control 
+                                                                                  comment-content' %>
+      <%= f.submit "Comment", class:"hide" %>
+    <% end %>
+  </div>
+  <div style="clear:both"></div>
+</div>    
