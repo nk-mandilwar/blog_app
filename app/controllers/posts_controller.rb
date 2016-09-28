@@ -43,7 +43,7 @@ class PostsController < ApplicationController
 
   def destroy
     @post.destroy
-    redirect_to :back, notice: 'Post was successfully destroyed.'
+    redirect_to posts_path, notice: 'Post was successfully destroyed.'
   end
 
   def my_blogs

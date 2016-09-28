@@ -14,18 +14,14 @@ class SubscribesController < ApplicationController
     end
   end
 
-  def destroy
-    @subscribe = Subscribe.find_by(email: params[:subscribe][:email])
+  def unsubscribe
+    @subscribe = Subscribe.find_by(id: params[:id])
     if(@subscribe)
       @subscribe.destroy
       redirect_to root_path, notice: 'You unsubscribed successfully'
-    else 
-      render 'unsubscribe'
-    end
-  end
-
-  def unsubscribe
-    @subscribe = Subscribe.first
+    else
+      redirect_to root_path, notice: 'You have already unsubscribed'
+    end  
   end
 
   private

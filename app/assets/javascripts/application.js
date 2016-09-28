@@ -94,22 +94,22 @@ $(document).ready(function() {
 
   var warning = function() {
     $(document).on('click', '#warning', function(){
-      $('.alert-msg').html('Sign in to read more');
+      $('.alert-msg').html('Sign in to read more...');
       timeOut();
     });
   }; 
 
-  warning(); 
-
-  var timeOut = function(){
-    setTimeout(function(){
-      $('.notice').html('');
-    }, 4000);
-  }
-  
-  timeOut();     
+  warning();    
 });
 
 function find_id(id_initial, id){
   return (id_initial + id.split("_")[1]);
 }
+
+var timeOut = function(){
+  setTimeout(function(){
+    $('.notice').html('');
+  }, 4000);
+}
+
+timeOut();  

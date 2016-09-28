@@ -30,8 +30,8 @@ Rails.application.routes.draw do
   end
   resources :relationships,  only: [:create, :destroy]
 
-  resources :subscribes, only: [:create, :destroy] do
-    collection do 
+  resources :subscribes, only: :create do
+    member do 
       get 'unsubscribe'
     end
   end
