@@ -82,10 +82,6 @@ class User < ActiveRecord::Base
     super && provider.blank?
   end
 
-  def following?(other_user)
-    following.include?(other_user)
-  end
-
   def login=(login)
     @login = login
   end

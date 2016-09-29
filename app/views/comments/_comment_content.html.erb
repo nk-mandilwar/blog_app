@@ -23,12 +23,20 @@
 	<% end %>
 
 	<span><%= link_to "Reply", "javascript:void(0);", 
-								id: "addcomment_#{comment.id}", class: "comment-reply"%></span>
-	<% if comment.user == current_user %>
-		<span><%= link_to 'Delete', [@post, comment], method: :delete, 
-																data: { confirm: 'Are you sure?' }, remote: true %></span> -
-	<% end %>
+								id: "addcomment_#{comment.id}", class: "comment-reply"%></span> - 
 	<span class="time-ago"><%= time_ago_in_words(comment.created_at) %></span>
+	
+	<span class="edit-delete-comment">
+		<% if comment.user == current_user %>		
+			<%= link_to  "<i class=\"glyphicon glyphicon-pencil\"></i>".html_safe, 
+																edit_post_comment_path(@post, comment), remote: true %>
+		<% end %>
+		<% if comment.user == current_user || @post.user == current_user %>															
+			<%= link_to "<i class=\"glyphicon glyphicon-trash\"></i>".html_safe, [@post, comment], 
+														method: :delete, data: { confirm: 'Are you sure?' }, remote: true %>
+		<% end %>
+	</span>	
+	
 	<% if (comment.children.length > 0) %>
 		<span id="reply_<%= "#{comment.id}"%>", class="reply"> Replies </span>
 		<span id="hide_<%= "#{comment.id}"%>", class="hide1"> Hide </span>

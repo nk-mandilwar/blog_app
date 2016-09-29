@@ -1,6 +1,7 @@
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
+  before_action :check_user, only: [:edit, :update, :destroy]
 
   def index
     if params[:search]
@@ -57,6 +58,12 @@ class PostsController < ApplicationController
   private
     def set_post
       @post = Post.find_by(id: params[:id])
+    end
+
+    def check_user
+      if @post.user != current_user
+        redirect_to posts_path, notice: "Cannot access other user post page" 
+      end
     end
 
     def post_params

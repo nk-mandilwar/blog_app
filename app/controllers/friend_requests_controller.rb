@@ -1,4 +1,5 @@
 class FriendRequestsController < ApplicationController
+  before_action :authenticate_user!
 	before_action :set_friend_request, except: [:index, :create, :sent_requests]
 
 
@@ -21,19 +22,27 @@ class FriendRequestsController < ApplicationController
 
   def destroy
     @friend_request ||= FriendRequest.find_by(friend_id: params[:id])
-  	@friend_request.destroy
-  	respond_to do |format|
-      format.html {redirect_to :back}  
-      format.js
-    end 
+    if @friend_request.user_id != current_user.id || @friend_request.friend_id != current_user.id
+      redirect_to :back, "You can't reject the request that you didnt send or receive."
+    else 
+    	@friend_request.destroy
+    	respond_to do |format|
+        format.html {redirect_to :back}  
+        format.js
+      end
+    end   
   end
 
   def update
-	  @friend_request.accept
-    respond_to do |format|
-	    format.html {redirect_to friend_requests_path}
-      format.js
-    end
+    if @friend_request.friend_id != current_user.id
+      redirect_to :back, "You can't accept the request that you didnt receive."
+    else
+  	  @friend_request.accept
+      respond_to do |format|
+  	    format.html {redirect_to friend_requests_path}
+        format.js
+      end
+    end  
 	end
 
   private

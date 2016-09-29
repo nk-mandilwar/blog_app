@@ -1,6 +1,8 @@
 class CommentsController < ApplicationController
 	before_action :authenticate_user!
-	before_action :set_post, only: [:destroy, :create, :edit, :update]
+	before_action :set_post, only: [:create]
+	before_action :check_user, only: [:edit, :update]
+	before_action :check_post_user, only: :destroy
 	
 	def create
 		@comment = Comment.create(comment_params.merge({post_id: @post.id, user_id: current_user.id}))
@@ -11,7 +13,6 @@ class CommentsController < ApplicationController
 	end
 
 	def destroy
-		@comment = @post.comments.find_by(id: params[:id])
 		@comment_ids = [@comment.id]
 		if(@comment.children)
 			find_all_child_comment(@comment.children)
@@ -24,14 +25,12 @@ class CommentsController < ApplicationController
   end
 
   def edit
-  	@comment = @post.comments.find_by(id: params[:id])
   	respond_to do |format|
   		format.js
   	end
   end
 
   def update
-  	@comment = @post.comments.find_by(id: params[:id])
   	if @comment.update(comment_params)
   		respond_to do |format|
   			format.js
@@ -53,6 +52,22 @@ class CommentsController < ApplicationController
 		def set_post
 			@post = Post.find_by(id: params[:post_id])
 		end
+
+		def check_post_user
+			@post = set_post
+			@comment = @post.comments.find_by(id: params[:id])
+			if @post.user != current_user
+        check_user 
+      end
+		end
+
+		def check_user
+			@post = set_post
+			@comment = @post.comments.find_by(id: params[:id])
+      if @comment.user != current_user
+        redirect_to @post, notice: "Cannot access other user comment page" 
+      end
+    end
 
 		def find_all_child_comment comments
 			comments.each do |comment|

@@ -1,6 +1,7 @@
  class UsersController < ApplicationController
  	before_action :authenticate_user!
  	before_action :set_user, except: :index
+ 	before_action :check_user, only: [:edit, :update]
 	
 	def index
 		if params[:search]
@@ -11,9 +12,6 @@
 	end
 
 	def edit
-		unless @user == current_user
-      redirect_to edit_user_path(current_user), notice: "Cannot access other user edit page" 
-    end
 	end
 
 	def update
@@ -21,7 +19,7 @@
 			redirect_to user_path(@user), notice: "Updated Successfully"
 		else
 			render "edit"
-		end	
+		end		
 	end
 
 	def show
@@ -44,6 +42,12 @@
 
 	def set_user
 		@user = User.find_by(:id => params[:id])
+	end
+
+	def check_user
+		if @user != current_user
+      redirect_to users_path, notice: "Cannot access other user page" 
+    end
 	end
 
 	def user_params

@@ -12,11 +12,15 @@ class LikesController < ApplicationController
 
 	def destroy
 		@like = Like.find_by(id: params[:id])
-    @like.destroy
-    respond_to do |f|
-			f.html {redirect_to post_path(@comment.post)}
-			f.js
-		end
+		if @like.user != current_user
+			redirect_to :back, notice: "Cannot access other user's like page" 
+    else
+    	@like.destroy
+    	respond_to do |f|
+				f.html {redirect_to post_path(@comment.post)}
+				f.js
+			end
+		end	
   end
 
 	private

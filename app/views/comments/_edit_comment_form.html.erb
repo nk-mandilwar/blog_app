@@ -1,5 +1,5 @@
 <div class="image">
-	<%= render partial: "shared/user_image", locals: {user: post.user}%>
+	<%= render partial: "shared/user_image", locals: {user: post.user} %>
 </div>
 <div class="comment-form">
 	<%= form_for([post, comment], method: :put,
@@ -8,4 +8,5 @@
 																id: "comment_content#{comment.id}", value: comment.content %>
 		<%= f.submit "Comment", class:"hide" %>
 	<% end %>
-</div>	
+</div>
+<div style="clear:both"></div>	

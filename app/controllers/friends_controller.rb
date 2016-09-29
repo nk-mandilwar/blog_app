@@ -7,10 +7,14 @@ class FriendsController < ApplicationController
   end
 
   def destroy
-    @friend.destroy
-    respond_to do |format|
-      format.html {redirect_to friends_path}
-      format.js
+    if @friend.user_id != current_user.id || @friend.friend_id != current_user.id
+      redirect_to :back, "You can't unfriend user who is not your friend."
+    else  
+      @friend.destroy
+      respond_to do |format|
+        format.html {redirect_to friends_path}
+        format.js
+      end
     end
   end
 
