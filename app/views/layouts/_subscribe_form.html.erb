@@ -8,7 +8,10 @@
 		<% else %>
 			<p> Email: </p>
 			<p><%= f.text_field :email, id: "subscribe_textfield" %></p>
-		<% end %>		
+		<% end %>
+			<p> Enter your nickname/anything </p>
+			<p><%= f.text_field :security_ans, id: "security_ans_text_field" %></p>
+			<p><small>You should remember this to unsubscribe.</small></p>		
 		<p><%= f.submit "subscribe", class: "btn btn-primary" %></p>
 	<% end %>
 </div>

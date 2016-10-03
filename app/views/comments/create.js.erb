@@ -1,8 +1,18 @@
+<% l = 100 %>
+<% level = @comment.level %>
+<% while level >= 0 %>
+	<% l = l * 0.9 %>
+	<% level = level - 1 %>
+<% end %>	
+
 <% if @comment.parent_id != nil %>
 	$('#comment_content<%= @comment.parent_id %>').val('');
 	$("#display_comment<%= @comment.parent_id %>").append("<%= escape_javascript(render partial: 'comments/comment', locals: {comment: @comment})%>");
-	$('#reply_div<%= @comment.parent_id %>').hide();
+	$("#reply_div<%= @comment.parent_id %>").hide();
 <% else %>
 	$('.comment-content').val('');
 	$("#base_comment").append("<%= escape_javascript(render partial: 'comments/comment', locals: {comment: @comment})%>");
 <% end %>		
+
+$('<div id="display_comment<%= "#{@comment.id}" %>", style="margin-left: <%=l%>px;" > </div>').appendTo("#display_comment<%= @comment.parent_id %>");
+$('<div id="reply_div<%= "#{@comment.id}" %>", style="margin-left: <%=l%>px;" ></div>').appendTo("#reply_div<%= @comment.parent_id %>");

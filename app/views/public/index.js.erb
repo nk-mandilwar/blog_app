@@ -1,4 +1,4 @@
-$("<%= j render(partial: 'index', locals: {:posts => @posts}) %>")
+$("<%= j render(partial: 'dashboard/index', locals: {:posts => @posts}) %>")
   .appendTo($(".my-posts"));
 
 toAddShowMoreButton();

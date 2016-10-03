@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   
-  root 'dashboard#index'
+  root 'public#index' 
+  get 'home', to: 'dashboard#index'
   devise_for :users, controllers: { registrations: "registrations", 
                                   omniauth_callbacks: "omniauth_callbacks"}
 
@@ -12,7 +13,7 @@ Rails.application.routes.draw do
     collection do 
       get 'my_blogs'
     end    
-    resources :comments, only: [:create, :destroy, :edit, :update]
+    resources :comments, only: [:create, :destroy, :edit, :update, :new]
   end
   post '/rate' => 'rater#create', :as => 'rate'
 
@@ -30,8 +31,8 @@ Rails.application.routes.draw do
   end
   resources :relationships,  only: [:create, :destroy]
 
-  resources :subscribes, only: :create do
-    member do 
+  resources :subscribes, only: [:create, :destroy] do
+    collection do 
       get 'unsubscribe'
     end
   end

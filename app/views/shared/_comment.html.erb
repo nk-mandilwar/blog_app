@@ -12,9 +12,6 @@
 		<% end %>	 
 
 		<div id="display_comment<%= "#{comment.id}" %>", style="margin-left: <%=l*0.9%>px;" > </div>
-		<div id="reply_div<%= "#{comment.id}" %>", class="add-reply", 
-																style="margin-left: <%=l*0.9%>px;" >
-			<%= render partial: "comments/comment_form", locals: {post: @post, comment: comment} %>
-		</div>
+		<div id="reply_div<%= "#{comment.id}" %>", style="margin-left: <%=l*0.9%>px;" ></div>
 	<% end %>
 </div>

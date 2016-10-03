@@ -25,8 +25,8 @@ $(document).ready(function() {
   var replyTextOnClick = function(){
     $(document).on('click', '.reply', function(){
       
-      var comment_id = find_id("#comment_", $(this).attr('id'));
-      var hide_id = find_id("#hide_", $(this).attr('id'));
+      var comment_id = findId("#comment_", $(this).attr('id'));
+          hide_id = findId("#hide_", $(this).attr('id'));
       
       $(comment_id).toggle();
       $(this).hide();
@@ -37,8 +37,8 @@ $(document).ready(function() {
   var hide1TextOnClick = function(){
     $(document).on('click', '.hide1', function() {
 
-      var comment_id = find_id("#comment_", $(this).attr('id'));
-      var reply_id = find_id("#reply_", $(this).attr('id'));
+      var comment_id = findId("#comment_", $(this).attr('id'));
+          reply_id = findId("#reply_", $(this).attr('id'));
       
       $(comment_id).toggle();
       $(this).hide();
@@ -46,31 +46,10 @@ $(document).ready(function() {
     });
   };
 
-  var commentReplyOnClick = function(){
-    $(document).on('click', '.comment-reply', function() {
-      var reply_div_id = find_id("#reply_div", $(this).attr('id'));
-      $(reply_div_id).toggle();
-    });
-  };
-
-  replyTextOnClick();
-  hide1TextOnClick();
-  commentReplyOnClick();
-
-  var content = document.getElementsByClassName('show-less-content');
-  for (var i = 0; i < content.length; ++i) {
-    var id = $(content[i]).attr('id').split('_')[1];
-    var scrollHeight = content[i].scrollHeight;
-    var clientHeight = content[i].clientHeight;
-    if( scrollHeight > clientHeight){
-      $("#show_more"+id).show();
-    }
-  }
-
   var showMore = function(){
     $(document).on('click', '.show-more', function(){
       var id = $(this).attr('id').split("e")[1];
-      var show_id = "show_" + id;
+          show_id = "show_" + id;
       $("#"+show_id).css("max-height", document.getElementById(show_id).scrollHeight);
       $("#show_less_"+id).show();
       $(this).hide(); 
@@ -80,17 +59,14 @@ $(document).ready(function() {
   var showLess = function(){
     $(document).on('click', '.read-less', function(){
       var id = $(this).attr('id').split("_")[2];
-      var show_id = "show_" + id;
+          show_id = "show_" + id;
+          position = $("#"+show_id).position();
       $("#"+show_id).css("max-height", 100);
       $("#show_more"+id).show();
       $(this).hide();
-      var position = $("#"+show_id).position();
       window.scrollTo(position.left, position.top); 
     });
   };
-
-  showMore();
-  showLess();
 
   var warning = function() {
     $(document).on('click', '#warning', function(){
@@ -99,10 +75,15 @@ $(document).ready(function() {
     });
   }; 
 
+  replyTextOnClick();
+  hide1TextOnClick();
+  toAddShowMoreButton();
+  showMore();
+  showLess();
   warning();    
 });
 
-function find_id(id_initial, id){
+var findId = function(id_initial, id){
   return (id_initial + id.split("_")[1]);
 }
 
@@ -110,6 +91,18 @@ var timeOut = function(){
   setTimeout(function(){
     $('.notice').html('');
   }, 4000);
+}
+
+var toAddShowMoreButton = function(){
+  var content = $('.show-less-content');
+  for (var i = 0; i < content.length; ++i) {
+    var id = $(content[i]).attr('id').split('_')[1];
+        scrollHeight = content[i].scrollHeight;
+        clientHeight = content[i].clientHeight;
+    if( scrollHeight > clientHeight){
+      $("#show_more"+id).show();
+    }
+  }
 }
 
 timeOut();  

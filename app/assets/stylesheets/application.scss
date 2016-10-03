@@ -240,10 +240,6 @@ margin:0px;
 	margin-left: 55px;
 }
 
-.add-reply {
-	display: none;
-}
-
 .create-comment {
 	margin-top: 0.5%;
 }
@@ -296,8 +292,12 @@ margin:0px;
 }
 
 .notice {
+	width: 50%;
 	font-size: medium;
+	text-align: center;
 	position: fixed;
+	margin-top: 10px;
+	border-radius: 5px;
 }
 
 .post-title-wrap {

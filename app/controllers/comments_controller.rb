@@ -1,9 +1,16 @@
 class CommentsController < ApplicationController
 	before_action :authenticate_user!
-	before_action :set_post, only: [:create]
+	before_action :set_post, only: [:create, :new]
 	before_action :check_user, only: [:edit, :update]
 	before_action :check_post_user, only: :destroy
 	
+	def new
+		@comment = Comment.find_by(id: params[:comment_id])
+		respond_to do |format|
+			format.js
+		end
+	end
+
 	def create
 		@comment = Comment.create(comment_params.merge({post_id: @post.id, user_id: current_user.id}))
 		respond_to do |format|

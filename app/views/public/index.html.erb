@@ -1,0 +1,16 @@
+<h1 id="header_id">Welcome</h1>
+<br>
+<div id="subscribe"> <%= render "layouts/subscribe" %> </div>
+
+<% if !@posts.any? %>
+	<p><strong> Create a New Post! </strong><%= link_to "Click here", new_post_path %></p>
+<% end %>
+
+<div class="my-posts">
+	<%= render partial: "dashboard/index", locals: {posts: @posts} %>
+</div>
+
+<div id="infinite_scrolling">
+  <%= link_to_next_page(@posts, "<i class=\"glyphicon glyphicon-option-vertical\"></i>".html_safe,
+  																							remote: true) %>	
+</div>

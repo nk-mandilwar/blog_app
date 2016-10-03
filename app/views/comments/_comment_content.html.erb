@@ -15,16 +15,21 @@
 	</span>	
 	<% like = Like.find_by(:comment_id => comment.id, :user_id => current_user.id) %>
 	<% if !like  %>
-		<span id="like<%=comment.id%>"><%= link_to "Like", comment_likes_path(comment),
-																								method: :post, remote: true %></span>
+		<span id="like<%=comment.id%>">
+			<%= link_to "Like", comment_likes_path(comment), method: :post, remote: true %>	
+		</span>
 	<% else %>
-		<span id="unlike<%=comment.id%>"><%= link_to "Unlike", 
-										comment_like_path(comment, like), method: :delete, remote: true %></span>
+		<span id="unlike<%=comment.id%>">
+			<%= link_to "Unlike", comment_like_path(comment, like), method: :delete, remote: true %>		
+		</span>
 	<% end %>
 
-	<span><%= link_to "Reply", "javascript:void(0);", 
-								id: "addcomment_#{comment.id}", class: "comment-reply"%></span> - 
-	<span class="time-ago"><%= time_ago_in_words(comment.created_at) %></span>
+	<span>
+		<%= link_to "Reply", new_post_comment_path(@post, comment_id: comment.id,), remote: true %>	
+	</span> 
+	<span class="time-ago">
+		<%= " - #{time_ago_in_words(comment.created_at)}" %>	
+	</span>
 	
 	<span class="edit-delete-comment">
 		<% if comment.user == current_user %>		

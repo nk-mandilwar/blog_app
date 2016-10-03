@@ -1,6 +1,6 @@
 <div class="form-div">
   <div class="image">
-    <%= render partial: "shared/user_image", locals: {user: @post.user} %>
+    <%= render partial: "shared/user_image", locals: {user: comment.user} %>
   </div>
 	<div class="comment-form">
 		<%= form_for([post, post.comments.build], remote: true, id: "comment_form#{comment.id}") do |f| %>

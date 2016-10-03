@@ -12,11 +12,11 @@ class User < ActiveRecord::Base
   has_many :received_requests, through: :received_friend_requests, source: :user                           
 
   has_many :request_friendships, class_name: "Friendship", 
-                              foreign_key: "user_id",
-                              dependent: :destroy
+                                 foreign_key: "user_id",
+                                 dependent: :destroy
   has_many :received_friendships, class_name: "Friendship", 
-                              foreign_key: "friend_id",
-                              dependent: :destroy                             
+                                  foreign_key: "friend_id",
+                                  dependent: :destroy                             
   has_many :request_friends, through: :request_friendships, source: :friend
   has_many :received_friends, through: :received_friendships, source: :user
 
@@ -27,6 +27,7 @@ class User < ActiveRecord::Base
                                    foreign_key: "followed_id",
                                    dependent:   :destroy
   has_many :following, through: :active_relationships,  source: :followed
+  has_many :following_blogs, through: :following, source: :posts
   has_many :followers, through: :passive_relationships
   has_many :likes, dependent: :destroy
   # Include default devise modules. Others available are:

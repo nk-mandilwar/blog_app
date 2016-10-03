@@ -32,7 +32,7 @@
 
 <div >
   <div class="image">
-    <%= render partial: "shared/user_image", locals: {user: @post.user} %>
+    <%= render partial: "shared/user_image", locals: {user: current_user} %>
   </div>
   <div class="comment-form">
     <%= form_for([@post, @post.comments.build], remote: true, class: "comment-form") do |f| %>

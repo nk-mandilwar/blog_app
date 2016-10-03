@@ -1,0 +1,14 @@
+<h2 id="header_id"> Unsubscribe </h2> 
+<%= form_for(:subscribe, action: :destroy, method: :delete) do |f|%>
+	<% if !@subscribe %>
+		<div class="text-danger">
+      <p> Invalid Email </p>
+      <p>Or you may have been already unsubscribed!</p>
+    </div> 
+  <% end %>
+  <p>Email</p>	
+	<p><%= f.text_field :email, value: nil %> Confirm your email to unsubscribe </p>
+	<p>Enter your nickname/anything that you used when subscribing </p>
+	<p><%= f.text_field :security_ans, value: nil %></p>
+	<p><%= f.submit "unsubscribe", class: "btn btn-primary" %></p>
+<% end %>			

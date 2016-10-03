@@ -4,8 +4,9 @@
 		$('#subscribe').remove();
 	<% end %>	
 	$('#subscribe_textfield').val('');
+	$('#security_ans_textfield').val('');
 <% else %>
-	$('#subscribe_error').html("Invalid email");
+	$('#subscribe_error').html("Invalid email or already subscribed!");
 <% end %>	
 
 timeOut();
