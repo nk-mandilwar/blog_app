@@ -15,24 +15,9 @@
   <tbody>
     <tr>
       <% if current_user != @user %>
-        <% if current_user.received_friendships.find_by(user_id: @user) or
-                      current_user.request_friendships.find_by(friend_id: @user) %>
-          <td colspan="8"> Friends</td>
-        <% elsif current_user.received_friend_requests.find_by(user_id: @user) %>
-          <td colspan="8"> Respond to Request </td> 
-        <% elsif !current_user.friend_requests.find_by(friend_id: @user) %>
-          <%= render partial: "shared/add_friend", locals: {user: @user} %>
-        <% else %>
-          <%= render partial: "shared/cancel_request", locals: {user: @user} %>
-        <% end %>
-          
-        <% relationship = current_user.active_relationships.find_by(followed_id: @user) %>
-        <% if !relationship %>
-          <%= render partial: "shared/link_to_follow", locals: {user: @user} %>
-        <% else %>
-          <%= render partial: "shared/link_to_unfollow", locals: {user: @user, relationship: relationship} %>
-        <% end %> 
-      <% end %>
+         <%= render partial: "shared/user_relationship", locals: {user: @user, friendship: @friendship,
+                                          friend_request: @friend_request, relationship: @relationship} %>
+      <% end %>  
     </tr>  
   </tbody>
 </table>
@@ -48,9 +33,7 @@
 <br>
 <h1> Posts </h1>
 <% if @posts.any? %>
-  <%= paginate @posts %>
-  <%= render partial: "dashboard/index", locals: {posts: @posts} %>
-  <%= paginate @posts %>
+  <%= render partial: "posts/posts", locals: {posts: @posts} %>
 <% else %>
   No posts to display. Create a new one. 
 <% end %>   

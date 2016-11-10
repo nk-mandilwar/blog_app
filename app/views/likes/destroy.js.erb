@@ -1,2 +1,7 @@
-$('#unlike<%=@comment.id%>').html("<%= escape_javascript(render partial: 'shared/like')%>");
-$('#like_count<%=@comment.id%>').html("<%= escape_javascript(render partial: 'shared/like_count', locals: {comment: @comment})%>");
+<% if !@notice %>
+	$('#unlike<%=@comment.id%>').html("<%= j render partial: 'shared/like' %>");
+	$('#like_count<%=@comment.id%>').html("<%= j render partial: 'shared/like_count', locals: {comment: @comment} %>");
+<% else %>
+	$('.notice-msg').html("<%= j @notice %>");
+	timeOut();
+<% end %>	

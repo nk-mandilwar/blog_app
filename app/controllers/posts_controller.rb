@@ -1,7 +1,7 @@
 class PostsController < ApplicationController
-  before_action :set_post, only: [:show, :edit, :update, :destroy]
+  before_action :get_post, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
-  before_action :check_user, only: [:edit, :update, :destroy]
+  before_action :check_authenticated_user?, only: [:edit, :update, :destroy]
 
   def index
     if params[:search]
@@ -13,9 +13,6 @@ class PostsController < ApplicationController
   end
 
   def show
-    unless @post 
-      redirect_to posts_path, notice: 'The post you are looking for does not exist'
-    end
   end
 
   def new
@@ -56,11 +53,14 @@ class PostsController < ApplicationController
   end 
 
   private
-    def set_post
+    def get_post
       @post = Post.find_by(id: params[:id])
+      unless @post 
+        redirect_to posts_path, notice: 'The post you are looking for does not exist'
+      end
     end
 
-    def check_user
+    def check_authenticated_user?
       if @post.user != current_user
         redirect_to posts_path, notice: "Cannot access other user post page" 
       end

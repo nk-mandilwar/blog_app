@@ -24,7 +24,7 @@ class SubscribesController < ApplicationController
         render 'unsubscribe'
       end
     else
-      render 'unsubscribe'  
+      redirect_to root_path
     end  
   end
 

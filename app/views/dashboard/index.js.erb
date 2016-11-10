@@ -1,12 +1,11 @@
-$("<%= j render(partial: 'index', locals: {:posts => @posts}) %>")
+$("<%= j render(:partial => 'index', locals: {:posts => @posts}) %>")
   .appendTo($(".my-posts"));
-
-toAddShowMoreButton();
 
 <% if @posts.last_page? %>
   $('#infinite_scrolling').html("That's all! No more posts to show");
 <% else %>
-
   $('#infinite_scrolling')
-    .html("<%= j link_to_next_page(@posts, "<i class=\"glyphicon glyphicon-option-vertical\"></i>".html_safe, :remote => true) %>");
+    .html('<%= j link_to_next_page(@posts, "<i class=\"glyphicon glyphicon-option-vertical\"></i>".html_safe, :remote => true, id: "link_to_next_page") %>');
 <% end %>
+
+toAddShowMoreButton();

@@ -1,2 +1,4 @@
 <h1 id="header_id">Followers</h1>
-<%= render "shared/follow" %>
+<%= paginate @users %>
+<%= render partial: "shared/follow", locals: {users: @users, relationships: @relationships} %>
+<%= paginate @users %>

@@ -16,93 +16,20 @@
 //= require ratyrate
 //= require bootstrap-sprockets
 //= require tinymce-jquery
-//= require social-share-button
 //= require jquery.infinite-pages
+//= require social-share-button
 //= require_tree .
 
 $(document).ready(function() {
- 
-  var replyTextOnClick = function(){
-    $(document).on('click', '.reply', function(){
-      
-      var comment_id = findId("#comment_", $(this).attr('id'));
-          hide_id = findId("#hide_", $(this).attr('id'));
-      
-      $(comment_id).toggle();
-      $(this).hide();
-      $(hide_id).show();
-    });
-  };
-
-  var hide1TextOnClick = function(){
-    $(document).on('click', '.hide1', function() {
-
-      var comment_id = findId("#comment_", $(this).attr('id'));
-          reply_id = findId("#reply_", $(this).attr('id'));
-      
-      $(comment_id).toggle();
-      $(this).hide();
-      $(reply_id).show();
-    });
-  };
-
-  var showMore = function(){
-    $(document).on('click', '.show-more', function(){
-      var id = $(this).attr('id').split("e")[1];
-          show_id = "show_" + id;
-      $("#"+show_id).css("max-height", document.getElementById(show_id).scrollHeight);
-      $("#show_less_"+id).show();
-      $(this).hide(); 
-    });
-  };
-
-  var showLess = function(){
-    $(document).on('click', '.read-less', function(){
-      var id = $(this).attr('id').split("_")[2];
-          show_id = "show_" + id;
-          position = $("#"+show_id).position();
-      $("#"+show_id).css("max-height", 100);
-      $("#show_more"+id).show();
-      $(this).hide();
-      window.scrollTo(position.left, position.top); 
-    });
-  };
-
-  var warning = function() {
-    $(document).on('click', '#warning', function(){
-      $('.alert-msg').html('Sign in to read more...');
-      timeOut();
-    });
-  }; 
-
-  replyTextOnClick();
-  hide1TextOnClick();
   toAddShowMoreButton();
-  showMore();
-  showLess();
-  warning();    
+  $(document).scroll(function(){
+    findPostionOfInfiniteScrolling();
+  });
+  timeOut();  
 });
-
-var findId = function(id_initial, id){
-  return (id_initial + id.split("_")[1]);
-}
 
 var timeOut = function(){
   setTimeout(function(){
     $('.notice').html('');
   }, 4000);
-}
-
-var toAddShowMoreButton = function(){
-  var content = $('.show-less-content');
-  for (var i = 0; i < content.length; ++i) {
-    var id = $(content[i]).attr('id').split('_')[1];
-        scrollHeight = content[i].scrollHeight;
-        clientHeight = content[i].clientHeight;
-    if( scrollHeight > clientHeight){
-      $("#show_more"+id).show();
-    }
-  }
-}
-
-timeOut();  
+}; 

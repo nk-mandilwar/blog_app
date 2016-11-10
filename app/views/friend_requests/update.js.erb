@@ -1,5 +1,9 @@
-$('#friend_request<%= @friend_request.user_id%>').remove();
-$('#friend_request_count').html("<%= escape_javascript(render partial: 'shared/friend_request_count')%>");
-$('#friends_list_count').html("<%= escape_javascript(render partial: 'shared/friends_list_count')%>");
-$('.notice-msg').html("Successfully added to your friends list!");
+<% if !@notice %> 
+	$('#friend_request<%= @friend_request.user_id%>').remove();
+	$('#friend_request_count').html("<%= escape_javascript(render partial: 'shared/friend_request_count')%>");
+	$('#friends_list_count').html("<%= escape_javascript(render partial: 'shared/friends_list_count')%>");
+	$('.notice-msg').html("Successfully added to your friends list!");
+<% else %>
+	$('.notice-msg').html("<%= j @notice %>");
+<% end %>	
 timeOut();

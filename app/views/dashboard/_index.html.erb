@@ -1,18 +1,20 @@
-
 <% posts.each do |post| %>
-	<div class="post-link"> <%= link_to post.title, post %> </div>
-	<div class="show-less-content", id="show_<%= post.id %>">
-		<div id="post_content">
-  		<%= post.content.html_safe %>
-		</div>
-	</div>
-	<%= render partial: "shared/post_manipulation", locals: {post: post} %> 
-	<% if current_user %>
- 		<span class="show-more" id="show_more<%= post.id %>"> <strong>...Read More</strong> </span>
-		<span class="read-less" id="show_less_<%= post.id %>"> <strong>...Read Less</strong> </span>
-	<% else %>
-		<span> <strong id="warning">...Read More</strong> </span>
-	<% end %>	
+	<div class="post">
+		<div class="post-link"> <%= link_to post.title, post %> </div>
+		<div class="show-less-content", id="show_<%= post.id %>">
+			<div id="post_content">
+	  		<%= post.content.html_safe %>
+			</div>
+		</div> 
+		<span class="time-ago"> <%= time_ago_in_words(post.created_at) %> ago</span>
+		<% if current_user %>
+	 		<span class="show-more" id="show_more_<%= post.id %>"> <strong>...Read More</strong> </span>
+			<span class="read-less" id="show_less_<%= post.id %>"> <strong>...Read Less</strong> </span>
+		<% else %>
+			<span> <strong id="warning">...Read More</strong> </span>
+		<% end %>
+		<div style="clear:right"></div>
+	</div>		
 	<br><br>
 <% end %>
 

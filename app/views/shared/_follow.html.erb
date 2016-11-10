@@ -3,12 +3,11 @@
     <th colspan="10">Username</th>   
   </thead>
   <tbody>
-    <% @users.each do |user| %>
+    <% @users.zip(relationships).each do |user, relationship| %>
       <tr>
         <td colspan="8"> <%= render partial: "shared/user_image", locals: {user: user}%>
                                                 <%= link_to "  #{user.username}", user %></td>
         <% if user != current_user %>
-          <% relationship = current_user.active_relationships.find_by(followed_id: user) %>
            <td colspan="8">
             <% if !relationship %>
               <%= render partial: "shared/link_to_follow", locals: {user: user} %>

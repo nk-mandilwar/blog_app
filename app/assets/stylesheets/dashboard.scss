@@ -1,0 +1,25 @@
+#infinite_scrolling {
+	text-align: center;
+	background: #cce6ff;
+}
+
+.show-more, .read-less {
+	cursor: pointer;
+	float: right; 
+	display: none;
+}
+
+#warning {
+	cursor: pointer;
+	float: right; 
+}
+
+.show-less-content {
+	max-height: 100px;
+	overflow: hidden;
+}
+
+.post-link {
+	font-size: large;
+	word-wrap: break-word;
+}

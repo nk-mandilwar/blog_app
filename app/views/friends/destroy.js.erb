@@ -1,5 +1,4 @@
-$('#friends_list_count').html("<%= escape_javascript(render partial: 'shared/friends_list_count')%>");
-$('#friend_list<%= @friend.user_id%>').remove();
-$('#friend_list<%= @friend.friend_id%>').remove();
+$('#friends_list_count').html("<%= j render partial: 'shared/friends_list_count'%>");
+$('#friend_list<%= @friend.id%>').remove();
 $('.notice-msg').html("Successfully removed from your friends list!");
 timeOut();

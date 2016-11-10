@@ -1,4 +1,4 @@
- /*
+/*
  * This is a manifest file that'll be compiled into application.css, which will include all the files
  * listed below.
  *
@@ -11,9 +11,14 @@
  * file per style scope.
  *
  */
- @import "bootstrap-sprockets";
- @import "bootstrap";
- @import "social-share-button";
+
+@import "dashboard";
+@import "posts";
+@import "users";
+@import "comments";
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import "social-share-button";
 
 .bar {
 	background: #111;
@@ -218,32 +223,6 @@ margin:0px;
 	font-size: 500%;
 }
 
-#post_title {
-	padding-top: 20px;
-	color: #008ae6;
-	font-size: 300%;
-	word-wrap: break-word;
-}
-
-#post_content {
-	font-size: 130%;
-	word-wrap: break-word;
-}
-
-.time-ago {
-	font-size: small;
-	color: #B8C7CC;
-}
-
-.comment-reply-delete {
-	font-size: 100%;
-	margin-left: 55px;
-}
-
-.create-comment {
-	margin-top: 0.5%;
-}
-
 .subscribers-div {
 	float: right;
 	border: solid grey 2px;
@@ -258,37 +237,9 @@ margin:0px;
 	background: white;
 }
 
-.nested-class {
-	display: none;
-}
-
-.hide1 {
-	display: none;
-}
-
 .modal-header-height {
 	height: 5px;
 	padding-top:1px;
-}
-
-.post-link {
-	font-size: large;
-	word-wrap: break-word;
-}
-
-.missing-image {
-	height: 35px;
-	width: 50px;
-}
-
-.user-page-image {
-	height: 200px;
-	width: 200px
-}
-
-.show-less-content {
-	max-height: 100px;
-	overflow: hidden;
 }
 
 .notice {
@@ -300,48 +251,11 @@ margin:0px;
 	border-radius: 5px;
 }
 
-.post-title-wrap {
-	word-wrap: break-word;
-}
-
-.show-more, .read-less {
-	float: right; 
-	display: none;
-}
-
-#infinite_scrolling {
-	text-align: center;
-	background: #cce6ff;
-}
-
-.full-comment, .form-div {
-	margin-top: 5px;
-  margin-bottom: 5px;
-  padding-left: 10px;
-  padding-right: 10px;
-  padding-top: 10px;
-  padding-bottom: 5px;
-  border: 1px #929698 solid;
-  border-radius: 5px; 
-  word-wrap: break-word;
-}
-
 .image {
 	float: left;
 }
 
-.comment-form {
-	width: calc(100% - 55px);
-	float: right;
-}
-
-.comment-contents {
-	font-size: 120%;
-	word-wrap: break-word;
-	width: calc(100% - 55px);
-	float: right;
-}
-
-.edit-delete-comment{
-	float: right;
+.time-ago {
+	font-size: small;
+	color: #B8C7CC;
 }

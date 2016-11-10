@@ -1,6 +1,6 @@
 class CommentsController < ApplicationController
 	before_action :authenticate_user!
-	before_action :set_post, only: [:create, :new]
+	before_action :get_post, except: :liked_by
 	before_action :check_user, only: [:edit, :update]
 	before_action :check_post_user, only: :destroy
 	
@@ -47,7 +47,10 @@ class CommentsController < ApplicationController
 
   def liked_by
   	@comment = Comment.find_by(id: params[:id])
-  	@users = @comment.liked_by
+  	@users = @comment.liked_by.page params[:page]
+  	@relationships = User.fetch_user_relationship(@users, current_user)
+		@friendships = User.fetch_user_friendship(@users, current_user)
+		@friend_requests = User.fetch_user_friend_request(@users, current_user)
   end
 
 	private
@@ -56,21 +59,22 @@ class CommentsController < ApplicationController
 			params.require(:comment).permit(:content, :parent_id, :base_id, :level)
 		end
 
-		def set_post
+		def get_post
 			@post = Post.find_by(id: params[:post_id])
+			redirect_to posts_path unless @post 
 		end
 
 		def check_post_user
-			@post = set_post
 			@comment = @post.comments.find_by(id: params[:id])
+			redirect_to post_path(@post) unless @comment
 			if @post.user != current_user
         check_user 
       end
 		end
 
 		def check_user
-			@post = set_post
 			@comment = @post.comments.find_by(id: params[:id])
+			redirect_to post_path(@post) unless @comment
       if @comment.user != current_user
         redirect_to @post, notice: "Cannot access other user comment page" 
       end

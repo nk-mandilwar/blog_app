@@ -1,3 +1,4 @@
 <% @comment_ids.each do |comment_id| %>
 	$("#destroy_comment<%= comment_id %>").remove();
+	$("#reply_div<%= @comment.id %>").remove();
 <% end %>	

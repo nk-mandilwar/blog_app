@@ -1,0 +1,25 @@
+.post-title-wrap {
+	word-wrap: break-word;
+}
+
+#post_content {
+	font-size: 130%;
+	word-wrap: break-word;
+}
+
+#post_title {
+	padding-top: 20px;
+	color: #008ae6;
+	font-size: 300%;
+	word-wrap: break-word;
+}
+
+.comment-form {
+	width: calc(100% - 55px);
+	float: right;
+}
+
+.post {
+	border: solid 1px black;
+	padding: 5px;
+}

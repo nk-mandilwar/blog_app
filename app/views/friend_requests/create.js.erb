@@ -1,5 +1,5 @@
 
-$('#add_friend<%= @friend_request.friend_id%>').html("<%= escape_javascript(render partial: 'shared/cancel_request', locals: {user: User.find(@friend_request.friend_id)})%>");
-$('#sent_request_count').html("<%= escape_javascript(render partial: 'shared/sent_request_count')%>");
+$('#add_friend<%= @friend_request.friend_id%>').html("<%= j render partial: 'shared/cancel_request', locals: {user: User.find(@friend_request.friend_id)} %>");
+$('#sent_request_count').html("<%= j render partial: 'shared/sent_request_count' %>");
 $('.notice-msg').html("Friend request sent.");
 timeOut();

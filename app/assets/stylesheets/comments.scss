@@ -1,0 +1,44 @@
+.nested-class {
+	display: none;
+}
+
+.full-comment, .form-div {
+	margin-top: 5px;
+  margin-bottom: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 10px;
+  padding-bottom: 5px;
+  border: 1px #929698 solid;
+  border-radius: 5px; 
+  word-wrap: break-word;
+}
+
+.comment-contents {
+	font-size: 120%;
+	word-wrap: break-word;
+	width: calc(100% - 55px);
+	float: right;
+}
+
+.comment-reply-delete {
+	font-size: 100%;
+	margin-left: 55px;
+}
+
+.edit-delete-comment{
+	float: right;
+}
+
+.no-display {
+	display: none;
+	cursor: pointer;
+}
+
+.reply {
+	cursor: pointer;
+}
+
+.create-comment {
+	margin-top: 0.5%;
+}

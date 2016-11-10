@@ -1,3 +1,5 @@
 <h1 id="header_id"> Liked By </h1>
-<%= render 'layouts/subscribe' %>
-<%= render "shared/users" %>
+<%= paginate @users %>
+<%= render partial: "shared/users", locals: {users: @users, relationships: @relationships,
+	  																			friendships: @friendships, friend_requests: @friend_requests} %>
+<%= paginate @users %>

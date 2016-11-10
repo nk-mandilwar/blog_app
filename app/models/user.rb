@@ -11,14 +11,8 @@ class User < ActiveRecord::Base
   has_many :requests, through: :friend_requests, source: :friend
   has_many :received_requests, through: :received_friend_requests, source: :user                           
 
-  has_many :request_friendships, class_name: "Friendship", 
-                                 foreign_key: "user_id",
-                                 dependent: :destroy
-  has_many :received_friendships, class_name: "Friendship", 
-                                  foreign_key: "friend_id",
-                                  dependent: :destroy                             
-  has_many :request_friends, through: :request_friendships, source: :friend
-  has_many :received_friends, through: :received_friendships, source: :user
+  has_many :friendships, dependent: :destroy
+  has_many :friends, through: :friendships
 
   has_many :active_relationships,  class_name:  "Relationship",
                                    foreign_key: "follower_id",
@@ -37,13 +31,13 @@ class User < ActiveRecord::Base
 
   VALID_TWITTER_REGEX = /(?:https?:\/\/)?(?:www\.)?twitter\.com\/(?:(?:\w)*#!\/)?(?:pages\/)?(?:[\w\-]*\/)*([\w\-\.]*)/
   VALID_STRING_REGEX=/([\w\-\'])([\s]+)?([\w\-\'])/
-  validates :name, presence: true, length: { maximum: 50 }, format: { with: VALID_STRING_REGEX }, unless: :uid
+  validates :name, presence: true, length: { maximum: 50 }, format: { with: VALID_STRING_REGEX }
   validates :city, presence: true, length: { maximum: 50 }, format: { with: VALID_STRING_REGEX }, unless: :uid
   validates :username,  presence: true, length: { maximum: 50 }, 
-                    uniqueness: { case_sensitive: false }, unless: :uid
+                    uniqueness: { case_sensitive: false }
   validates :twitter_profile, length: { maximum: 100 },
                     format: { with: VALID_TWITTER_REGEX },
-                    uniqueness: { case_sensitive: false }, unless: :uid
+                    uniqueness: { case_sensitive: false }
 
   mount_uploader :image, ImageUploader                    
 
@@ -99,9 +93,37 @@ class User < ActiveRecord::Base
     [id, name.parameterize].join("-")
   end
 
-  def following_posts
-    following_ids = "SELECT followed_id FROM relationships WHERE follower_id = :user_id"
-    Post.where("user_id IN (#{following_ids}) OR user_id = :user_id", 
-                                              user_id: id).order("updated_at DESC")
+  def remove_friend(friend)
+    self.friends.destroy(friend)
+    friend.friends.destroy(self)
   end
+
+  def self.fetch_user_relationship(users, current_user)
+    relationships = []
+    users.each do |user|
+      relationship = current_user.active_relationships.find_by(followed_id: user)
+      relationships << relationship
+    end  
+    relationships
+  end
+
+  def self.fetch_user_friendship(users, current_user)
+    friendships = []
+    users.each do |user|
+      friendship = current_user.friendships.find_by(friend_id: user)
+      friendships << friendship
+    end
+    friendships
+  end
+
+  def self.fetch_user_friend_request(users, current_user)
+    friend_requests = []
+    users.each do |user|
+      friend_request = { received_request: current_user.received_friend_requests.find_by(user_id:  user),
+                         sent_request: current_user.friend_requests.find_by(friend_id: user) }
+      friend_requests << friend_request
+    end
+    friend_requests
+  end
+    
 end

@@ -1,9 +1,8 @@
-<h1 id="header_id">Welcome</h1>
-<br>
 <div id="subscribe"> <%= render "layouts/subscribe" %> </div>
-
+<br>
 <% if !@posts.any? %>
-	<p><strong> Create a New Post! </strong><%= link_to "Click here", new_post_path %></p>
+	<p><strong>Sorry! No posts to display</strong></p>
+	<p> Sign in to create a post. <%= link_to "Click here to sign in", new_user_session_path %></p>
 <% end %>
 
 <div class="my-posts">
@@ -12,5 +11,6 @@
 
 <div id="infinite_scrolling">
   <%= link_to_next_page(@posts, "<i class=\"glyphicon glyphicon-option-vertical\"></i>".html_safe,
-  																							remote: true) %>	
+  																							remote: true, id: "link_to_next_page") %>	
 </div>
+

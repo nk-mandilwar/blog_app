@@ -1,0 +1,14 @@
+<% if friendship %>
+  <td colspan="8"> Friends</td>
+<% elsif friend_request[:received_request] %>
+  <td colspan="8"> Respond to Request </td> 
+<% elsif !friend_request[:sent_request] %>
+  <%= render partial: "shared/add_friend", locals: {user: user} %>
+<% else %>
+  <%= render partial: "shared/cancel_request", locals: {user: user} %>
+<% end %>
+<% if !relationship %>
+  <%= render partial: "shared/link_to_follow", locals: {user: user} %>
+<% else %>
+  <%= render partial: "shared/link_to_unfollow", locals: {user: user, relationship: relationship} %>
+<% end %> 

@@ -1,4 +1,8 @@
-<% user = User.find(@relationship.followed_id) %>
-$('#unfollow<%= @relationship.followed_id %>').html("<%= escape_javascript(render partial: 'shared/link_to_follow', locals: {user: user})%>");
-$('.notice-msg').html("Successfully unfollowed!");
+<% if !@notice %>
+	<% user = User.find(@relationship.followed_id) %>
+	$('#unfollow<%= @relationship.followed_id %>').html("<%= j render partial: 'shared/link_to_follow', locals: {user: user} %>");
+	$('.notice-msg').html("Successfully unfollowed!");
+<% else %>
+	$('.notice-msg').html("<%= j @notice %>");
+<% end %>	
 timeOut();

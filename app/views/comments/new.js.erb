@@ -1,1 +1,1 @@
-$("#reply_div<%= @comment.id %>").html("<%=j render partial: 'comments/comment_form', locals: {post: @post, comment: @comment} %>");
+$("#reply_div<%= @comment.id %>").append("<%= j render partial: 'comments/comment_form', locals: {post: @post, comment: @comment} %>");
