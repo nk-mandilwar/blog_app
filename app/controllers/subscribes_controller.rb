@@ -25,16 +25,17 @@ class SubscribesController < ApplicationController
       end
     else
       redirect_to root_path
-    end  
+    end
   end
 
   def unsubscribe
+    binding.pry
     @subscribe = Subscribe.new
   end
 
   private
 
   def subscriber_params
-  	params.require(:subscribe).permit(:email, :security_ans)
+  	params.require(:subscribe).permit(:email, :security_question, :security_ans)
   end
 end

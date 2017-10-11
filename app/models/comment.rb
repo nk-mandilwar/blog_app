@@ -9,4 +9,17 @@ class Comment < ActiveRecord::Base
   validates :content, presence: true, length: { maximum: 10000}
   validates :post_id, presence: true
   validates :user_id, presence: true
+
+  def get_children
+    self.children.includes(:likes, :user)
+  end
+
+  def self.get_user_likes(comments, user_id)
+    current_user_likes = []
+    comments.each do |comment|
+      like = Like.find_by(:comment_id => comment.id, :user_id => user_id)
+      current_user_likes << like
+    end
+    current_user_likes
+  end
 end

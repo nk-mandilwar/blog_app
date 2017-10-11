@@ -7,8 +7,8 @@
 <% end %> 
 
 <span>
-  <%= link_to " #{@user.followers.count} followers", followers_user_path(@user) %>
-  <%= link_to " #{@user.following.count} following", following_user_path(@user) %> 
+  <%= link_to " #{@followers_count} followers", followers_user_path(@user) %>
+  <%= link_to " #{@following_count} following", following_user_path(@user) %> 
 </span>
 
 <table class="table table-hover">

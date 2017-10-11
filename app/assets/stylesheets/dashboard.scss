@@ -7,11 +7,28 @@
 	cursor: pointer;
 	float: right; 
 	display: none;
+	color: #6890d1;
 }
 
 #warning {
 	cursor: pointer;
-	float: right; 
+	float: right;
+	color: #6890d1; 
+}
+
+.read-less:hover {
+	text-decoration: underline;
+	color: #466699;
+}
+
+#warning:hover {
+	text-decoration: underline;
+	color: #466699;	 
+}
+
+.show-more:hover {
+	text-decoration: underline;
+	color: #466699;
 }
 
 .show-less-content {

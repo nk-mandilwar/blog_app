@@ -49,6 +49,8 @@
 			@friend_request = { received_request: current_user.received_friend_requests.find_by(user_id:  @user),
                          sent_request: current_user.friend_requests.find_by(friend_id: @user) }
 			@posts = @user.posts.order("updated_at DESC").page params[:page]
+			@following_count = @user.following.count
+			@followers_count = @user.followers.count
 		end
 	end
 

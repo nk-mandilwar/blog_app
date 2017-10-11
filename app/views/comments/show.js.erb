@@ -1,0 +1,5 @@
+$('#link_to_replies_<%= @comment.id %>').remove();
+$('#display_comment_<%= @comment.id %>').css("margin-left", <%= @left_margin %>);
+$('#display_comment_<%= @comment.id %>').html('<%= j render partial: "shared/comment", locals: {comments: @comments,
+                                                                post: @post, current_user_likes: @current_user_likes } %>');
+$('#hide_<%= @comment.id %>').show();

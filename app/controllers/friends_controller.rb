@@ -4,10 +4,11 @@ class FriendsController < ApplicationController
 
   def index
   	@friends = current_user.friends
+    @user = User.find_by(id: @friend_request.friend_id)
   end
 
   def destroy
-    redirect_to :back unless @friend  
+    redirect_to :back unless @friend
     current_user.remove_friend(@friend)
     respond_to do |format|
       format.html {redirect_to friends_path}
@@ -18,6 +19,6 @@ class FriendsController < ApplicationController
   private
 
   def get_friend
-    @friend = current_user.friends.find_by(id: params[:id])                                                                          
+    @friend = current_user.friends.find_by(id: params[:id])
   end
 end

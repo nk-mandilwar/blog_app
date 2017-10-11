@@ -11,15 +11,15 @@ class LikesController < ApplicationController
 
 	def destroy
 		@like = Like.find_by(id: params[:id])
-		redirect_to :back unless @like 
+		redirect_to :back unless @like
 		if @like.user != current_user
-			@notice = "Cannot access other user's like page" 
+			@notice = "Cannot access other user's like page"
     else
     	@like.destroy
     end
     respond_to do |format|
 			format.js
-		end	
+		end
   end
 
 	private

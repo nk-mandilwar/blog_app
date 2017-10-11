@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
-  
-  root 'public#index' 
+
+  root 'public#index'
   get 'home', to: 'dashboard#index'
-  devise_for :users, controllers: { registrations: "registrations", 
+  devise_for :users, controllers: { registrations: "registrations",
                                   omniauth_callbacks: "omniauth_callbacks"}
 
   resources :friends, only: [:index, :destroy]
@@ -10,10 +10,10 @@ Rails.application.routes.draw do
   get 'sent_requests', to: 'friend_requests#sent_requests'
 
   resources :posts do
-    collection do 
+    collection do
       get 'my_blogs'
-    end    
-    resources :comments, only: [:create, :destroy, :edit, :update, :new]
+    end
+    resources :comments, only: [:create, :destroy, :edit, :update, :new, :show]
   end
   post '/rate' => 'rater#create', :as => 'rate'
 
@@ -22,8 +22,8 @@ Rails.application.routes.draw do
       get :liked_by
     end
     resources :likes, only: [:create, :destroy]
-  end  
-  
+  end
+
   resources :users, except: :destroy do
     member do
       get :following, :followers
@@ -32,13 +32,13 @@ Rails.application.routes.draw do
   resources :relationships,  only: [:create, :destroy]
 
   resources :subscribes, only: [:create, :destroy] do
-    collection do 
+    collection do
       get 'unsubscribe'
     end
   end
 
   # get '*a', :to => 'errors#routing'
- 
+
   # get '/post/my_blogs', to: 'posts#my_blogs', as: 'my_blogs'
   # post 'users/auth/twitter/callback', to: 'sessions#create'
 

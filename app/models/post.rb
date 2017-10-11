@@ -1,6 +1,6 @@
 class Post < ActiveRecord::Base
 	after_create :send_email_to_subscribers
-	
+
 	ratyrate_rateable "content"
 	belongs_to :user
 	has_many :comments, dependent: :destroy
@@ -11,7 +11,11 @@ class Post < ActiveRecord::Base
 	def to_param
     [id, title.parameterize].join("-")
   end
-  
+
+  def get_root_comments
+		self.comments.where(parent_id: nil).includes(:user, :children, :likes)
+	end
+
 	private
 
 	def send_email_to_subscribers
@@ -23,4 +27,5 @@ class Post < ActiveRecord::Base
 	def self.search(search)
   	where("title LIKE :search", {search: "%#{search}%"}).order("updated_at DESC")
 	end
+
 end

@@ -2,7 +2,7 @@
 
 <div id="post_title">
   <u><%= @post.title %></u>
-</div> 
+</div>
 <div id="post_content">
   <%= @post.content.html_safe %>
 </div>
@@ -10,25 +10,23 @@
 <%= render partial: "shared/post_manipulation", locals: {post: @post} %>
 
 <div>
-  <% if @post.user != current_user %>
-    <span> --posted by: <%= link_to @post.user.username, user_path(@post.user) %> </strong>
-          <%= link_to " #{@post.user.followers.count} followers", followers_user_path(@post.user) %>
-          <%= link_to " #{@post.user.following.count} following", following_user_path(@post.user) %> 
+  <% if @post.user_id != current_user.id %>
+    <span> --posted by: <%= link_to @post_user, user_path(@post.user_id) %> </strong>
+          <%= link_to " #{@followers_count} followers", followers_user_path(@post.user_id) %>
+          <%= link_to " #{@following_count} following", following_user_path(@post.user_id) %>
     </span>
   <% end %>
 </div>
 
-<%= rating_for @post, 'content', disable_after_rate: false, enable_half: true %> 
+<%= rating_for @post, 'content', disable_after_rate: false, enable_half: true %>
 
-<% comments = @post.comments.includes(:user, :children, :likes) %>
-<% if comments.any? %>
+<% if @comments.any? %>
   <h3>Comments:</h3>
-  <%= render partial: "shared/comment", locals: {comments: (comments.where("level = ?", 0)), l: 0} %>
-<% end %>  
+  <%= render partial: "shared/comment", locals: {comments: @comments, post: @post,
+                                                current_user_likes: @current_user_likes } %>
+<% end %>
 
 <div id="base_comment"></div>
-<div id="display_comment" ></div>
-<div id="reply_div" ></div>
 
 <h4><strong>Add a comment:</strong></h4>
 
@@ -38,10 +36,10 @@
   </div>
   <div class="comment-form">
     <%= form_for([@post, @post.comments.build], remote: true, class: "comment-form") do |f| %>
-      <%= f.text_field :content, placeholder: "Comment", autocomplete: "off", class: 'form-control 
+      <%= f.text_field :content, placeholder: "Comment", autocomplete: "off", class: 'form-control
                                                                                   comment-content' %>
       <%= f.submit "Comment", class:"hide" %>
     <% end %>
   </div>
   <div style="clear:both"></div>
-</div>    
+</div>

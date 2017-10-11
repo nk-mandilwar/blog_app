@@ -1,13 +1,23 @@
-<% l = calc_left_margin(@comment.level) %>
 <% if @comment.parent_id != nil %>
-	$('#comment_content<%= @comment.parent_id %>').val('');
-	$("#display_comment<%= @comment.parent_id %>").append("<%= j render partial: 'comments/comment', locals: {comment: @comment} %>");
-	$("#reply_div<%= @comment.parent_id %>").html('');
-	$('<div id="display_comment<%= "#{@comment.id}" %>", style="margin-left: <%=l%>px;" > </div>').appendTo("#display_comment<%= @comment.parent_id %>");
-	$('<div id="reply_div<%= "#{@comment.id}" %>", style="margin-left: <%=l%>px;" ></div>').appendTo("#reply_div<%= @comment.parent_id %>");
+	$('#comment_content_<%= @parent_comment.id %>').val('');
+  $('#display_comment_<%= @parent_comment.id %>').css("margin-left", <%= @left_margin %>);
+	$("#display_comment_<%= @parent_comment.id %>").
+              append("<%= j render partial: 'comments/comment', locals: {comment: @comment, like: @like, post: @post} %>");
+	$("#reply_div_<%= @parent_comment.id %>").html('');
+	$('<div id="display_comment_<%= @comment.id %>"></div>').appendTo("#display_comment_<%= @parent_comment.id %>");
+	$('<div id="reply_div_<%= @comment.id %>"></div>').appendTo("#display_comment_<%= @parent_comment.id %>");
 <% else %>
 	$('.comment-content').val('');
-	$("#base_comment").append("<%= j render partial: 'comments/comment', locals: {comment: @comment} %>");
-	$('<div id="display_comment<%= "#{@comment.id}" %>", style="margin-left: <%=l%>px;" > </div>').appendTo("#display_comment");
-	$('<div id="reply_div<%= "#{@comment.id}" %>", style="margin-left: <%=l%>px;" ></div>').appendTo("#reply_div");
-<% end %>		
+	$("#base_comment").append("<%= j render partial: 'comments/comment',
+                              locals: {comment: @comment, like: @like, post: @post} %>");
+	$('<div id="display_comment_<%= @comment.id %>"></div>').appendTo("#base_comment");
+	$('<div id="reply_div_<%= @comment.id %>"></div>').appendTo("#base_comment");
+<% end %>
+
+<% if @no_of_children == 1 %>
+  $('#full_comment_<%= @parent_comment.id %>').find(".comment-reply-delete").
+                        append('<span id="reply_<%= @parent_comment.id %>", class="reply"> Replies </span>');
+  $('#full_comment_<%= @parent_comment.id %>').find(".comment-reply-delete").
+                        append('<span id="hide_<%= @parent_comment.id %>", class="no-display"> Hide </span>');
+  $("#hide_<%= @parent_comment.id %>").show();
+<% end %>

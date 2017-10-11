@@ -1,1 +1,3 @@
-$("#reply_div<%= @comment.id %>").append("<%= j render partial: 'comments/comment_form', locals: {post: @post, comment: @comment} %>");
+$("#reply_div_<%= @comment.id %>").css("margin-left", <%= @left_margin %>);
+$("#reply_div_<%= @comment.id %>").
+              append("<%= j render partial: 'comments/comment_form', locals: {post: @post, comment: @comment} %>");

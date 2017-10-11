@@ -1,17 +1,24 @@
-<div class="subscribers-div">
-	<%= form_for(:subscribe, :url => url_for(:controller => "subscribes", :action => "create", 
-														:method => "post"), remote: true) do |f|%>
-		<p id="subscribe_error" class="text-danger"></p>
-		<p> <strong>To get all news, Subscribe it.</strong> </p>
-		<% if current_user %>
-			<p><%= f.hidden_field(:email, :value => current_user.email) %></p>
-		<% else %>
-			<p> Email: </p>
-			<p><%= f.text_field :email, id: "subscribe_textfield" %></p>
-		<% end %>
-			<p> Enter your nickname/anything </p>
-			<p><%= f.text_field :security_ans, id: "security_ans_text_field" %></p>
-			<p><small>You should remember this to unsubscribe.</small></p>		
-		<p><%= f.submit "subscribe", class: "btn btn-primary" %></p>
+<%= form_for(:subscribe, :url => url_for(:controller => "subscribes", :action => "create",
+													:method => "post"), remote: true) do |f|%>
+	<p id="subscribe_error" class="text-danger"></p>
+	<% if current_user %>
+		<p><%= f.hidden_field(:email, :value => current_user.email) %></p>
+	<% else %>
+		<p>
+			<strong>Email:</strong>
+			<%= f.text_field :email, id: "subscribe_textfield" %>
+		</p>
 	<% end %>
-</div>
+	<p> <strong>Select a security question:</strong>
+  <p><%= f.select :security_question, options_for_select([["What is your pet name?", "pet_name"],
+  																												["What is your favourite color?", "favourite_color"],
+  																												["What is your first possession?", "first_possession"],
+  																												["What is your mother's name?", "mother_name"],
+  																												["What is your lover's name?", "lover_name"]]) %></p>
+		<p>
+			<strong>Answer:</strong>
+			<%= f.text_field :security_ans, id: "security_ans_text_field" %>
+		</p>
+		<p><small>(You should remember this to unsubscribe.)</small></p>
+	<p><%= f.submit "submit", class: "btn btn-primary" %></p>
+<% end %>

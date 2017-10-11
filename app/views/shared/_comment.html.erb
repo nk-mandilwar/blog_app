@@ -1,17 +1,5 @@
-<div style="margin-left: <%= l %>px;">
-	<% if l == 0 %>
-		<% l = 100 %>
-	<% end %>
-
-	<% comments.each do |comment| %> 
-		<%= render partial: "comments/comment", locals: {comment: comment} %>
-		<% if (comments = comment.children) %>	
-			<div id="comment_<%= "#{comment.id}" %>", class="nested-class" > 
-				<%= render partial: "shared/comment", locals: {comments: comments, l: l * 0.9} %>
-			</div> 
-		<% end %>	 
-
-		<div id="display_comment<%= "#{comment.id}" %>", style="margin-left: <%=l*0.9%>px;" ></div>
-		<div id="reply_div<%= "#{comment.id}" %>", style="margin-left: <%=l*0.9%>px;" ></div>
-	<% end %>
-</div>
+<% comments.zip(current_user_likes).each do |comment, like| %>
+	<%= render partial: "comments/comment", locals: {comment: comment, like: like, post: post} %>
+	<div id="display_comment_<%= comment.id %>" ></div>
+	<div id="reply_div_<%= comment.id %>" ></div>
+<% end %>

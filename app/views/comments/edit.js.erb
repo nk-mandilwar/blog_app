@@ -1,3 +1,2 @@
-
-$("#destroy_comment<%= @comment.id %>")
-	.html("<%= j render partial: 'edit_comment_form', locals: {post: @post, comment: @comment}%>");
+$("#full_comment_<%= @comment.id %>").
+            html("<%= j render partial: 'edit_comment_form', locals: {post: @post, comment: @comment}%>");

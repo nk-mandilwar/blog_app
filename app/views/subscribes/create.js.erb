@@ -1,12 +1,18 @@
 <% if @subscribe.save %>
 	$('.notice-msg').html("Subscribed successfully!");
-	<% if current_user %>
-		$('#subscribe').remove();
-	<% end %>	
-	$('#subscribe_textfield').val('');
-	$('#security_ans_textfield').val('');
+	<% if !current_user %>
+	  $('#subscribe_textfield').val('');
+	  $('#security_ans_text_field').val('');
+    $('.subscribe').show();
+    $('.subscriber-form').hide();
+    $('#subscribe_security_question').val('pet_name');
+    $('#subscribe_error').html('');
+  <% else %>
+    $('.subscribers-div').remove();
+  <% end %>
 <% else %>
-	$('#subscribe_error').html("Invalid email or already subscribed!");
-<% end %>	
+	$('#subscribe_error').
+                html("<p>Invalid email or already subscribed!</p><p>Answer must contain atleast three characters</p>");
+<% end %>
 
 timeOut();

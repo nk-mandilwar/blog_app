@@ -3,10 +3,10 @@
 </div>
 <div class="comment-form">
 	<%= form_for([post, comment], method: :put,
-												remote: true, id: "comment_form#{comment.id}") do |f| %>
-		<%= f.text_field :content, autocomplete: "off", class: 'form-control', 
-																id: "comment_content#{comment.id}", value: comment.content %>
+												remote: true, id: "comment_form_#{comment.id}") do |f| %>
+		<%= f.text_field :content, autocomplete: "off", class: 'form-control',
+																id: "comment_content_#{comment.id}", value: comment.content %>
 		<%= f.submit "Comment", class:"hide" %>
 	<% end %>
 </div>
-<div style="clear:both"></div>	
+<div style="clear:both"></div>

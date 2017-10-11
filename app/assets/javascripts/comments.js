@@ -1,6 +1,6 @@
 var replyTextOnClick = function(){
   $(document).on('click', '.reply', function(){
-    var comment_id = findId("#comment_", $(this).attr('id'));
+    var comment_id = findId("#display_comment_", $(this).attr('id'));
         hide_id = findId("#hide_", $(this).attr('id'));
     $(comment_id).toggle();
     $(this).hide();
@@ -10,7 +10,7 @@ var replyTextOnClick = function(){
 
 var hiddenTextOnClick = function(){
   $(document).on('click', '.no-display', function() {
-    var comment_id = findId("#comment_", $(this).attr('id'));
+    var comment_id = findId("#display_comment_", $(this).attr('id'));
         reply_id = findId("#reply_", $(this).attr('id'));
     $(comment_id).toggle();
     $(this).hide();

@@ -1,4 +1,9 @@
 <% @comment_ids.each do |comment_id| %>
-	$("#destroy_comment<%= comment_id %>").remove();
-	$("#reply_div<%= @comment.id %>").remove();
-<% end %>	
+	$("#full_comment_<%= comment_id %>").remove();
+	$("#reply_div_<%= comment_id %>").remove();
+<% end %>
+
+<% if @no_of_children == 0 %>
+  $("#full_comment_<%= @comment.parent_id %>").find('#reply_<%= @comment.parent_id %>').remove();
+  $("#full_comment_<%= @comment.parent_id %>").find('#hide_<%= @comment.parent_id %>').remove();
+<% end %>

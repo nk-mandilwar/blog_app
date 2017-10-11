@@ -46,11 +46,11 @@ footer {
 	padding-top: 5px;
 	border-top: 1px solid #eaeaea;
 	color: red;
-	
+
 	a {
 		color: blue;
 	}
-	
+
 	a:hover {
 		color: #222;
 	}
@@ -63,7 +63,7 @@ footer {
 		margin-right :7%;
 		float: right;
 		list-style: none;
-		
+
 		li {
 			float: left;
 			margin-left: 15px;
@@ -225,11 +225,16 @@ margin:0px;
 
 .subscribers-div {
 	float: right;
+	width: 20%;
 	border: solid grey 2px;
 	padding: 10px;
 	position: fixed;
-	top: 100px; 
+	top: 100px;
 	right: 5px;
+}
+
+.subscriber-form {
+	display: none;
 }
 
 .button-search {

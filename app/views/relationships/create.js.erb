@@ -1,4 +1,5 @@
 <% user = User.find(@relationship.followed_id) %>
-$('#follow<%= @relationship.followed_id %>').html("<%= j render partial: 'shared/link_to_unfollow', locals: {user: user, relationship: @relationship} %>");
+$('#follow_<%= @relationship.followed_id %>').
+            html("<%= j render partial: 'shared/link_to_unfollow', locals: {user: user, relationship: @relationship} %>");
 $('.notice-msg').html("Successfully followed!");
 timeOut();

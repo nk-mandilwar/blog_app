@@ -22,14 +22,33 @@
 
 $(document).ready(function() {
   toAddShowMoreButton();
+  subscribeButtonOnClick();
   $(document).scroll(function(){
     findPostionOfInfiniteScrolling();
   });
-  timeOut();  
+  timeOut();
 });
 
 var timeOut = function(){
   setTimeout(function(){
     $('.notice').html('');
   }, 4000);
-}; 
+};
+
+var subscribeButtonOnClick = function(){
+  $(document).on('click', '.subscriber-button', function(){
+    $('.subscribe').hide();
+    $('.subscriber-form').show();
+  });
+};
+
+var findPostionOfInfiniteScrolling = function(){
+  var $myElt       = $('#infinite_scrolling');
+      $window      = $(window);
+      myTop        = $myElt.offset().top;
+      windowTop    = $window.scrollTop();
+      windowBottom = windowTop + $window.height();
+  if (myTop > windowTop && myTop < windowBottom) {
+    $('#link_to_next_page').trigger('click');
+  }
+};

@@ -1,11 +1,12 @@
-<% if !@notice %> 
-	$('#cancel_request<%= @friend_request.friend_id%>').html("<%= j render partial: 'shared/add_friend', locals: {user: User.find(@friend_request.friend_id)} %>");
-	$('#friend_request<%= @friend_request.user_id%>').remove();
-	$('#sent_cancel_request<%= @friend_request.friend_id %>').remove();
+<% if !@notice %>
+	$('#cancel_request_<%= @friend_request.friend_id%>').
+                      html("<%= j render partial: 'shared/add_friend', locals: {user: @user} %>");
+	$('#friend_request_<%= @friend_request.user_id %>').remove();
+	$('#sent_cancel_request_<%= @friend_request.friend_id %>').remove();
 	$('#sent_request_count').html("<%= j render partial: 'shared/sent_request_count' %>");
 	$('#friend_request_count').html("<%= j render partial: 'shared/friend_request_count' %>");
 	$('.notice-msg').html("Friend request deleted.");
 <% else %>
 	$('.notice-msg').html("<%= j @notice %>");
-<% end %>	
+<% end %>
 timeOut();

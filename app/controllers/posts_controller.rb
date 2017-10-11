@@ -8,11 +8,15 @@ class PostsController < ApplicationController
       @posts = Post.search(params[:search]).page params[:page]
     else
       @posts = Post.order("updated_at DESC").page params[:page]
-      # @posts = Post.includes(:user).order("created_at DESC").page params[:page]
     end
   end
 
   def show
+    @following_count = @post.user.following.count
+    @followers_count = @post.user.followers.count
+    @post_user = @post.user.name
+    @comments = @post.get_root_comments
+    @current_user_likes = Comment.get_user_likes(@comments, current_user.id)
   end
 
   def new
@@ -25,7 +29,7 @@ class PostsController < ApplicationController
   def create
     @post = current_user.posts.build(post_params)
     if @post.save
-      redirect_to @post, notice: 'Post was successfully created.' 
+      redirect_to @post, notice: 'Post was successfully created.'
     else
       render :new
     end
@@ -50,19 +54,19 @@ class PostsController < ApplicationController
     else
       @posts = current_user.posts.order("updated_at DESC").page params[:page]
     end
-  end 
+  end
 
   private
     def get_post
       @post = Post.find_by(id: params[:id])
-      unless @post 
+      unless @post
         redirect_to posts_path, notice: 'The post you are looking for does not exist'
       end
     end
 
     def check_authenticated_user?
       if @post.user != current_user
-        redirect_to posts_path, notice: "Cannot access other user post page" 
+        redirect_to posts_path, notice: "Cannot access other user post page"
       end
     end
 

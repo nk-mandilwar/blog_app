@@ -14,23 +14,25 @@ class FriendRequestsController < ApplicationController
   def create
     @friend_request = current_user.friend_requests.new(friend_id: params[:friend_id] )
     @friend_request.save
+    @user = User.find_by(id: @friend_request.friend_id)
     respond_to do |format|
-      format.html {redirect_to users_path}  
+      format.html {redirect_to users_path}
       format.js
     end
   end
 
   def destroy
     @friend_request ||= FriendRequest.find_by(friend_id: params[:id])
+    @user = User.find_by(id: @friend_request.friend_id)
     redirect_to :back unless @friend_request
     if @friend_request.user_id != current_user.id && @friend_request.friend_id != current_user.id
       @notice = "You can't reject the request that you didnt send or receive."
     else
     	@friend_request.destroy
     end
-    respond_to do |format|  
+    respond_to do |format|
       format.js
-    end   
+    end
   end
 
   def update
@@ -42,7 +44,7 @@ class FriendRequestsController < ApplicationController
     end
     respond_to do |format|
       format.js
-    end  
+    end
 	end
 
   private

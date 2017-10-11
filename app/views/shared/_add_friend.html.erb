@@ -1,4 +1,3 @@
-
-<td id="add_friend<%= user.id %>">
+<td id="add_friend_<%= user.id %>">
   <%= link_to "Add Friend", friend_requests_path(friend_id: user.id), method: :post, remote: true %>
 </td>

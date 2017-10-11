@@ -16,7 +16,7 @@ var showMore = function(){
         show_id = "show_" + id;
     $("#"+show_id).css("max-height", document.getElementById(show_id).scrollHeight);
     $("#show_less_"+id).show();
-    $(this).hide(); 
+    $(this).hide();
   });
 };
 
@@ -28,7 +28,7 @@ var showLess = function(){
     $(show_id).css("max-height", 100);
     $("#show_more_"+id).show();
     $(this).hide();
-    window.scrollTo(position.left, position.top); 
+    window.scrollTo(position.left, position.top);
   });
 };
 
@@ -37,19 +37,8 @@ var warning = function() {
     $('.alert-msg').html('Sign in to read more...');
     timeOut();
   });
-}; 
-
-var findPostionOfInfiniteScrolling = function(){
-  var $myElt       = $('#infinite_scrolling');    
-      $window      = $(window);          
-      myTop        = $myElt.offset().top;  
-      windowTop    = $window.scrollTop();     
-      windowBottom = windowTop + $window.height();
-  if (myTop > windowTop && myTop < windowBottom) {
-    $('#link_to_next_page').trigger('click');
-  }  
 };
 
 showMore();
 showLess();
-warning();  
+warning();
